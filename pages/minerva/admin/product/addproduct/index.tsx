@@ -6,22 +6,13 @@ import Head from 'next/head'
 import {TbEdit, TbFile, TbFiles, TbTrash, TbUsers } from 'react-icons/tb'
 import router from 'next/router'
 
-const EditProductPage: FC= () => {
+interface InputProp {
+  labelTitle: string;
+  defaultValue: string;
+  updateFormValue: (value: string) => void;
+}
 
-  const [productName, setProductName] = useState('Motolite Gold');
-const [price, setPrice] = useState('PHP 5,600.00');
-const [description, setDescription] = useState('Long lasting power for high performance vehicles.');
-
-const handleProductNameChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-  setProductName(event.target.value);
-};
-const handlePriceChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-  setPrice(event.target.value);
-};
-
-const handleDescriptionChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-  setDescription(event.target.value);
-};
+const AddProductPage: FC<InputProp> = ({labelTitle, defaultValue, updateFormValue }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -38,7 +29,7 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
     
     <div>
       <Head>
-        <title>Edit Product</title>
+        <title>Add Product</title>
       </Head>
 
       <div className={styles.titleHead}>
@@ -47,7 +38,7 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
       </div>
 
       <div className={styles.container}>
-        <div className={styles.title}>Edit Product Details</div>
+        <div className={styles.title}>Add Product Details</div>
           <div className={styles.divider}></div>
 
           <div className="flex lg:flex-row flex-col items-center py-6 px-4">
@@ -61,7 +52,7 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
     <form className='grid grid-cols-1 md:grid-cols-2 gap-16'>
         <div className="mb-6">
             <label htmlFor="productName" className="text-sm font-medium text-gray-900 block mb-2">Product Name</label>
-            <input type="text" id="productName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input product name" value={productName} onChange={handleDescriptionChange} required />
+            <input type="text" id="productName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input product name"required />
             </div>
         <div className="mb-6">
         <div className="relative inline-block text-left">
@@ -115,12 +106,12 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
 </div>
 </div>
         <div className="mb-6">
-            <label htmlFor="email" className="text-sm font-medium text-gray-900 block mb-2">Product Price</label>
-            <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="ex. PHP 5,600.00" value={price} onChange={handlePriceChange} required />
+            <label htmlFor="email" className="text-sm font-medium text-gray-900 block mb-2">Email Address</label>
+            <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="name@gmail.com" required />
             </div>
         <div className="mb-6">
             <label htmlFor="description" className="text-sm font-medium text-gray-900 block mb-2">Product Description</label>
-            <textarea id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" placeholder="Input your product description here" value={description} onChange={handleDescriptionChange} required />
+            <textarea id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" placeholder="Input your product description here" required />
             </div>
             <br></br>
         <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Product</button>
@@ -138,5 +129,5 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
 
 
 
-(EditProductPage as PageWithLayout).layout = AdminPageLayout
-export default EditProductPage
+(AddProductPage as PageWithLayout).layout = AdminPageLayout
+export default AddProductPage

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter} from 'next/router'
 import Link from 'next/link'
 import styles from '@/styles/Navbar/navbar.module.scss'
 import { Poppins } from 'next/font/google'
 import { TbMenu2 } from 'react-icons/tb'
 import Image from 'next/image'
+
 
 const customer = [
   { name: "Home", url: "/"},  

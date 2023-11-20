@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '@/styles/admin/sidebar.module.scss'
 import { useRouter } from 'next/router'
 import {  Open_Sans } from 'next/font/google'
-import {TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight  } from 'react-icons/tb'
+import {TbListSearch, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbSettings  } from 'react-icons/tb'
 import { report } from 'process'
 
 
@@ -15,7 +15,7 @@ const poppins = Open_Sans({
 const routes = [
     { name: "Customer Profile" , url: "/minerva/admin/customer", icons: <TbUsers size={30} />}, 
     { name: "Product Management", url: "/minerva/admin/product", icons: <TbFiles size={30} />},
-    { name: "Service Management", url: "/minerva/admin/services", icons: <TbCalendar size={30} />}, 
+    { name: "Service Management", url: "/minerva/admin/services", icons: <TbListSearch size={30} />}, 
     { name: "Orders", url: "/minerva/admin/orders", icons: <TbShoppingBag size={30} />},
     { name: "Appointments", url:"/minerva/admin/appointments", icons: <TbClock size={30} />},
     { name: "Inventory", url: "/minerva/admin/inventory", icons: <TbClipboard size={30}/>},
@@ -24,9 +24,9 @@ const routes = [
 
 
 const submenu = [
-    { name: "Generate Reports", url :"/minerva/admin/reports", icons: <TbFileAnalytics size={30}/>},
-    { name: "Audit Logs", url: "/minerva/admin/auditlogs", icons: <TbList size={30}/>},
-    { name: "Report Archive", url: "/minerva/admin/archive", icons: <TbArchive size={30}/>}
+    { name: "Generate Reports", url :"/minerva/admin/reports/generatereport", icons: <TbFileAnalytics size={30}/>},
+    { name: "Audit Logs", url: "/minerva/admin/reports/auditlog", icons: <TbList size={30}/>},
+    { name: "Report Archive", url: "/minerva/admin/reports/reportarchive", icons: <TbArchive size={30}/>}
 ]
 
 export default function Sidebar() {
@@ -72,7 +72,7 @@ export default function Sidebar() {
                 </div> : null
             }
             <button onClick={() => router.push("/minerva/admin/settings")}>
-                <TbSettings2 size={30}/>
+                <TbSettings size={30}/>
                 <span>Settings</span>
             </button>
             <button onClick={onLogoutBtn}>
