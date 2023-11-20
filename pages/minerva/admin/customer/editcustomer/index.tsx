@@ -75,10 +75,6 @@ const EditCustomerPage: FC<InputProp> = ({labelTitle, defaultValue, updateFormVa
             <input type="text" id="firstName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input first name" value={firstName} onChange={handleFirstNameChange} required />
             </div>
         <div className="mb-6">
-            <label htmlFor="middleName" className="text-sm font-medium text-gray-900 block mb-2">Middle Name</label>
-            <input type="text" id="middleName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input middle name" value={middleName} onChange={handleMiddleNameChange} required />
-            </div>
-        <div className="mb-6">
             <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Last Name</label>
             <input type="text" id="lastName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input last name" value={lastName} onChange={handleLastNameChange} required />
             </div>
@@ -94,7 +90,7 @@ const EditCustomerPage: FC<InputProp> = ({labelTitle, defaultValue, updateFormVa
             <label htmlFor="phoneNumber" className="text-sm font-medium text-gray-900 block mb-2">Phone Number</label>
             <input type="tel" id="phoneNumber" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="ex. 905-441-4300" value={phoneNumber} onChange={handlePhoneNumberChange} required />
             </div>
-
+            <br></br>
         <button type="submit" className="relative left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Customer Profile</button>
     </form>
 </div>

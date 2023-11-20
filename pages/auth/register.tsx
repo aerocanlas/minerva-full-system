@@ -1,9 +1,44 @@
-import React from 'react'
+import React, { SyntheticEvent, useState } from 'react'
 import Image from 'next/image'
 import router from 'next/router'
 
 export default function Register() {
+
+      const [ retype, retypPassword ] = useState("")
+      const [ register, setRegister ] = useState({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        phone: "",
+        shipping: ""
+
+    })
+
+
+
+    const onHandleRegister = async (e: SyntheticEvent) => {
+      e.preventDefault();
+      const res = await fetch("http://localhost:4000/createCustomer", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+              email: register.email,
+              password: register.password,
+              firstname: register.firstname,
+              lastname: register.lastname,
+              phone: register.phone,
+              shipping: register.shipping
+          })
+      })
+
+
+      return res.json()
+
+    }
   return (
+
+   
 
     <div className="h-screen md:flex">
 	<div
@@ -25,35 +60,28 @@ export default function Register() {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
 </svg>
-						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="First Name" />
+						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="First Name" onChange={(e) => setRegister({ ...register, firstname: e.target.value })}/>
       </div>
       <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
 </svg>
 
-						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Middle Name" />
-      </div>
-      <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-</svg>
-
-						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Last Name" />
+						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Last Name" onChange={(e) => setRegister({ ...register, lastname: e.target.value })}/>
       </div>
 					<div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
   <path stroke-linecap="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" />
 </svg>
 
-						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Email Address" />
+						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Email Address" onChange={(e) => setRegister({ ...register, email: e.target.value })} />
       </div>
       <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
 </svg>
 
-							<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Password" />
+							<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Password" onChange={(e) => setRegister({ ...register, password: e.target.value })}/>
       </div>
 
       <div className="flex items-center border-2 py-2 px-3 rounded-2xl ">
@@ -61,7 +89,7 @@ export default function Register() {
   <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
 </svg>
 
-							<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Confirm Password" />
+							<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Confirm Password"  />
       </div>
 
       <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4 mt-4">
@@ -69,14 +97,14 @@ export default function Register() {
   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
 </svg>
 
-						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Shipping Address" />
+						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Shipping Address" onChange={(e) => setRegister({ ...register, shipping: e.target.value })}/>
       </div>
       <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4 mt-4">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
 </svg>
 
-						<input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Last Name" />
+						<input className="pl-2 outline-none border-none" type="tel" name="" id="" placeholder="Phone Numbe onChange={(e) => setRegister({ ...phone, password: e.target.value })}r" />
       </div>
       </div>
 							<button type="submit" className="block w-full bg-[#FFBD59] mt-4 py-2 rounded-2xl text-black font-semibold mb-2">Register</button>
