@@ -104,7 +104,7 @@ export default function Register() {
   <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
 </svg>
 
-						<input className="pl-2 outline-none border-none" type="tel" name="" id="" placeholder="Phone Numbe onChange={(e) => setRegister({ ...phone, password: e.target.value })}r" />
+						<input className="pl-2 outline-none border-none" type="tel" name="" id="" placeholder="Phone Number" onChange={(e) => setRegister({ ...register, phone: e.target.value })} />
       </div>
       </div>
 							<button type="submit" className="block w-full bg-[#FFBD59] mt-4 py-2 rounded-2xl text-black font-semibold mb-2">Register</button>
