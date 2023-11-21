@@ -25,6 +25,33 @@ const AddProductPage: FC<InputProp> = ({labelTitle, defaultValue, updateFormValu
   const toggleDropdown1 = () => {
     setIsOpen1(!isOpen1);
   };
+
+
+  const [ products, setProducts ] = useState({
+    name: "",
+    quantity: "",
+    price: "",
+    description: "",
+    category: "",
+
+  })
+
+
+  const AddProductForm = async () => {
+    const response = await fetch("http://localhost:3001/product/createProduct", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: products.name,
+        quantity: products.quantity,
+        price: products.price,
+        description: products.description,
+        category: products.category,
+        userID: "",  //get userId of current login
+      })  
+    })
+    return response.json();
+  }
   return (
     
     <div>

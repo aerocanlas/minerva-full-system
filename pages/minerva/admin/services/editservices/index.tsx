@@ -36,6 +36,21 @@ const toggleDropdown1 = () => {
   setIsOpen1(!isOpen1);
 };
   
+
+  const serviceEditForm = async() => {
+    const response = await fetch("http://localhost:3001/services/updateService/:id", {  //get service id
+      method: "PATCH",
+      body: JSON.stringify({
+        serviceID: "",
+        description,
+        services: serviceName,
+        price, 
+        userID: ""
+      })
+    })
+
+    return response.json()
+  }
   
 
 

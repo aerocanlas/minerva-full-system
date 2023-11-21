@@ -3,10 +3,25 @@ import PageWithLayout from '@/layout/pagewithlayout'
 import styles from '@/styles/admin/content.module.scss'
 import Head from 'next/head'
 import {TbListSearch, TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbHexagonPlus   } from 'react-icons/tb'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import router from 'next/router'
 
 const ServicePage: FC = () => {
+
+
+  const [ services, setServices ] = useState(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+       const response = await fetch("http://localhost:3001/services/getAllServices", {
+          method: "GET",
+      })
+
+
+      const result = await response.json();
+      setServices(result)
+    }
+  }, [])
   return (
     <div>
       <Head>

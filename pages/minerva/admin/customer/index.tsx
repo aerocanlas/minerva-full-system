@@ -2,13 +2,35 @@ import styles from '@/styles/admin/content.module.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect} from 'react'
 import Head from 'next/head'
 import {TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight   } from 'react-icons/tb'
 import router from 'next/router'
 
 
 const CustomerPage: FC = () => {
+
+  const [ users, setUsers ] = useState(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:3001/user/getUserCustomer", {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+
+      if(!response.ok) {
+        throw new Error("Therer something wrong while fetching data")
+      }
+
+      const result = await response.json();
+
+      setUsers(result)
+
+    }
+  }, [])
+
   return (
     
     <div>

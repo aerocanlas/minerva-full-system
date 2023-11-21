@@ -1,4 +1,4 @@
-import React, { FC} from 'react'
+import React, { FC, useState, useEffect} from 'react'
 import styles from '@/styles/admin/content.module.scss'
 import Head from 'next/head'
 import PageWithLayout from '@/layout/pagewithlayout'
@@ -8,6 +8,23 @@ import {TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, T
 
 
 const Orders: FC = () => {
+
+  const [ orders, setOrders ] = useState(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:30001/orders/", {
+          method: "GET",
+          headers: { 'Content-Type': 'application/json' },
+      })
+
+      if(!response.ok) throw new Error("There is something wrong while fethcing")
+
+      const result = await response.json();
+      setOrders(result)
+    }
+  }, [])
+
   return (
     <div>
         <Head>

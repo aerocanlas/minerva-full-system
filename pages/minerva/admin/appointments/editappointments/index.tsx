@@ -18,6 +18,7 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
 
   const [customerName, setCustomerName] = useState('Prince Aero Canlas');
   const [serviceName, setServiceName] = useState('Preventive Maintenance');
+  const [ status, setStatus ] = useState("") // set niyo ung status
 
   const handleCustomerNameChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setCustomerName(event.target.value);
@@ -27,6 +28,19 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
   };
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const formSubmitForm = async () => {
+    const response = await fetch("http://localhost:3001/schedule/updateSchedule/:id", {
+         method: "PUT",
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+          status,
+          userID: ""  //get userid of current login
+        })
+    })
+
+    return response.json();
+  }
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);

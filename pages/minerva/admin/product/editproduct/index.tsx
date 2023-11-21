@@ -34,6 +34,33 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
   const toggleDropdown1 = () => {
     setIsOpen1(!isOpen1);
   };
+
+
+  const [ products, setProducts ] = useState({
+    name: "",
+    quantity: "",
+    price: "",
+    description: "",
+    category: "",
+
+  })
+
+  const EditProductForm = async () => {
+    const response = await fetch("http://localhost:3001/product/updateProduct/:id", {
+      method: "PATCH",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: products.name,
+        quantity: products.quantity,
+        price: products.price,
+        description: products.description,
+        category: products.category,
+        userID: "",  //get userId of current login
+      })  
+    })
+    return response.json();
+  }
+
   return (
     
     <div>

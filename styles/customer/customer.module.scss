@@ -1,0 +1,198 @@
+
+.bodyHome{
+    background-image: url('/frontbg.jpg');
+    background: cover; // Adjust as needed
+    background-repeat: repeat;
+}
+
+.bodyProducts{
+    width: 100%;
+    height: 1000px;
+    background-image: url('/frontbg.jpg');
+    background-size: cover;
+}
+
+.header{
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 100px;
+}
+
+.heading{
+    font-size: 50px;
+}
+
+.paragraph{
+    font-size: 50px;
+}
+
+.container{
+    
+position: absolute;
+top: 200px;
+
+}
+  .videoDocker video {
+    height: 100px;
+    top: 0px;
+    left: 0%;
+}
+
+.videoDocker::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+.videoDocker1 video {
+    height: 310px;
+    top: 0px;
+    left: 0%;
+}
+
+.videoDocker1::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 310px;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+.videoDocker2 video {
+    height: 310px;
+    top: 0px;
+    left: 0%;
+}
+
+.videoDocker2::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 310px;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+.videoDockerS video {
+    width: 10%;
+    height: 10%;
+    top: 0px;
+    left: 0%;
+}
+
+.videoDockerS::after {
+    content: "";
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+.welcome{
+    -webkit-text-stroke: 1px #000;
+    color: #FFBD59;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -5px;
+}
+
+.tagline{
+    line-height: 80px;
+    font-weight: bold;
+    font-size: 100px;
+    font-family: 'Bebas Neue', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment{
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section2{
+    position: absolute;
+    top: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.titleText{
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+.contentText{
+    padding-top: 55px;
+    max-width: 60%;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+}
+.color{
+    color: #FFBD59;
+}
+
+.section3{
+    width: 100%;
+    height: 50%;
+}
+
+.section5{
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    height: 50%;
+}
+
+.map{
+    position: absolute;
+    top: 30px;
+    left: 40px;
+}
+
+.contactCards{
+    position: absolute;
+    top: -20px;
+    left: 690px;
+    margin: 0 0 0 0;
+}
+
+.category{
+    height: 200px;
+}
+
+.categoryIcons{
+    width: 100px;
+    height: 100px;
+}

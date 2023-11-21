@@ -23,6 +23,24 @@ const EditCustomerPage: FC<InputProp> = ({labelTitle, defaultValue, updateFormVa
   const [phoneNumber, setPhoneNumber] = useState('0905-441-4300');
   const [shippingAddress, setShippingAddress] = useState('Espana Blvd., Sampaloc, Manila, Philippines 1008.');
 
+
+  const formSubmit = async () => {
+    const response = await fetch("http://localhost:3001/users/updateACcountDetails/:id", {
+      method: "PATCH",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        firstname: firstName,
+        lastname: lastName,
+        phone: phoneNumber,
+        shipping: shippingAddress,
+        userID: ""   // get customer user id 
+      })
+    })
+
+    return response.json();
+  }
+
   const handleFirstNameChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setFirstName(event.target.value);
   };

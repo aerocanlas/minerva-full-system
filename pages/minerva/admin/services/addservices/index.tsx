@@ -1,7 +1,7 @@
 import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC, FormEvent, useState } from 'react'
+import React, { FC, FormEvent, useState, SyntheticEvent} from 'react'
 import Head from 'next/head'
 import {  TbListSearch, TbCalendar, TbEdit, TbTrash, TbUsers } from 'react-icons/tb'
 import router from 'next/router'
@@ -19,7 +19,28 @@ const [isOpen1, setIsOpen1] = useState(false);
 
 const toggleDropdown1 = () => {
   setIsOpen1(!isOpen1);
-};
+};  
+
+
+const [ services, setServices ] = useState({
+  services: "",
+  description: "",
+  price: ""
+})
+
+ const onSubmitForm = async (e: SyntheticEvent) => {
+  e.preventDefault()  
+  const response = await fetch("http://localhost:3001/createService", {
+    method: "POST",
+    body: JSON.stringify({
+        services: services.services,
+        description: services.description,
+        price: services.price,
+        userID: ""   // get userId on user login
+    })
+  })
+  return response.json();
+ }
 
 
   return (

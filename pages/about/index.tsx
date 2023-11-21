@@ -5,11 +5,12 @@ import { Inter } from 'next/font/google'
 import { motion } from "framer-motion"
 import { FC, useRef, useState } from 'react'
 import Link from 'next/link'
-import styles from '@/styles/about/about.module.scss'
+import styles from '@/styles/customer/customer.module.scss'
 
 const  About: FC = () => {
   return (
-    <div></div>
+    <div className={styles.bodyProducts}>
+    </div>
   )
 }
 

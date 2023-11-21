@@ -26,6 +26,26 @@ const EditOrdersPage: FC<InputProp> = ({labelTitle, defaultValue, updateFormValu
   const toggleDropdown1 = () => {
     setIsOpen1(!isOpen1);
   };
+
+  const [ status, setStatus ] = useState("")
+
+  const odersEditForm = async () => {
+    const response = await fetch("http://localhost:3001/order/updateOderStatus/:id", {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            status,
+            userID: "" //get userId current login
+        })
+    })
+
+
+    return response.json();
+  }
+
+
+
+
   return (
     
     <div>

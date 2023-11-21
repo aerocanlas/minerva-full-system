@@ -3,11 +3,28 @@ import PageWithLayout from '@/layout/pagewithlayout'
 import styles from '@/styles/admin/content.module.scss'
 import Head from 'next/head'
 import {TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbHexagonPlus, TbHexagonMinus   } from 'react-icons/tb'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import router from 'next/router'
 import Image from 'next/image'
 
 const Inventory: FC = () => {
+
+
+  const [ quantity, setQuantity ] = useState(1);
+
+
+  const formSubmitProductQuantity = async () => {
+    const response = await fetch("http://localhost:3001/", { 
+      method: "PUT",
+      body: JSON.stringify({
+        quantity,
+        userID: ""  // get userId of current login
+      })
+    })  
+
+    return response.json();
+  }
+
   return (
     <div>
       <Head>
