@@ -2,6 +2,8 @@ import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
 import React, { FC } from 'react'
 import styles from '@/styles/customer/customer.module.scss'
+import { FaUserClock } from "react-icons/fa6";
+
 
 
 const Services: FC = () => {
@@ -9,57 +11,65 @@ const Services: FC = () => {
     {
         title: "React Tailwind Card with Grid 1",
         img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
+        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
+        price: "starts at PHP 2000"
     },
     {
         title: "React Tailwind Card with Grid 2",
         img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
+        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
+        price: "starts at PHP 2000"
     },
     {
         title: "React Tailwind Card with Grid 3",
         img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
+        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
+        price: "starts at PHP 2000"
     },
     {
       title: "React Tailwind Card with Grid 4",
       img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
+      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
+      price: "starts at PHP 2000"
   },
   {
       title: "React Tailwind Card with Grid 5",
       img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
+      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
+      price: "starts at PHP 2000"
   },
   {
       title: "React Tailwind Card with Grid 6",
       img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
+      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
+      price: "starts at PHP 2000"
   },
   ];
 
   return (
     <>
   <div className={styles.bodyProducts}>
-  <section className="relative mt-4 h-screen pb-12 mb-16 flex flex-col items-center justify-center text-center text-white ">
-    <div className="relative top-40 left-8 mb-12 grid gap-16 lg:grid-cols-3 justify-items-center p-8 mx-8 gap-y-20	">
+  <section className="relative mt-4 h-screen pb-12 mb-16 flex flex-col items-center justify-center ">
+    <div className="relative top-60 mb-12 grid gap-16 lg:grid-cols-3 p-8 mx-8 gap-y-18	">
                 {posts.map((items, key) => (
-                    <div className="w-full rounded-lg shadow-md lg:max-w-sm" key={key}>
+                    <div className="w-full rounded-lg shadow-md lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow transition-all duration-700 hover:scale-105" key={key}>
                         <img
                             className="object-cover w-full h-48"
                             src={items.img}
                             alt="image"
                         />
                         <div className="p-4">
-                            <h4 className="text-xl font-semibold text-white-600">
+                            <h4 className="text-xl font-semibold text-black-600 text-center">
                                 
                                 {items.title}
                             </h4>
-                            <p className="mb-2 leading-normal">
+                            <p className="mb-2 leading-normal text-center">
                             {items.content}
                             </p>
-                            <button className="px-4 py-2 text-sm text-white-400 bg-[#FFBD59] rounded shadow">
-                                Schedule an Appointment
+                            <p className="mr-2 text-lg font-bold text-black dark:text-black">
+                            {items.price}
+                            </p>
+                            <button className="ml-64 px-4 py-1 bottom-0 right-0 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/>
                             </button>
                         </div>
                     </div>
@@ -67,6 +77,7 @@ const Services: FC = () => {
             </div>
             </section>
             </div>
+
             {/*  */}
           <section className="relative flex flex-col items-center justify-center text-center text-white ">
           <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
