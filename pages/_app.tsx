@@ -1,6 +1,5 @@
 import PageWithLayout from '@/layout/pagewithlayout'
 import '@/styles/globals.scss'
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 

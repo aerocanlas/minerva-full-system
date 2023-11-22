@@ -209,10 +209,10 @@ const Home: FC = () => {
         <small className="font-[700]">Explore our wide range of products.</small>
         <ul className="flex items-start justify-between gap-8 mt-10 md:flex-row flex-col">
         <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Change Tire" />
+                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
                         <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Change Tire</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Requires two sets of wheels and two sets of tires.</p>
+                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
+                          <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
                               <div className="flex items-center">
                                 <p className="mr-2 text-lg font-bold flex text-black dark:text-black">PHP 5,600.00 </p>
                                 <button
@@ -222,10 +222,10 @@ const Home: FC = () => {
                       </div>
 
                       <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Change Tire" />
+                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
                         <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Change Tire</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Requires two sets of wheels and two sets of tires.</p>
+                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
+                          <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
                               <div className="flex items-center">
                                 <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
                                 <button
@@ -236,10 +236,10 @@ const Home: FC = () => {
                       </div>
 
                       <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Change Tire" />
+                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
                         <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Change Tire</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Requires two sets of wheels and two sets of tires.</p>
+                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
+                          <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
                               <div className="flex items-center">
                                 <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
                                 <button
@@ -296,7 +296,7 @@ const Home: FC = () => {
                           <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Change Tire</h2>
                           <p className="text-sm mb-2 dark:text-black text-black">Requires two sets of wheels and two sets of tires.</p>
                               <div className="flex items-center">
-                                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
+                                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 1,600.00</p>
                                 <button
                   className="ml-40  px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/></button>
 
@@ -310,7 +310,7 @@ const Home: FC = () => {
                           <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Change Tire</h2>
                           <p className="text-sm mb-2 dark:text-black text-black">Requires two sets of wheels and two sets of tires.</p>
                               <div className="flex items-center">
-                                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
+                                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 1,600.00</p>
                                 <button
                   className="ml-40  px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/></button>
 

@@ -21,7 +21,7 @@ const CustomerPage: FC = () => {
 
 
       if(!response.ok) {
-        throw new Error("Therer something wrong while fetching data")
+        throw new Error("There something wrong while fetching data")
       }
 
       const result = await response.json();

@@ -16,6 +16,7 @@ import { BiSolidCylinder } from "react-icons/bi";
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { IoMdArrowDropright } from "react-icons/io";
+import getAllProducts from '@/lib/getAllProducts'
 
 
 const Products: FC= () =>{ 
@@ -72,6 +73,7 @@ const Products: FC= () =>{
       setProducts(result)
     }
   }, [])
+
   
   return (
     <div className={styles.bodyProducts}>
