@@ -48,7 +48,7 @@ const Services: FC = () => {
 
   return (
     <>
-  <div className={styles.bodyProducts}>
+  <div className={styles.bodyServices}>
   <section className="relative mt-4 h-screen pb-12 mb-16 flex flex-col items-center justify-center ">
     <div className="relative top-60 mb-12 grid gap-16 lg:grid-cols-3 p-8 mx-8 gap-y-18	">
                 {posts.map((items, key) => (

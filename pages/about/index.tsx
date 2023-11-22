@@ -9,8 +9,8 @@ import styles from '@/styles/customer/customer.module.scss'
 
 const  About: FC = () => {
   return (
-    <div className={styles.bodyProducts}>
-      <section className='relative top-20 ' id="about">
+    <div className={styles.bodyAbout}>
+      <section className='absolute top-20 left-48' id="about">
         <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
           <p className="font-normal text-sm leading-3 text-blue-600 hover:text-blue cursor-pointer pb-2">About Us</p>
           <div className="flex lg:flex-row flex-col lg:gap-8 sm:gap-10 gap-12">
@@ -68,8 +68,8 @@ const  About: FC = () => {
       <div className="w-full lg:w-6/12">
         <h2 className="font-bold lg:text-4xl text-3xl lg:leading-9 leading-7 text-white">Our Mission</h2>
         <p className="font-normal text-base leading-6 text-white mt-6 w-full lg:w-10/12 xl:w-9/12">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum. In the first place, we have granted to God, and by this, our present charter confirmed for us and our heirs forever that the English Church shall be free, and shall have her rights entire, and her liberties inviolate; and we will that it be thus observed; which is apparent from</p>
-        <h2 className="font-bold lg:text-4xl text-3xl lg:leading-9 leading-7 text-black">Our Vision</h2>
-        <p className="font-normal text-base leading-6 text-black w-full lg:w-10/12 xl:w-9/12 mt-10">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum. In the first place, we have granted to God, and by this, our present charter confirmed for us and our heirs forever that the English Church shall be free, and shall have her rights entire, and her liberties inviolate; and we will that it be thus observed; which is apparent from</p>
+        <h2 className="font-bold lg:text-4xl text-3xl lg:leading-9 leading-7 text-white">Our Vision</h2>
+        <p className="font-normal text-base leading-6 text-white w-full lg:w-10/12 xl:w-9/12 mt-10">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum. In the first place, we have granted to God, and by this, our present charter confirmed for us and our heirs forever that the English Church shall be free, and shall have her rights entire, and her liberties inviolate; and we will that it be thus observed; which is apparent from</p>
       </div>
       <div className="w-full lg:w-6/12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 lg:gap-12 gap-10">
@@ -77,7 +77,7 @@ const  About: FC = () => {
           {/* Team Card */}
           <div className="flex p-4 shadow-md">
             <div className="mr-6">
-              <img className="mr-6" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg4.svg" alt="team card" />
+              <img className="mr-6 fill" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg4.svg" alt="team card" />
             </div>
             <div className="">
               <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white">Team</p>
@@ -113,7 +113,7 @@ const  About: FC = () => {
 </section>
 
 {/* Footer */}
-<section className="relative flex flex-col items-center justify-center text-center text-white ">
+<section className="absolute top-[1500px] left-[500px] flex flex-col items-center justify-center text-center text-white ">
     <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
       <div className="max-w-screen-xl mt-2 px-2 py-8 mx-auto sm:px-6 lg:px-8">
         <div className="relative top-4 grid grid-cols-1 gap-8 lg:grid-cols-3">
