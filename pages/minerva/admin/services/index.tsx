@@ -16,8 +16,6 @@ const ServicePage: FC = () => {
        const response = await fetch("http://localhost:3001/services/getAllServices", {
           method: "GET",
       })
-
-
       const result = await response.json();
       setServices(result)
     }

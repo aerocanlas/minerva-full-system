@@ -31,6 +31,25 @@ const Settings: FC = () => {
   const handleShippingAddressChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setShippingAddress(event.target.value);
   };
+
+
+  const submitForm = () => {
+    const res = await fetch("http://localhost:3001/user/updateAccountDetails/id", { 
+      method: "POST",       
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstname: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phoneNumber,
+        shipping: shippingAddress
+      })
+    })
+
+    if(!res.ok) throw new Error("There something wrong while fetching your data")
+
+    return res.json()
+  }
   
   return (
     

@@ -10,8 +10,21 @@ import React from 'react';
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { FaUserClock } from "react-icons/fa6";
+import Modal from '@/components/Modal';
 
 const Home: FC = () => {
+
+  const [isModalOpen, setIsModalOpen] = useState(true
+    );
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   const posts = [
     {
@@ -32,7 +45,7 @@ const Home: FC = () => {
   ];
 
   return (
-    
+
     <div className={styles.bodyHome}>
 
       <section className="relative h-screen flex flex-col items-center justify-center text-center text-white ">
@@ -55,17 +68,24 @@ const Home: FC = () => {
       <section className="relative h-96 flex flex-col items-center justify-center text-center text-white">
               <div className={styles.section2}>
               <div className={styles.titleText}>
+              
+      <button onClick={handleOpenModal}>Open Modal</button>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <p>Modal Content Goes Here</p>
+      </Modal>
+
               <span>
               WELCOME TO <span className={styles.color}>MINERVA SALES</span> CORPORATION
               </span>
               </div>
-              <div className={styles.contentText}>
-              <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-              standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-              standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-              standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-              standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</span>
-              </div>
+                <div className={styles.contentText}>
+                  <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
+                  </span>
+                </div>
               </div>
       </section>
 
@@ -74,6 +94,8 @@ const Home: FC = () => {
       <img src="/section-3.jpeg"></img>
       </div>
       </section>
+
+      
 
 
       {/* contact */}
@@ -109,8 +131,9 @@ const Home: FC = () => {
                           <p className="text-2xl font-extrabold text-dark-grey-900">Location</p>
                           <p className="text-base leading-7 text-dark-grey-600 font-medium">Find us at our office</p>
                           <a className="text-lg font-bold text-purple-blue-500" target="_blank" href="https://tinyurl.com/yeysd225">General Malvar Street
-  Barangay Tubigan
-  Binan City, Laguna</a>
+                            Barangay Tubigan
+                            Binan City, Laguna
+                          </a>
                           </div>  
                       </div>
 

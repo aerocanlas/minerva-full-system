@@ -88,7 +88,7 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
     <form className='grid grid-cols-1 md:grid-cols-2 gap-16'>
         <div className="mb-6">
             <label htmlFor="productName" className="text-sm font-medium text-gray-900 block mb-2">Product Name</label>
-            <input type="text" id="productName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input product name" value={productName} onChange={handleDescriptionChange} required />
+            <input type="text" id="productName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input product name" value={productName} onChange={handleProductNameChange} required />
             </div>
         <div className="mb-6">
         <div className="relative inline-block text-left">
@@ -114,6 +114,7 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
   )}
 </div>
 </div>
+
 <div className="mb-6">
         <div className="relative inline-block text-left">
   <div>
