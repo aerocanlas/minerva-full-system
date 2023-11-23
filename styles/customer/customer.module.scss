@@ -65,6 +65,21 @@
     opacity: 0.85;
   }
 
+  .titleHead {
+    position: absolute;
+    top: 10px;
+    left: 405px;
+    font-family: 'poppins', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 20px 20px 20px 20px;
+    display: flex;
+    .icon{
+       padding-right: 10px;
+    }
+    
+  }
+
   .titleEdit {
     font-family: 'Poppins', sans-serif;
     font-size: 28px;
@@ -84,220 +99,135 @@
   }
 
 .container{
-    
     position: absolute;
     top: 130px;
     width: 1000px;
     height: 850px;
     position: absolute;
-    background-color: #ccc;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     margin-left: 200px;
     box-shadow: 0px 0px 10px 0px #ccc;
-
-    .pagination {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        width: 100%;
-      }
-      .pagination ul {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        outline: 0;
-        vertical-align: baseline;
-        background: 0 0;
-      }
-      .pagination li {
-        display: inline;
-        margin: 0;
-        padding: 0;
-      }
-      .pagination li a {
-        border: 1px solid #c9c9c9;
-        color: #242424;
-        text-decoration: none;
-        display: inline-block;
-        transition: all .8s ease 0s;
-        height: 40px;
-        line-height: 40px;
-        margin: 0 10px 0 0;
-        padding: 0;
-        text-align: center;
-        width: 40px;
-        margin-top: 10px;
-      }
-      .pagination li a:hover {
-        background-color: #FFBD59;
-        color: white;
-      }
-      .pagination li a.active {
-        background-color: #FFBD59;
-        color: white;
-      }
-    
-      .badgeSuccess {
-        -webkit-text-fill-color: white;
-        display: inline-block;
-        padding: 5px 10px;
-        border-radius: 12px; // Equivalent to rounded-pill
-        background-color: green; // Assuming $primary is defined elsewhere
-        color: green($color: #000000); // Assuming $primary-contrast is defined elsewhere
-        font-weight: bold;
-        font-size: 14px;
-      }
-      
-      .badgePending {
-        -webkit-text-fill-color: white;
-        display: inline-block;
-        padding: 5px 10px;
-        border-radius: 12px; // Equivalent to rounded-pill
-        background-color: #FFBD59; // Assuming $primary is defined elsewhere
-        color: green($color: #000000); // Assuming $primary-contrast is defined elsewhere
-        font-weight: bold;
-        font-size: 14px;
-      }
-      
-      .badgeCancel {
-        -webkit-text-fill-color: white;
-        display: inline-block;
-        padding: 5px 10px;
-        border-radius: 12px; // Equivalent to rounded-pill
-        background-color: rgb(235, 32, 49); // Assuming $primary is defined elsewhere
-        color: green($color: #000000); // Assuming $primary-contrast is defined elsewhere
-        font-weight: bold;
-        font-size: 14px;
-      }
-      
-    .responsiveTable {
-        width: 98%;
-        margin-left: 1%;
-        
-        li {
-          border-radius: 3px;
-          padding: 25px 30px;
-          display: flex;
-          justify-content: space-between;
-          margin-bottom: 25px;
-        }
-        .tableHeader {
-            margin-top: 10px;
-          font-weight: bold;
-          background-color: #FFBD59;
-          font-size: 14px;
-          text-transform: uppercase;
-          letter-spacing: 0.03em;
-        }
-        .tableRow {
-          background-color: #ccc;
-          box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
-        }
-        .col1 {
-          padding-left: 50px;
-          flex-basis: 20%;
-        }
-        .col2 {
-          flex-basis: 15%;
-        }
-        .col3 {
-            
-          flex-basis: 15%;
-        }
-        .col4 {
-          flex-basis: 15%;
-        }
-        .col5 {
-          flex-basis: 15%;
-        }
-        .col6 {
-            
-          flex-basis: 15%;
-        }
-        .col7 {
-          flex-basis: 10%;
-        }
-        
-        @media all and (max-width: 767px) {
-          .table-header {
-            display: none;
-          }
-          .table-row{
-            
-          }
-          li {
-            display: block;
-          }
-          .col {
-            
-            flex-basis: 100%;
-            
-          }
-          .col {
-            display: flex;
-            padding: 10px 0;
-            &:before {
-              color: #6C7A89;
-              padding-right: 10px;
-              content: attr(data-label);
-              flex-basis: 50%;
-              text-align: right;
-            }
-          }
-        }
-      }
-    
-      .videoDocker video {
-        height: 100px;
-        top: 0px;
-        left: 0%;
-    }
-    
-    .videoDocker::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.75);
-        z-index: 1;
-    }
-    
-    .videoDocker1 video {
-        height: 310px;
-        top: 0px;
-        left: 0%;
-    }
-    
-    .videoDocker1::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 310px;
-        top: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.75);
-        z-index: 1;
-    }
-    
-    .videoDocker2 video {
-        height: 310px;
-        top: 0px;
-        left: 0%;
-    }
-    
-    .videoDocker2::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 310px;
-        top: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.75);
-        z-index: 1;
-    }
 }
+
+.pagination {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+  }
+  .pagination ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: 0 0;
+  }
+  .pagination li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+  }
+  .pagination li a {
+    border: 1px solid #c9c9c9;
+    color: #242424;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .8s ease 0s;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 10px 0 0;
+    padding: 0;
+    text-align: center;
+    width: 40px;
+    margin-top: 10px;
+  }
+  .pagination li a:hover {
+    background-color: #FFBD59;
+    color: white;
+  }
+  .pagination li a.active {
+    background-color: #FFBD59;
+    color: white;
+  }
+
+.responsiveTable {
+    width: 98%;
+    margin-left: 1%;
+    
+    li {
+      border-radius: 3px;
+      padding: 25px 30px;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+    .tableHeader {
+        margin-top: 10px;
+      font-weight: bold;
+      background-color: #FFBD59;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .tableRow {
+      background-color: #ffffff;
+      box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+    }
+    .col1 {
+      padding-left: 50px;
+      flex-basis: 20%;
+    }
+    .col2 {
+      flex-basis: 15%;
+    }
+    .col3 {
+        
+      flex-basis: 15%;
+    }
+    .col4 {
+      flex-basis: 15%;
+    }
+    .col5 {
+      flex-basis: 15%;
+    }
+    .col6 {
+        
+      flex-basis: 15%;
+    }
+    .col7 {
+      flex-basis: 10%;
+    }
+    
+    @media all and (max-width: 767px) {
+      .table-header {
+        display: none;
+      }
+      .table-row{
+        
+      }
+      li {
+        display: block;
+      }
+      .col {
+        
+        flex-basis: 100%;
+        
+      }
+      .col {
+        display: flex;
+        padding: 10px 0;
+        &:before {
+          color: #6C7A89;
+          padding-right: 10px;
+          content: attr(data-label);
+          flex-basis: 50%;
+          text-align: right;
+        }
+      }
+    }
+  }
 
   .videoDocker video {
     height: 100px;

@@ -30,6 +30,7 @@ const ViewAppointments: FC = () => {
     <section className='absolute top-20 left-48' id="viewappointments">
     </section>            
     <div>
+                <div>
     <Head>
       <title>Appointments</title>
     </Head>
@@ -145,6 +146,7 @@ const ViewAppointments: FC = () => {
     </div>
 
     </div>
+    </div>            
   )
 }
 
