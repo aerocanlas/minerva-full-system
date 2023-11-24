@@ -27,7 +27,9 @@ const ViewAppointments: FC = () => {
   return (
     
   <div className={styles.bodyProducts}>
-                <div>
+    <section className='absolute top-20 left-48' id="viewappointments">
+    </section>            
+    <div>
     <Head>
       <title>Appointments</title>
     </Head>
@@ -141,7 +143,8 @@ const ViewAppointments: FC = () => {
 </div>
 
     </div>
-    </div>            
+
+    </div>
   )
 }
 

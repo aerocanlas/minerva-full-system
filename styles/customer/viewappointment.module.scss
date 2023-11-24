@@ -390,3 +390,36 @@
     width: 100px;
     height: 100px;
 }
+
+.badgeSuccess {
+    -webkit-text-fill-color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 12px; // Equivalent to rounded-pill
+    background-color: green; // Assuming $primary is defined elsewhere
+    color: green($color: #000000); // Assuming $primary-contrast is defined elsewhere
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .badgePending {
+    -webkit-text-fill-color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 12px; // Equivalent to rounded-pill
+    background-color: #FFBD59; // Assuming $primary is defined elsewhere
+    color: green($color: #000000); // Assuming $primary-contrast is defined elsewhere
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .badgeCancel {
+    -webkit-text-fill-color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 12px; // Equivalent to rounded-pill
+    background-color: rgb(235, 32, 49); // Assuming $primary is defined elsewhere
+    color: green($color: #000000); // Assuming $primary-contrast is defined elsewhere
+    font-weight: bold;
+    font-size: 14px;
+  }
