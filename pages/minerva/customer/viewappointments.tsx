@@ -55,7 +55,7 @@ const ViewAppointments: FC = () => {
     <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
     <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
     <div className={styles.col5} data-label="Action">
-    <button onClick={() => router.push("/minerva/admin/appointments/editappointments")}className={styles.col4} > <TbEdit size={25}/> </button>
+    <button onClick={() => router.push("")}className={styles.col4} > <TbEdit size={25}/> </button>
     <button className={styles.col4} > <TbTrash size={25}/> </button>
     </div>
   </li>
@@ -65,7 +65,7 @@ const ViewAppointments: FC = () => {
     <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
     <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
     <div className={styles.col5} data-label="Action">
-    <button onClick={() => router.push("/minerva/admin/appointments/editappointments")}className={styles.col4} > <TbEdit size={25}/> </button>
+    <button onClick={() => router.push("")}className={styles.col4} > <TbEdit size={25}/> </button>
     <button className={styles.col4} > <TbTrash size={25}/> </button>
     </div>
   </li>
@@ -75,7 +75,7 @@ const ViewAppointments: FC = () => {
     <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
     <div className={styles.col6} data-label="Order Status"><span className={styles.badgeCancel}>Cancelled</span></div>
     <div className={styles.col5} data-label="Action">
-    <button onClick={() => router.push("/minerva/admin/appointments/editappointments")}className={styles.col4} > <TbEdit size={25}/> </button>
+    <button onClick={() => router.push("")}className={styles.col4} > <TbEdit size={25}/> </button>
     <button className={styles.col4} > <TbTrash size={25}/> </button>
     </div>
   </li>
@@ -85,7 +85,7 @@ const ViewAppointments: FC = () => {
     <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
     <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
     <div className={styles.col5} data-label="Action">
-    <button onClick={() => router.push("/minerva/admin/appointments/editappointments")}className={styles.col4} > <TbEdit size={25}/> </button>
+    <button onClick={() => router.push("")}className={styles.col4} > <TbEdit size={25}/> </button>
     <button className={styles.col4} > <TbTrash size={25}/> </button>
     </div>
   </li>
@@ -95,7 +95,7 @@ const ViewAppointments: FC = () => {
     <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
     <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
     <div className={styles.col5} data-label="Action">
-    <button onClick={() => router.push("/minerva/admin/appointments/editappointments")}className={styles.col4} > <TbEdit size={25}/> </button>
+    <button onClick={() => router.push("")}className={styles.col4} > <TbEdit size={25}/> </button>
     <button className={styles.col4} > <TbTrash size={25}/> </button>
     </div>
   </li>
@@ -105,7 +105,7 @@ const ViewAppointments: FC = () => {
     <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
     <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
     <div className={styles.col5} data-label="Action">
-    <button onClick={() => router.push("/minerva/admin/appointments/editappointments")}className={styles.col4} > <TbEdit size={25}/> </button>
+    <button onClick={() => router.push("")}className={styles.col4} > <TbEdit size={25}/> </button>
     <button className={styles.col4} > <TbTrash size={25}/> </button>
     </div>
   </li>

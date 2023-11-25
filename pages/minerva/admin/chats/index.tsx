@@ -8,6 +8,26 @@ import {TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAna
 
 
 const Chats: FC = () => {
+
+
+    const [ chats, setChats ] = useState(null)
+
+    useEffect (() => {
+        (const fetchData = async () => {
+           const res = await fetch("http://localhost:3001/t/", { 
+                method: "GET",
+                body: JSON.stringify({
+                    userID: "" // get admin user
+                })
+           }) 
+
+           const return = await res.json();
+           setChates(return)
+        })()  // paki ayos ulit routing to see chats ng mga customer
+
+
+    },  [])
+
   return (
     <div>
       <Head>

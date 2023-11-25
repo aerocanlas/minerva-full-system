@@ -1,11 +1,12 @@
 import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import Head from 'next/head'
 import {TbEdit, TbTrash, TbUsers, TbFolders, TbHexagonPlus } from 'react-icons/tb'
 import router from 'next/router'
 import Image from 'next/image'
+
 
 const ProductPage: FC = () => {
   return (

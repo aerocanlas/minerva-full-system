@@ -8,6 +8,21 @@ import router from 'next/router'
 
 
 const AuditLog: FC = () => {
+
+
+  const [ logs, setLogs ] = useState(null)
+
+  useEffect(() => {
+    (const fetchData = async () => {
+      const res = await fetch("http://localhost:3001/logs/", {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      const result= await res.json();
+      setLogs(result)
+    })()
+  } , [])
   
   return (
     
