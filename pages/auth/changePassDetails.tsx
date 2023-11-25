@@ -1,40 +1,72 @@
+import React, { useState, SyntheticEvent } from 'react'
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import router from 'next/router'
+import Modal from '@/components/Modal';
 import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import { motion } from "framer-motion"
-import { FC, FunctionComponent, useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import styles from '@/styles/customer/customer.module.scss'
-import React from 'react';
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { FaUserClock } from "react-icons/fa6";
 
+export default function ChangePassword() {
 
-const Home: FC = () => {
 
-  const posts = [
-    {
-        title: "React Tailwind Card with Grid 1",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
-    },
-    {
-        title: "React Tailwind Card with Grid 2",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
-    },
-    {
-        title: "React Tailwind Card with Grid 3",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
-    }
-  ];
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
+    <div>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+      <div className=" bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
+      <div className="p-4 sm:p-7 " >
+        <div className="text-center">
+          <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Reset Your Password</h1>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Enter the details of your old and new password
+          </p>
+        </div>
 
-    <div className={styles.bodyHome}>
+        <div className="mt-5">
+          <form>
+            <div className="grid gap-y-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-bold ml-1 mb-2 dark:text-white">Old Password:</label>
+                <div className="relative">
+                  <input type="email" id="email" name="email" className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required aria-describedby="email-error"/>
+                </div>
+                <p className="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p>
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-bold ml-1 mb-2 dark:text-white">New Password:</label>
+                <div className="relative">
+                  <input type="email" id="email" name="email" className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required aria-describedby="email-error"/>
+                </div>
+                <p className="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p>
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-bold ml-1 mb-2 dark:text-white">Confirm New Password</label>
+                <div className="relative">
+                  <input type="email" id="email" name="email" className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required aria-describedby="email-error"/>
+                </div>
+                <p className="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p>
+              </div>
+              <button type="submit" className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 bg-[#FFBD59]" onClick={() => router.push("/auth/changPassReqSuccess")}>Submit</button>
+            </div>
+          </form>
+             </div>
+           </div>
+        </div>
+      </Modal>
+
+      <div className={styles.bodyHome}>
 
       <section className="relative h-screen flex flex-col items-center justify-center text-center text-white ">
           <div className={styles.videoDocker}>
@@ -404,11 +436,7 @@ const Home: FC = () => {
 </footer>
           </section>
     </div>
-
-    
+    </div>
   )
 }
-
-(Home as PageWithLayout).layout = HomePageLayout
-export default  Home
-
+(ChangePassword as unknown as PageWithLayout).layout = HomePageLayout

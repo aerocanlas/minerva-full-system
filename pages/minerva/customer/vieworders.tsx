@@ -80,7 +80,7 @@ const ViewOrders: FC = () => {
       <div className={styles.col5} data-label="Payment Method">GCash</div>
       <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Picked-Up</span></div>
       <div className={styles.col7} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/orders")}className={styles.col7}> <TbEdit size={25}/> </button>
+      <button onClick={() => router.push("")}className={styles.col7}> <TbEdit size={25}/> </button>
       <button className={styles.col7}> <TbTrash size={25}/> </button>
       </div>
     </li>
@@ -92,7 +92,7 @@ const ViewOrders: FC = () => {
       <div className={styles.col5} data-label="Payment Method">GCash</div>
       <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
       <div className={styles.col7} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/orders")}className={styles.col7}> <TbEdit size={25}/> </button>
+      <button onClick={() => router.push("")}className={styles.col7}> <TbEdit size={25}/> </button>
 >>>>>>> 63ea9d2bd17739952765f3ecd6107169d7f6b498
 
                   <button className={styles.col7}> <TbTrash size={25}/> </button>
@@ -105,9 +105,9 @@ const ViewOrders: FC = () => {
                   <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
                   <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
                   <div className={styles.col5} data-label="Payment Method">GCash</div>
-                  <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
+                  <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Picked-Up</span></div>
                   <div className={styles.col7} data-label="Action">
-                  <button onClick={() => router.push("/minerva/admin/orders/editorders")}className={styles.col7}> <TbEdit size={25}/> </button>
+                  <button onClick={() => router.push("")}className={styles.col7}> <TbEdit size={25}/> </button>
 
                   <button className={styles.col7}> <TbTrash size={25}/> </button>
                   </div>
@@ -117,7 +117,6 @@ const ViewOrders: FC = () => {
                   <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
                   <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
                   <div className={styles.col5} data-label="Payment Method">GCash</div>
-                  <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Picked-Up</span></div>
                   <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
                   <div className={styles.col7} data-label="Action">
                   <button onClick={() => router.push("/minerva/admin/orders/editorders")}className={styles.col7}> <TbEdit size={25}/> </button>
@@ -153,7 +152,7 @@ const ViewOrders: FC = () => {
       <div className={styles.col5} data-label="Payment Method">GCash</div>
       <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Picked-Up</span></div>
       <div className={styles.col7} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/orders")}className={styles.col7}> <TbEdit size={25}/> </button>
+      <button onClick={() => router.push("")}className={styles.col7}> <TbEdit size={25}/> </button>
 
       <button className={styles.col7}> <TbTrash size={25}/> </button>
       </div>
@@ -165,7 +164,7 @@ const ViewOrders: FC = () => {
       <div className={styles.col5} data-label="Payment Method">GCash</div>
       <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
       <div className={styles.col7} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/orders")}className={styles.col7}> <TbEdit size={25}/> </button>
+      <button onClick={() => router.push("")}className={styles.col7}> <TbEdit size={25}/> </button>
 
       <button className={styles.col7}> <TbTrash size={25}/> </button>
       </div>
@@ -177,7 +176,7 @@ const ViewOrders: FC = () => {
       <div className={styles.col5} data-label="Payment Method">GCash</div>
       <div className={styles.col6} data-label="Order Status"><span className={styles.badgeCancel}>Cancelled</span></div>
       <div className={styles.col7} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/orders")}className={styles.col7}> <TbEdit size={25}/> </button>
+      <button onClick={() => router.push("")}className={styles.col7}> <TbEdit size={25}/> </button>
 
       <button className={styles.col7}> <TbTrash size={25}/> </button>
       </div>
@@ -189,14 +188,12 @@ const ViewOrders: FC = () => {
       <div className={styles.col5} data-label="Payment Method">GCash</div>
       <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Picked-Up</span></div>
       <div className={styles.col7} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/orders")}className={styles.col7}> <TbEdit size={25}/> </button>
+      <button onClick={() => router.push("")}className={styles.col7}> <TbEdit size={25}/> </button>
 >>>>>>> 63ea9d2bd17739952765f3ecd6107169d7f6b498
 
                   <button className={styles.col7}> <TbTrash size={25}/> </button>
                   </div>
                 </li>
-
-                
               </ul>
 </div>
 
@@ -228,7 +225,7 @@ const ViewOrders: FC = () => {
 
       </ul>
     </div>
-
+</div>
   </div>
 
   </div>

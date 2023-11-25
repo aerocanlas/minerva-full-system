@@ -1,40 +1,48 @@
+import React, { useState, SyntheticEvent } from 'react'
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import router from 'next/router'
+import Modal from '@/components/Modal';
 import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import { motion } from "framer-motion"
-import { FC, FunctionComponent, useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import styles from '@/styles/customer/customer.module.scss'
-import React from 'react';
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { FaUserClock } from "react-icons/fa6";
+import { IoMailUnread } from "react-icons/io5";
+
+export default function ChangePassword() {
 
 
-const Home: FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
-  const posts = [
-    {
-        title: "React Tailwind Card with Grid 1",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
-    },
-    {
-        title: "React Tailwind Card with Grid 2",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
-    },
-    {
-        title: "React Tailwind Card with Grid 3",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content"
-    }
-  ];
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
+    <div>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+      <div className=" bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
+      <div className="p-4 sm:p-7 " >
+        <div className="text-center">
+          <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Change Password Successful</h1>
+        </div>
 
-    <div className={styles.bodyHome}>
+        <div className="mt-5 flex flex-col justify-center items-center">
+        <IoMailUnread size={60} className="text-white mb-3" />
+        <p className="text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+          The verification link for your forgot password request is now sent to the email you provided. Please see the email, if you cannot see an email from us, please double-check the spam folder.
+        </p>
+      </div>
+           </div>
+        </div>
+      </Modal>
+
+      <div className={styles.bodyHome}>
 
       <section className="relative h-screen flex flex-col items-center justify-center text-center text-white ">
           <div className={styles.videoDocker}>
@@ -404,11 +412,7 @@ const Home: FC = () => {
 </footer>
           </section>
     </div>
-
-    
+    </div>
   )
 }
-
-(Home as PageWithLayout).layout = HomePageLayout
-export default  Home
-
+(ChangePassword as unknown as PageWithLayout).layout = HomePageLayout

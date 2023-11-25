@@ -45,12 +45,11 @@ export default function Login() {
 			const { role }: any = jwtDecode(cookies)
 			if (role === "admin") {
 			  router.push("/minerva/admin/customer")
+			} else {
+				router.push('/minerva/customer/accountdetails')
 			}
 		  }
 		}
-	
-	
-	
 	  }
   return (
 
