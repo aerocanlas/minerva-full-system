@@ -6,7 +6,6 @@ import { motion } from "framer-motion"
 import { FC, FunctionComponent, useEffect, useRef, useState, SyntheticEvent} from 'react'
 import Link from 'next/link'
 import styles from '@/styles/customer/customer.module.scss'
-import React from 'react';
 import { GiCarWheel } from "react-icons/gi";
 import { GiCartwheel } from "react-icons/gi";
 import { BiSolidCarBattery } from "react-icons/bi";
@@ -16,7 +15,6 @@ import { BiSolidCylinder } from "react-icons/bi";
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { IoMdArrowDropright } from "react-icons/io";
-import getAllProducts from '@/lib/getAllProducts'
 
 
 const Products: FC= () =>{ 
@@ -108,14 +106,14 @@ const Products: FC= () =>{
 						<span className=" ml-3 text-2xl">View All</span>
 					</a>
 				</li>
-				<li>
+				
 				<li>
 					<a href="#"
 						className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">
 						<GiCarWheel size="40px"/>
 						<span className="ml-3 text-2xl">Tires</span>
 					</a>
-				</li>
+				
 				<li>
 					<a href="#"
 						className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">

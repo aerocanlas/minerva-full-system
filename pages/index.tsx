@@ -14,8 +14,7 @@ import Modal from '@/components/Modal';
 
 const Home: FC = () => {
 
-  const [isModalOpen, setIsModalOpen] = useState(true
-    );
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

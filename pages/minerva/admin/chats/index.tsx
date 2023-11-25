@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
 import Head from 'next/head'
@@ -13,7 +13,7 @@ const Chats: FC = () => {
     const [ chats, setChats ] = useState(null)
 
     useEffect (() => {
-        (const fetchData = async () => {
+        const fetchData = async () => {
            const res = await fetch("http://localhost:3001/t/", { 
                 method: "GET",
                 body: JSON.stringify({
@@ -21,9 +21,9 @@ const Chats: FC = () => {
                 })
            }) 
 
-           const return = await res.json();
-           setChates(return)
-        })()  // paki ayos ulit routing to see chats ng mga customer
+           const datas = await res.json();
+           setChates(datas)
+        }  // paki ayos ulit routing to see chats ng mga customer
 
 
     },  [])

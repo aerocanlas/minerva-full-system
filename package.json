@@ -27,7 +27,10 @@
     "react-icons": "^4.12.0",
     "react-leaflet": "^4.2.1",
     "react-slick": "^0.29.0",
+<<<<<<< HEAD
+=======
     "react-table": "^7.8.0",
+>>>>>>> 63ea9d2bd17739952765f3ecd6107169d7f6b498
     "rect": "^1.2.1",
     "sass": "^1.69.5",
     "slick-carousel": "^1.8.1"
@@ -38,7 +41,10 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-slick": "^0.23.12",
+<<<<<<< HEAD
+=======
     "@types/react-table": "^7.7.18",
+>>>>>>> 63ea9d2bd17739952765f3ecd6107169d7f6b498
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",

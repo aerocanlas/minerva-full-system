@@ -33,7 +33,7 @@ const Settings: FC = () => {
   };
 
 
-  const submitForm = () => {
+  const submitForm = async () => {
     const res = await fetch("http://localhost:3001/user/updateAccountDetails/id", { 
       method: "POST",       
       headers: { 'Content-Type': 'application/json' },
