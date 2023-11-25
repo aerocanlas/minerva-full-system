@@ -6,7 +6,9 @@ export default function Login() {
 
 
   const  [email, setEmail ] = useState("")
-  const onSubmitForm = (e: SyntheticEvent) {
+
+  
+  const onSubmitForm = async (e: SyntheticEvent)  => {
     e.preventDefault();
 
     const res = await fetch("http://localhost:3001/user/requestPasswordReset", {
@@ -26,7 +28,7 @@ export default function Login() {
 
 
       
-        <form onSubmit={onsubmit}>
+        <form onSubmit={onSubmitForm}>
           <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.currentTarget.value)}/>
           <button type="submit">Submit</button>
         </form>

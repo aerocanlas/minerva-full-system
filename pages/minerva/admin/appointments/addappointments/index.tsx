@@ -22,6 +22,25 @@ const AddAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFor
     setIsOpen(!isOpen);
   };
 
+
+  const onSubmitForm = () => {
+    const res = await fetch("http://localhost:30001/schedule/createManualSchedule", {
+      method: "GET",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+          date: "",
+          time: "",
+          name: ""
+          service: ""
+      })
+    })
+
+    if(!res.ok) throw new Error("There is something wrong while adding")
+
+    res.json()
+  }
+
+
   return (
     
     <div>

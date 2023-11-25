@@ -143,8 +143,8 @@ const handleDescriptionChange = (event: { target: { value: React.SetStateAction<
 </div>
 </div>
         <div className="mb-6">
-            <label htmlFor="email" className="text-sm font-medium text-gray-900 block mb-2">Product Price</label>
-            <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="ex. PHP 5,600.00" value={price} onChange={handlePriceChange} required />
+            <label htmlFor="price" className="text-sm font-medium text-gray-900 block mb-2">Product Price</label>
+            <input type="text" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="ex. PHP 5,600.00" value={price} onChange={handlePriceChange} required />
             </div>
         <div className="mb-6">
             <label htmlFor="description" className="text-sm font-medium text-gray-900 block mb-2">Product Description</label>

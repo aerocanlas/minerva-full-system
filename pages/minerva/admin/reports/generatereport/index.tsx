@@ -21,6 +21,13 @@ const GenerateReport: FC = () => {
     setIsOpen1(!isOpen1);
   };
 
+
+  const onSubmitGenerateRerport = async () => {
+    const res = await fetch("http://localhost:3001/order/generateReport", { 
+      method: "POST"
+    })
+  }
+
   return (
     <div>
       <Head>

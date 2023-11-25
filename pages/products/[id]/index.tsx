@@ -7,7 +7,11 @@ import { GetStaticPathsContext, GetStaticPropsContext } from 'next'
 
 
 export const getStaticPaths = async () => {
-  const res = await fetch("http://localhost:3001/product/getAllProducts");
+  const res = await fetch("http://localhost:3001/product/getAllProducts", {
+    method: "GET",
+    headers: { 'Content-Type': 'application/json' },
+    cache: "force-cache"
+  });
   const repo = await res.json();
 
 
@@ -21,7 +25,10 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const res = await fetch(`http://localhost:3001/product/getProductById/${context.params?.id}`)
+  const res = await fetch(`http://localhost:3001/product/getProductById/${context.params?.id}`, {
+    method: "GET",
+    headers: { 'Content-Type': 'application/json' },
+  })
 
   return {
       props: {

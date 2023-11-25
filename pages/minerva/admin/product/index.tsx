@@ -1,7 +1,7 @@
 import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import Head from 'next/head'
 import {TbEdit, TbTrash, TbUsers, TbFolders, TbHexagonPlus } from 'react-icons/tb'
 import router from 'next/router'
@@ -9,6 +9,21 @@ import Image from 'next/image'
 
 
 const ProductPage: FC = () => {
+
+
+  const [ products, setProducts ] = useState(null)
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("http://localhost:3001/product/getAllProduct", {
+        method: "GET",
+
+      })
+
+      const result = await res.json();
+      setProducts(result)
+    }
+  }, [])
   return (
     <div>
       <Head>

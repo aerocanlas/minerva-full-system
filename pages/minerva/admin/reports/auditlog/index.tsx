@@ -1,7 +1,7 @@
 import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import Head from 'next/head'
 import {TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight   } from 'react-icons/tb'
 import router from 'next/router'
@@ -13,7 +13,7 @@ const AuditLog: FC = () => {
   const [ logs, setLogs ] = useState(null)
 
   useEffect(() => {
-    (const fetchData = async () => {
+    const fetchData = async () => {
       const res = await fetch("http://localhost:3001/logs/", {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
@@ -21,7 +21,7 @@ const AuditLog: FC = () => {
 
       const result= await res.json();
       setLogs(result)
-    })()
+    }
   } , [])
   
   return (

@@ -30,7 +30,6 @@ const ViewAppointments: FC = () => {
     <section className='absolute top-20 left-48' id="viewappointments">
     </section>            
     <div>
-                <div>
     <Head>
       <title>Appointments</title>
     </Head>
@@ -39,6 +38,7 @@ const ViewAppointments: FC = () => {
     <div className={styles.icon}><TbClock size={50}/></div>
      Appointments
     </div>
+    
     <div className={styles.container}>
         <div className={styles.divider}></div>
 
@@ -113,40 +113,39 @@ const ViewAppointments: FC = () => {
 </ul>
 
 
-<div className={styles.pagination}>
-    <ul>
+            <div className={styles.pagination}>
+                <ul>
 
-      <li>
-        <a href="#" >&laquo;</a>
-      </li>
+                  <li>
+                    <a href="#" >&laquo;</a>
+                  </li>
 
-      <li>
-        <a href="#" >1</a>
-      </li>
-      <li>
-        <a href="#" >2</a>
-      </li>
-      <li>
-        <a href="#" className={styles.active}>3</a>
-      </li>
-      <li>
-        <a href="#" >4</a>
-      </li>
-      <li>
-        <a href="#" >5</a>
-      </li>
-      <li>
-        <a href="#" >&raquo;</a>
-      </li>
+                  <li>
+                    <a href="#" >1</a>
+                  </li>
+                  <li>
+                    <a href="#" >2</a>
+                  </li>
+                  <li>
+                    <a href="#" className={styles.active}>3</a>
+                  </li>
+                  <li>
+                    <a href="#" >4</a>
+                  </li>
+                  <li>
+                    <a href="#" >5</a>
+                  </li>
+                  <li>
+                    <a href="#" >&raquo;</a>
+                  </li>
 
-    </ul>
-  </div>
-</div>
-
-    </div>
+                </ul>
+              </div>
+        </div>
 
     </div>
-    </div>            
+
+    </div>
   )
 }
 

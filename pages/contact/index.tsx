@@ -14,11 +14,11 @@ const  Contacts: FC= () => {
                 <p className="text-base font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-200">
                     Contact Us
                 </p>
-                <h2
-                    className="font-heading mb-4 font-bold tracking-tight text-gray-900 dark:text-white text-3xl sm:text-5xl">
+                <h2 className="font-heading mb-4 font-bold tracking-tight text-gray-900 dark:text-white text-3xl sm:text-5xl">
                     Get in Touch with us through Email
                 </h2>
-                <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 dark:text-slate-400">We would love to hear from you!
+                <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 dark:text-slate-400">
+                    We would love to hear from you!
                 </p>
             </div>
         </div>
