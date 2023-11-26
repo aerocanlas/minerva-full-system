@@ -4,24 +4,34 @@ import PageWithLayout from '@/layout/pagewithlayout'
 import React, { FC, useEffect, useState } from 'react'
 import Head from 'next/head'
 import { TbEdit, TbFile, TbFiles, TbTrash, TbUsers } from 'react-icons/tb'
-import router from 'next/router'
-import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
+import Cookie from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 
+const EditProductPage: FC = () => {
 
-interface InputProp {
-  labelTitle: string;
-  defaultValue: string;
-  updateFormValue: (value: string) => void;
-}
+  const [ productName, setProductName ] = useState('Motolite Gold');
+  const [ price, setPrice ] = useState('PHP 5,600.00');
+  const [ description, setDescription ] = useState('Long lasting power for high performance vehicles.');
+  const [ userId, setUserId ] = useState("")
 
-const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormValue }) => {
+  const handleProductNameChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+    setProductName(event.target.value);
+  };
+  const handlePriceChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+    setPrice(event.target.value);
+  };
+
+  const handleDescriptionChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+    setDescription(event.target.value);
+  };
 
   const [ isOpen, setIsOpen ] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+  const router = useRouter();
 
   const [ isOpen1, setIsOpen1 ] = useState(false);
 
@@ -29,18 +39,14 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
     setIsOpen1(!isOpen1);
   };
 
-
-  const [ userid, setUserId ] = useState("")
-
   useEffect(() => {
-    const cookies = Cookies.get("ecom_token")
+    const cookies = Cookie.get("ecom_token");
     if (cookies) {
       const { userID }: any = jwtDecode(cookies)
       setUserId(userID)
     }
   }, [])
 
-  const [ selectedImage, setSelectedImage ] = useState(null)
 
   const [ products, setProducts ] = useState({
     name: "",
@@ -48,29 +54,30 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
     price: "",
     description: "",
     category: "",
+
   })
 
-  const AddProductForm = async () => {
-    const response = await fetch("http://localhost:3001/product/createProduct", {
-      method: "POST",
+  const EditProductForm = async () => {
+    const response = await fetch(`http://localhost:3001/product/updateProduct/${router.query.id}`, {
+      method: "PATCH",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        image: selectedImage,
         name: products.name,
         quantity: products.quantity,
         price: products.price,
         description: products.description,
         category: products.category,
-        userID: userid,  //get userId of current login
+        userID: userId,  //get userId of current login
       })
     })
     return response.json();
   }
+
   return (
 
     <div>
       <Head>
-        <title>Add Product</title>
+        <title>Edit Product</title>
       </Head>
 
       <div className={styles.titleHead}>
@@ -79,7 +86,7 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
       </div>
 
       <div className={styles.container}>
-        <div className={styles.title}>Add Product Details</div>
+        <div className={styles.title}>Edit Product Details</div>
         <div className={styles.divider}></div>
 
         <div className="flex lg:flex-row flex-col items-center py-6 px-4">
@@ -90,10 +97,10 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
 
             <div className=" w-full mx-auto">
 
-              <form className='grid grid-cols-1 md:grid-cols-2 gap-16'>
+              <form onSubmit={EditProductForm} className='grid grid-cols-1 md:grid-cols-2 gap-16'>
                 <div className="mb-6">
                   <label htmlFor="productName" className="text-sm font-medium text-gray-900 block mb-2">Product Name</label>
-                  <input type="text" id="productName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input product name" required />
+                  <input type="text" id="productName" onChangeCapture={(e) => setProducts({ ...products, name: e.currentTarget.value })} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input product name" value={productName} onChange={handleProductNameChange} required />
                 </div>
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
@@ -119,6 +126,7 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                     )}
                   </div>
                 </div>
+
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
@@ -147,12 +155,12 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                   </div>
                 </div>
                 <div className="mb-6">
-                  <label htmlFor="price" className="text-sm font-medium text-gray-900 block mb-2">Email Address</label>
-                  <input type="text" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="name@gmail.com" required />
+                  <label htmlFor="price" className="text-sm font-medium text-gray-900 block mb-2">Product Price</label>
+                  <input type="text" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="ex. PHP 5,600.00" value={price} onChange={handlePriceChange} required />
                 </div>
                 <div className="mb-6">
                   <label htmlFor="description" className="text-sm font-medium text-gray-900 block mb-2">Product Description</label>
-                  <textarea id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" placeholder="Input your product description here" required />
+                  <textarea id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" placeholder="Input your product description here" value={description} onChange={handleDescriptionChange} required />
                 </div>
                 <br></br>
                 <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Product</button>
@@ -170,5 +178,5 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
 
 
 
-(AddProductPage as PageWithLayout).layout = AdminPageLayout
-export default AddProductPage
+(EditProductPage as PageWithLayout).layout = AdminPageLayout
+export default EditProductPage
