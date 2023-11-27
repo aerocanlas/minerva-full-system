@@ -10,8 +10,8 @@ import Image from 'next/image'
 
 const ProductPage: FC = () => {
 
+  const [ products, setProducts ] = useState<[]>()
 
-  const [ products, setProducts ] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +24,7 @@ const ProductPage: FC = () => {
     }
     fetchData()
   }, [])
+  
   return (
     <div>
       <Head>
@@ -51,80 +52,22 @@ const ProductPage: FC = () => {
               <div className={styles.col7}>ACTION</div>
             </li>
 
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Product Image"><Image src='/motolite.webp' alt={''} width={30} height={10}></Image></div>
-              <div className={styles.col2} data-label="Product Id">#42442</div>
-              <div className={styles.col3} data-label="Customer Name">Motolite Gold</div>
-              <div className={styles.col4} data-label="Email Address">In Stock</div>
-              <div className={styles.col5} data-label="Email Address">Car Battery</div>
-              <div className={styles.col6} data-label="Email Address">PHP 5,600.00</div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/product/editproduct")} className={styles.col7}> <TbEdit size={25} /> </button>
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Product Image"><Image src='/motolite.webp' alt={''} width={30} height={10}></Image></div>
-              <div className={styles.col2} data-label="Product Id">#42442</div>
-              <div className={styles.col3} data-label="Customer Name">Motolite Gold</div>
-              <div className={styles.col4} data-label="Email Address">In Stock</div>
-              <div className={styles.col5} data-label="Email Address">Car Battery</div>
-              <div className={styles.col6} data-label="Email Address">PHP 5,600.00</div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/customer/editcustomer")} className={styles.col7}> <TbEdit size={25} /> </button>
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Product Image"><Image src='/motolite.webp' alt={''} width={30} height={10}></Image></div>
-              <div className={styles.col2} data-label="Product Id">#42442</div>
-              <div className={styles.col3} data-label="Customer Name">Motolite Gold</div>
-              <div className={styles.col4} data-label="Email Address">In Stock</div>
-              <div className={styles.col5} data-label="Email Address">Car Battery</div>
-              <div className={styles.col6} data-label="Email Address">PHP 5,600.00</div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/customer/editcustomer")} className={styles.col7}> <TbEdit size={25} /> </button>
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Product Image"><Image src='/motolite.webp' alt={''} width={30} height={10}></Image></div>
-              <div className={styles.col2} data-label="Product Id">#42442</div>
-              <div className={styles.col3} data-label="Customer Name">Motolite Gold</div>
-              <div className={styles.col4} data-label="Email Address">In Stock</div>
-              <div className={styles.col5} data-label="Email Address">Car Battery</div>
-              <div className={styles.col6} data-label="Email Address">PHP 5,600.00</div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/customer/editcustomer")} className={styles.col7}> <TbEdit size={25} /> </button>
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Product Image"><Image src='/motolite.webp' alt={''} width={30} height={10}></Image></div>
-              <div className={styles.col2} data-label="Product Id">#42442</div>
-              <div className={styles.col3} data-label="Customer Name">Motolite Gold</div>
-              <div className={styles.col4} data-label="Email Address">In Stock</div>
-              <div className={styles.col5} data-label="Email Address">Car Battery</div>
-              <div className={styles.col6} data-label="Email Address">PHP 5,600.00</div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/customer/editcustomer")} className={styles.col7}> <TbEdit size={25} /> </button>
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Product Image"><Image src='/motolite.webp' alt={''} width={30} height={10}></Image></div>
-              <div className={styles.col2} data-label="Product Id">#42442</div>
-              <div className={styles.col3} data-label="Customer Name">Motolite Gold</div>
-              <div className={styles.col4} data-label="Email Address">In Stock</div>
-              <div className={styles.col5} data-label="Email Address">Car Battery</div>
-              <div className={styles.col6} data-label="Email Address">PHP 5,600.00</div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/customer/editcustomer")} className={styles.col7}> <TbEdit size={25} /> </button>
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
+            {products?.map(({ productID, name, category, price, quantity, image, description, }: any) => (
+                <li className={styles.tableRow}>
+                <div className={styles.col1} data-label="Product Image">
+                  <Image src={image} alt={name} height={120} width={120} />
+                </div>
+                <div className={styles.col2} data-label="Product Id">#42442</div>
+                <div className={styles.col3} data-label="Customer Name">{name}</div>
+                <div className={styles.col4} data-label="Email Address">In Stock</div>
+                <div className={styles.col5} data-label="Email Address">{category}</div>
+                <div className={styles.col6} data-label="Email Address">{Intl.NumberFormat("en-US", { style: "currency", currency: "PHP"}).format(price)}</div>
+                <div className={styles.col7} data-label="Action">
+                  <button onClick={() => router.push(`/minerva/admin/product/editproduct/${productID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
+                  <button onClick={() => router.push(`/minerva/admin/product/deleteproduct/${productID}`)}className={styles.col7}> <TbTrash size={25} /> </button>
+                </div>
+              </li>
+            ))}
 
 
           </ul>

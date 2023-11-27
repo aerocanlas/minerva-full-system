@@ -10,6 +10,7 @@ export default function AdminPageLayout({ children }: { children: ReactNode}) {
         <HeaderAdminNavBar />
           {children}
         </div>
+
     </div>
   )
 }
