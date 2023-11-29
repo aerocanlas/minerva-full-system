@@ -15,13 +15,14 @@ import { BiSolidCylinder } from "react-icons/bi";
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { IoMdArrowDropright } from "react-icons/io";
+import { FormattedPrice } from '@/helpers/index'
 
 
 const Products: FC = () => {
 
   const [ productsTake, setProductsTake ] = useState(10)  // you can set this on default
   const [ filters, setFilters ] = useState("")
-  const [ products, setProducts ] = useState(null)
+  const [ products, setProducts ] = useState<[]>()
   const [ filterProducts, setFilterProducts ] = useState(null)
   const [ search, setSearch ] = useState("")
   const [ productSearch, setProductSearch ] = useState(null)
@@ -32,9 +33,6 @@ const Products: FC = () => {
     const response = await fetch("http://localhost:3001/product/getSearchProduct", {
       method: "GET",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        search: search
-      })
     })
     const result = await response.json()
     setProductSearch(result)
@@ -47,9 +45,6 @@ const Products: FC = () => {
       const response = await fetch("http://localhost:3001/product/getProductByCategory", {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          category: filters
-        })
       })
 
       const result = await response.json();
@@ -67,7 +62,7 @@ const Products: FC = () => {
         headers: { 'Content-Type': 'application/json' },
       })
       if (!resposne.ok) {
-        throw new Error("There is something errro")
+        throw new Error("There is something error")
       }
       const result = await resposne.json();
       setProducts(result)
@@ -150,91 +145,24 @@ const Products: FC = () => {
           </aside>
 
         </div>
-        <div className="absolute top-[200px] ml-60 left-96 grid grid-cols-1 md:grid-cols-3 gap-8 ">
+        <div className="absolute top-[120px] ml-60 left-96 grid grid-cols-1 md:grid-cols-3 gap-8 ">
 
+        {products?.map(({ productID, name, category, price, quantity, image, description, }: any) => (
           <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-            <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
+            <Image src={image} alt={name} height={300} width={330} className="object-cover object-center" />
             <div className="p-4">
-              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-              <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
+              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">{name}</h2>
+              <p className="text-sm mb-2 dark:text-black text-black">{description}</p>
               <div className="flex items-center">
-                <p className="mr-2 text-lg font-bold flex text-black dark:text-black">PHP 5,600.00 </p>
+                <p className="mr-2 text-lg font-bold flex text-black dark:text-black">{FormattedPrice(price)} </p>
                 <button
                   className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px" /></button>
               </div>
             </div>
           </div>
+          ))}
 
-          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-            <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
-            <div className="p-4">
-              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-              <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
-              <div className="flex items-center">
-                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
-                <button
-                  className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px" /></button>
-
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-            <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
-            <div className="p-4">
-              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-              <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
-              <div className="flex items-center">
-                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
-                <button
-                  className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px" /></button>
-
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-            <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
-            <div className="p-4">
-              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-              <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
-              <div className="flex items-center">
-                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
-                <button
-                  className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px" /></button>
-
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-            <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
-            <div className="p-4">
-              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-              <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
-              <div className="flex items-center">
-                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
-                <button
-                  className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px" /></button>
-
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-            <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
-            <div className="p-4">
-              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-              <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
-              <div className="flex items-center">
-                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
-                <button
-                  className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px" /></button>
-
-              </div>
-            </div>
-          </div>
-          <div className="relative left-80 ml-10 grid min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
+          <div className="absolute bottom-[-120px] grid min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
             <nav>
               <ul className="flex">
                 <li>

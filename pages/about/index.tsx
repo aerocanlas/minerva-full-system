@@ -24,6 +24,7 @@ const  About: FC = () => {
               <img className="sm:hidden block w-full" src="https://i.ibb.co/Jxhpxh6/Rectangle-122.png" alt="people discussing on board" />
             </div>
           </div>
+        </div>
 
     <div className="relative mt-24">
       <div className="grid sm:grid-cols-3 grid-cols-2 sm:gap-8 gap-4">

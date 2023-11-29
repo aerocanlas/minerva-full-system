@@ -42,204 +42,140 @@ const ViewOrders: FC = () => {
   return (
 
     <div className={styles.bodyProducts}>
-      <div>
-        <Head>
-          <title>Order</title>
-        </Head>
-        <div className={styles.titleHead}>
-          <div className={styles.icon}><TbShoppingBag size={50} /></div>
-          Orders
+
+      <div className={styles.titleHead}>
+        <div className={styles.icon}><TbShoppingBag size={50} /></div>
+        Orders
+      </div>
+
+      <div className={styles.container}>
+        <div className={styles.divider}></div>
+
+        <div className={styles.tablecontainer}>
+          <ul className={styles.responsiveTable}>
+            <li className={styles.tableHeader}>
+              <div className={styles.col1}>ORDER ID</div>
+              <div className={styles.col3}>DATE ORDERED</div>
+              <div className={styles.col4}>AMOUNT</div>
+              <div className={styles.col5}>PAYMENT METHOD</div>
+              <div className={styles.col6}>ORDER STATUS</div>
+              <div className={styles.col7}>ACTION</div>
+            </li>
+              
+            <li className={styles.tableRow}>
+              <div className={styles.col1} data-label="Order ID">#42442</div>
+              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
+              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
+              <div className={styles.col5} data-label="Payment Method">GCash</div>
+              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
+              <div className={styles.col7} data-label="Action">
+                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
+                <button className={styles.col7}> <TbTrash size={25} /> </button>
+              </div>
+            </li>
+
+            <li className={styles.tableRow}>
+              <div className={styles.col1} data-label="Order ID">#42442</div>
+              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
+              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
+              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
+              <div className={styles.col5} data-label="Payment Method">GCash</div>
+              <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
+              <div className={styles.col7} data-label="Action">
+                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
+
+                <button className={styles.col7}> <TbTrash size={25} /> </button>
+              </div>
+            </li>
+
+            <li className={styles.tableRow}>
+              <div className={styles.col1} data-label="Order ID">#42442</div>
+              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
+              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
+              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
+              <div className={styles.col5} data-label="Payment Method">GCash</div>
+              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
+              <div className={styles.col7} data-label="Action">
+                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
+
+                <button className={styles.col7}> <TbTrash size={25} /> </button>
+              </div>
+            </li>
+            <li className={styles.tableRow}>
+              <div className={styles.col1} data-label="Order ID">#42442</div>
+              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
+              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
+              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
+              <div className={styles.col5} data-label="Payment Method">GCash</div>
+              <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
+              <div className={styles.col7} data-label="Action">
+                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
+
+                <button className={styles.col7}> <TbTrash size={25} /> </button>
+              </div>
+            </li>
+            <li className={styles.tableRow}>
+              <div className={styles.col1} data-label="Order ID">#42442</div>
+              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
+              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
+              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
+              <div className={styles.col5} data-label="Payment Method">GCash</div>
+              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeCancel}>Cancelled</span></div>
+              <div className={styles.col7} data-label="Action">
+                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
+
+                <button className={styles.col7}> <TbTrash size={25} /> </button>
+              </div>
+            </li>
+            <li className={styles.tableRow}>
+              <div className={styles.col1} data-label="Order ID">#42442</div>
+              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
+              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
+              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
+              <div className={styles.col5} data-label="Payment Method">GCash</div>
+              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
+              <div className={styles.col7} data-label="Action">
+                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
+
+                <button className={styles.col7}> <TbTrash size={25} /> </button>
+              </div>
+            </li>
+
+
+          </ul>
         </div>
 
-        <div className={styles.container}>
-          <div className={styles.divider}></div>
+        <div className={styles.pagination}>
+          <ul>
 
-          <div className={styles.tablecontainer}>
-            <ul className={styles.responsiveTable}>
-              <li className={styles.tableHeader}>
-                <div className={styles.col1}>ORDER ID</div>
-                <div className={styles.col3}>DATE ORDERED</div>
-                <div className={styles.col4}>AMOUNT</div>
-                <div className={styles.col5}>PAYMENT METHOD</div>
-                <div className={styles.col6}>ORDER STATUS</div>
-                <div className={styles.col7}>ACTION</div>
-              </li>
+            <li>
+              <a href="#" >&laquo;</a>
+            </li>
 
-              <li className={styles.tableRow}>
-                <div className={styles.col1} data-label="Order ID">#42442</div>
-                <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                <div className={styles.col5} data-label="Payment Method">GCash</div>
-                <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
-                <div className={styles.col7} data-label="Action">
-                  <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-                  <button className={styles.col7}> <TbTrash size={25} /> </button>
-                </div>
-              </li>
+            <li>
+              <a href="#" >1</a>
+            </li>
+            <li>
+              <a href="#" >2</a>
+            </li>
+            <li>
+              <a href="#" className={styles.active}>3</a>
+            </li>
+            <li>
+              <a href="#" >4</a>
+            </li>
+            <li>
+              <a href="#" >5</a>
+            </li>
+            <li>
+              <a href="#" >&raquo;</a>
+            </li>
 
-              <li className={styles.tableRow}>
-                <div className={styles.col1} data-label="Order ID">#42442</div>
-                <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                <div className={styles.col5} data-label="Payment Method">GCash</div>
-                <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Picked-Up</span></div>
-                <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
-                <div className={styles.col7} data-label="Action">
-                  <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-                  <li className={styles.tableRow}>
-                    <div className={styles.col1} data-label="Order ID">#42442</div>
-                    <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                    <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                    <div className={styles.col5} data-label="Payment Method">GCash</div>
-                    <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Picked-Up</span></div>
-                    <div className={styles.col7} data-label="Action">
-                      <button onClick={() => router.push("")} className={styles.col7}> <TbEdit size={25} /> </button>
-                      <button className={styles.col7}> <TbTrash size={25} /> </button>
-                    </div>
-                  </li>
+          </ul>
+        </div>
 
-                  <li className={styles.tableRow}>
-                    <div className={styles.col1} data-label="Order ID">#42442</div>
-                    <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                    <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                    <div className={styles.col5} data-label="Payment Method">GCash</div>
-                    <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
-                    <div className={styles.col7} data-label="Action">
-                      <button onClick={() => router.push("")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                      <button className={styles.col7}> <TbTrash size={25} /> </button>
-                    </div>
-                  </li>
-
-                  <li className={styles.tableRow}>
-                    <div className={styles.col1} data-label="Order ID">#42442</div>
-                    <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                    <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                    <div className={styles.col5} data-label="Payment Method">GCash</div>
-                    <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Picked-Up</span></div>
-                    <div className={styles.col7} data-label="Action">
-                      <button onClick={() => router.push("")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                      <button className={styles.col7}> <TbTrash size={25} /> </button>
-                    </div>
-                  </li>
-                  <li className={styles.tableRow}>
-                    <div className={styles.col1} data-label="Order ID">#42442</div>
-                    <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                    <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                    <div className={styles.col5} data-label="Payment Method">GCash</div>
-                    <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
-                    <div className={styles.col7} data-label="Action">
-                      <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                      <button className={styles.col7}> <TbTrash size={25} /> </button>
-                    </div>
-                  </li>
-                  <li className={styles.tableRow}>
-                    <div className={styles.col1} data-label="Order ID">#42442</div>
-                    <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                    <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                    <div className={styles.col5} data-label="Payment Method">GCash</div>
-                    <div className={styles.col6} data-label="Order Status"><span className={styles.badgeCancel}>Cancelled</span></div>
-                    <div className={styles.col7} data-label="Action">
-                      <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                      <button className={styles.col7}> <TbTrash size={25} /> </button>
-                    </div>
-                  </li>
-                  <li className={styles.tableRow}>
-                    <div className={styles.col1} data-label="Order ID">#42442</div>
-                    <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                    <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                    <div className={styles.col5} data-label="Payment Method">GCash</div>
-                    <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
-                    <div className={styles.col7} data-label="Action">
-                      <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-                      <li className={styles.tableRow}>
-                        <div className={styles.col1} data-label="Order ID">#42442</div>
-                        <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                        <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                        <div className={styles.col5} data-label="Payment Method">GCash</div>
-                        <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Picked-Up</span></div>
-                        <div className={styles.col7} data-label="Action">
-                          <button onClick={() => router.push("")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                          <button className={styles.col7}> <TbTrash size={25} /> </button>
-                        </div>
-                      </li>
-                      <li className={styles.tableRow}>
-                        <div className={styles.col1} data-label="Order ID">#42442</div>
-                        <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                        <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                        <div className={styles.col5} data-label="Payment Method">GCash</div>
-                        <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
-                        <div className={styles.col7} data-label="Action">
-                          <button onClick={() => router.push("")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                          <button className={styles.col7}> <TbTrash size={25} /> </button>
-                        </div>
-                      </li>
-                      <li className={styles.tableRow}>
-                        <div className={styles.col1} data-label="Order ID">#42442</div>
-                        <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                        <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                        <div className={styles.col5} data-label="Payment Method">GCash</div>
-                        <div className={styles.col6} data-label="Order Status"><span className={styles.badgeCancel}>Cancelled</span></div>
-                        <div className={styles.col7} data-label="Action">
-                          <button onClick={() => router.push("")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                          <button className={styles.col7}> <TbTrash size={25} /> </button>
-                        </div>
-                      </li>
-                      <li className={styles.tableRow}>
-                        <div className={styles.col1} data-label="Order ID">#42442</div>
-                        <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-                        <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-                        <div className={styles.col5} data-label="Payment Method">GCash</div>
-                        <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Picked-Up</span></div>
-                        <div className={styles.col7} data-label="Action">
-                          <button onClick={() => router.push("")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                          <button className={styles.col7}> <TbTrash size={25} /> </button>
-                        </div>
-                      </li>
-                    </ul>
-                </div>
-
-                <div className={styles.pagination}>
-                  <ul>
-
-                    <li>
-                      <a href="#" >&laquo;</a>
-                    </li>
-
-                    <li>
-                      <a href="#" >1</a>
-                    </li>
-                    <li>
-                      <a href="#" >2</a>
-                    </li>
-                    <li>
-                      <a href="#" className={styles.active}>3</a>
-                    </li>
-                    <li>
-                      <a href="#" >4</a>
-                    </li>
-                    <li>
-                      <a href="#" >5</a>
-                    </li>
-                    <li>
-                      <a href="#" >&raquo;</a>
-                    </li>
-
-                  </ul>
-                </div>
-              </div >
-          </div >
-
-        </div >
-
-        <section className="absolute top-[1500px] left-[500px] flex flex-col items-center justify-center text-center text-white ">
+      </div>
+      <section className="absolute top-[1000px] left-[500px] flex flex-col items-center justify-center text-center text-white ">
           <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
             <div className="max-w-screen-xl mt-2 px-2 py-8 mx-auto sm:px-6 lg:px-8">
               <div className="relative top-4 grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -308,13 +244,16 @@ const ViewOrders: FC = () => {
             </div>
           </footer>
         </section>
+    </div>
+     
 
 
-      </div >
+        
 
+      
 
       )
 }
 
-      (ViewOrders as PageWithLayout).layout = HomePageLayout
-      export default ViewOrders
+(ViewOrders as PageWithLayout).layout = HomePageLayout
+export default ViewOrders

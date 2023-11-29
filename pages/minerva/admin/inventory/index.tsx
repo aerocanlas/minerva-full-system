@@ -14,7 +14,7 @@ const Inventory: FC = () => {
 
   const [ quantity, setQuantity ] = useState(1);
   const [ userID, setUserId ] = useState("")
-
+  const [ products, setProducts ] = useState<[]>()
 
   useEffect(() => {
     const cookies = Cookies.get("ecom_token");
@@ -32,6 +32,7 @@ const Inventory: FC = () => {
         userID: userID
       })
     })
+    
 
     return response.json();
   }

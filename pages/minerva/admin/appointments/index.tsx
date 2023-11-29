@@ -5,15 +5,22 @@ import React, { FC, useState, useEffect } from 'react'
 import Head from 'next/head'
 import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbHexagonPlus } from 'react-icons/tb'
 import router from 'next/router'
+import Modal from '@/components/Modal'
 
 
 
 const Appointments: FC = () => {
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  }
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const [ appointment, setAppointment ] = useState(null)
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,10 +34,32 @@ const Appointments: FC = () => {
     }
   }, [])
 
-
-
   return (
     <div>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <div className=" bg-gray-800 rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
+          <div className="p-4 sm:p-7 " >
+            <div className="text-center">
+              <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Confirm Delete</h1>
+            </div>
+
+            <div className="mt-5 flex flex-col justify-center items-center">
+            <form>
+                <div className="grid gap-y-4">
+                <p className="text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                Are you sure you want to delete this appointment?
+                </p>
+                <div className='flex gap-2'>
+                  <button type="submit" className="py-3 px-4 flex w-40 justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={() => router.push("/auth/changePassReqSuccess")}>Yes</button>
+                  <button type="submit" className="py-3 px-4 w-40 flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={handleCloseModal}>No</button>
+                </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
       <Head>
         <title>Appointments</title>
       </Head>
@@ -62,7 +91,7 @@ const Appointments: FC = () => {
             <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
             <div className={styles.col5} data-label="Action">
               <button onClick={() => router.push("/minerva/admin/appointments/editappointments")} className={styles.col4} > <TbEdit size={25} /> </button>
-              <button className={styles.col4} > <TbTrash size={25} /> </button>
+              <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
             </div>
           </li>
           <li className={styles.tableRow}>

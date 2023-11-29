@@ -1,79 +1,55 @@
 import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styles from '@/styles/customer/customer.module.scss'
 import { FaUserClock } from "react-icons/fa6";
-
-
+import Image from 'next/image'
+import { FormattedPrice } from '@/helpers/index'
 
 const Services: FC = () => {
-  const posts = [
-    {
-        title: "React Tailwind Card with Grid 1",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
-        price: "starts at PHP 2000"
-    },
-    {
-        title: "React Tailwind Card with Grid 2",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
-        price: "starts at PHP 2000"
-    },
-    {
-        title: "React Tailwind Card with Grid 3",
-        img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-        content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
-        price: "starts at PHP 2000"
-    },
-    {
-      title: "React Tailwind Card with Grid 4",
-      img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
-      price: "starts at PHP 2000"
-  },
-  {
-      title: "React Tailwind Card with Grid 5",
-      img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
-      price: "starts at PHP 2000"
-  },
-  {
-      title: "React Tailwind Card with Grid 6",
-      img: "https://cdn.pixabay.com/photo/2019/12/17/14/43/christmas-4701783__340.png",
-      content: "react tailwind css card with image It is a long established fact that a reader will be distracted by the readable content",
-      price: "starts at PHP 2000"
-  },
-  ];
+  
+  const [ services, setServices ] = useState<[]>()
+
+useEffect(() => {
+  const fetchData = async () => {
+     const response = await fetch("http://localhost:3001/services/getAllServices", {
+        method: "GET",
+    })
+
+    const result = await response.json();
+    setServices(result)
+  }
+  fetchData()
+}, [])
 
   return (
     <>
   <div className={styles.bodyServices}>
   <section className="relative mt-4 h-screen pb-12 mb-16 flex flex-col items-center justify-center ">
     <div className="relative top-60 mb-12 grid gap-16 lg:grid-cols-3 p-8 mx-8 gap-y-18	">
-                {posts.map((items, key) => (
-                    <div className="w-full rounded-lg shadow-md lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow transition-all duration-700 hover:scale-105" key={key}>
-                        <img
-                            className="object-cover w-full h-48"
-                            src={items.img}
-                            alt="image"
-                        />
+    
+    {services?.map(({ image, services, description, userID, price }: any) => (
+
+                    <div className="w-full lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow transition-all duration-700 hover:scale-105">
+                        <div>
+                        <Image src={image} alt={services} height={350} width={450} />
+                        </div>
                         <div className="p-4">
                             <h4 className="text-xl font-semibold text-black-600 text-center">
-                                
-                                {items.title}
+                                {services}
                             </h4>
                             <p className="mb-2 leading-normal text-center">
-                            {items.content}
+                            {description}
                             </p>
                             <p className="mr-2 text-lg font-bold text-black dark:text-black">
-                            {items.price}
+                            {FormattedPrice(price)}
                             </p>
                             <button className="ml-64 px-4 py-1 bottom-0 right-0 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/>
                             </button>
                         </div>
                     </div>
                 ))}
+
             </div>
             </section>
             </div>
