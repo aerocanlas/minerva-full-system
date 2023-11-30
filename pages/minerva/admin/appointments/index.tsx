@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbHexagonPlus } from 'react-icons/tb'
 import router from 'next/router'
 import Modal from '@/components/Modal'
-
+import {FormattedDate} from '@/helpers/index'
 
 
 const Appointments: FC = () => {
@@ -20,7 +20,7 @@ const Appointments: FC = () => {
     setIsModalOpen(false);
   };
 
-  const [ appointment, setAppointment ] = useState(null)
+  const [ appointment, setAppointment ] = useState<[]>()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +32,8 @@ const Appointments: FC = () => {
       const result = await response.json()
       setAppointment(result)
     }
+
+    fetchData()
   }, [])
 
   return (
@@ -76,79 +78,30 @@ const Appointments: FC = () => {
 
         <ul className={styles.responsiveTable}>
           <li className={styles.tableHeader}>
-            <div className={styles.col1}>Service ID</div>
+            <div className={styles.col1}>Appointment ID</div>
             <div className={styles.col2}>Customer Name</div>
             <div className={styles.col3}>Service Name</div>
             <div className={styles.col4}>Appointment Date</div>
             <div className={styles.col5}>Status</div>
             <div className={styles.col6}>Action</div>
           </li>
+
+          {appointment?.map(({ service, date,  time, id, status, }: any) => (
+
           <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
+            <div className={styles.col1} data-label="Service Id">{id}</div>
             <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-            <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-            <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
+            {service.map((name) => (
+                   <div className={styles.col3} data-label="Service Name">{name}</div>
+            ))}
+            <div className={styles.col4} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
+            <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>{status}</span></div>
             <div className={styles.col5} data-label="Action">
               <button onClick={() => router.push("/minerva/admin/appointments/editappointments")} className={styles.col4} > <TbEdit size={25} /> </button>
               <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
             </div>
           </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-            <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-            <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/appointments/editappointments")} className={styles.col4} > <TbEdit size={25} /> </button>
-              <button className={styles.col4} > <TbTrash size={25} /> </button>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-            <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-            <div className={styles.col6} data-label="Order Status"><span className={styles.badgeCancel}>Cancelled</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/appointments/editappointments")} className={styles.col4} > <TbEdit size={25} /> </button>
-              <button className={styles.col4} > <TbTrash size={25} /> </button>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-            <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-            <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/appointments/editappointments")} className={styles.col4} > <TbEdit size={25} /> </button>
-              <button className={styles.col4} > <TbTrash size={25} /> </button>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-            <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-            <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/appointments/editappointments")} className={styles.col4} > <TbEdit size={25} /> </button>
-              <button className={styles.col4} > <TbTrash size={25} /> </button>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-            <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-            <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/appointments/editappointments")} className={styles.col4} > <TbEdit size={25} /> </button>
-              <button className={styles.col4} > <TbTrash size={25} /> </button>
-            </div>
-          </li>
+        ))}   
         </ul>
 
 

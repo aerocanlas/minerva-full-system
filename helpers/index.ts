@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 export const FormattedPrice = ( price: number) => {
     const formattedPrice = Intl.NumberFormat("fil-PH", {
       style: "currency",
@@ -8,3 +9,8 @@ export const FormattedPrice = ( price: number) => {
 
     return updatedPrice
   }
+
+
+export const FormattedDate = (date: any) => {
+  return format(new Date(date), "dd MMM yyyy")
+}

@@ -18,6 +18,8 @@ const AddAppointmentsPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFo
 
   const [ isOpen, setIsOpen ] = useState(false);
 
+
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };

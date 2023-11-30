@@ -71,15 +71,7 @@ const Inventory: FC = () => {
               <div className={styles.col6} data-label="Email Address">PHP 5,600.00</div>
               <div className={styles.col7} data-label="Action">
                 <div className="flex align-items-center">
-                  <button className=" btn btn-square btn-ghost" ><TbHexagonPlus className="w-5" /></button>
-                  <form >
-                    <div>
-                      <label htmlFor="quantity"></label>
-                      <input type="text" id="quantity" className="w-8 bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-yellow-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0" required></input>
-                    </div>
-
-                  </form>
-                  <button className=" btn btn-square btn-ghost" ><TbHexagonMinus className="w-5" /></button>
+                <button onClick={() => router.push(`/minerva/admin/product/}`)} className={styles.col7}> <TbEdit size={25} /> </button>
                 </div>
               </div>
             </li>

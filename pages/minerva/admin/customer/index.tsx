@@ -11,8 +11,10 @@ import Modal from '@/components/Modal';
 const CustomerPage: FC = () => {
 
   const [ userid, setuserid ] = useState("")
+  
   const [ users, setUsers ] = useState<[]>()
   const [ userId, setUserId] = useState("")
+
   const [ isModalOpen, setIsModalOpen ] = useState(false);
 
   const handleOpenModal = () => {
