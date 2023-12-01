@@ -131,7 +131,9 @@ const ProductPage: FC = () => {
               
                 <li className={styles.tableRow}>
                 <div className={styles.col1} data-label="Product Image">
-                  <Image src={image} alt={name} height={120} width={120} />
+                  {image.map((random: any) => (
+                      <Image src={random} alt={name} height={120} width={120} />
+                  ))}
                 </div>
                 <div className={styles.col2} data-label="Product Id">{id}</div>
                 <div className={styles.col3} data-label="Product Name">{name}</div>

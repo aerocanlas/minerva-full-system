@@ -1,12 +1,14 @@
 import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState, useCallback, SyntheticEvent } from 'react'
 import Head from 'next/head'
 import { TbEdit, TbFile, TbFiles, TbTrash, TbUsers } from 'react-icons/tb'
 import router from 'next/router'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+import { useDropzone } from 'react-dropzone';
+import { IoIosAttach } from "react-icons/io";
 
 
 interface InputProp {
@@ -16,6 +18,8 @@ interface InputProp {
 }
 
 const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormValue }) => {
+
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
   const [ isOpen, setIsOpen ] = useState(false);
 
@@ -30,8 +34,8 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
   };
   const [ openCategory, setOpenCategory ] = useState(false);
   const [ openAvailability, setAvailability ] = useState(false)
-  const [ productCateg, setProductCateg ] = useState("");
-  const [ productStatus, setProductStatus ] = useState("")
+  const [ productCateg, setProductCateg ] = useState("Product Category");
+  const [ productStatus, setProductStatus ] = useState("Product Status")
   const productsAvailability =["In Stock", "Out of Stock"];
   const productsCategory = ["Tires", "Car Battery", "Tire Mags", "Oils", "Car Filters" ]
   const [ userid, setUserId ] = useState("")
@@ -44,7 +48,7 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
     }
   }, [])
 
-  const [ selectedImage, setSelectedImage ] = useState(null)
+  const [ selectedImage, setSelectedImage ] = useState<any>([])
 
   const [ products, setProducts ] = useState({
     name: "",
@@ -54,22 +58,46 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
     category: "",
   })
 
-  const AddProductForm = async () => {
-    const response = await fetch("http://localhost:3001/product/createProduct", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        image: selectedImage,
-        name: products.name,
-        quantity: products.quantity,
-        price: products.price,
-        description: products.description,
-        category: products.category,
-        userID: userid,  //get userId of current login
-      })
-    })
-    return response.json();
+  const onHandleImageUpload = (e: any) => {
+    setSelectedImage(Array.from(e.target.files))
   }
+
+  const AddProductForm = async (e :any) => {
+
+
+    e.preventDefault();
+    const fd = new FormData();
+
+    for(const image of selectedImage) {
+      fd.append("file", image)
+    }
+    fd.append("name", products.name)
+    fd.append("descriptions", products.description);
+    fd.append("category", productCateg);
+    fd.append("price",products.price);
+    fd.append("stock", productStatus)
+    fd.append("quantity", products.quantity)
+    fd.append("userID", userid)
+    const response = await fetch("http://localhost:3001/product/createProduct", {
+      method: "POST",  
+      body: fd
+    })
+
+    if(!response.ok) throw new Error("There something wrong while updating")
+
+  }
+
+
+  console.log({
+    'file': selectedImage, 
+    'name': products.name,
+    'descriptions': products.description,
+    'category': productCateg,
+    'price': products.price,
+    'stock': productStatus,
+    'quantity': products.quantity,
+
+  })
   return (
 
     <div>
@@ -94,16 +122,18 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
 
             <div className=" w-full mx-auto">
 
-              <form className='grid grid-cols-1 md:grid-cols-2 gap-16'>
+              <form encType='multipart/form-data' onSubmit={AddProductForm} className='grid grid-cols-1 md:grid-cols-2 gap-16'>
                 <div className="mb-6">
                   <label htmlFor="productName" className="text-sm font-medium text-gray-900 block mb-2">Product Name</label>
-                  <input type="text" id="productName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input product name" required />
+                  <input type="text" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onChange={(e) => setProducts({...products, name: e.target.value})}
+                   />
                 </div>
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
                       <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Status</label>
-                      <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                      <button type="button" className="inline-flex justify-center w-[250px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown}
                       >
                        {productStatus}
@@ -113,16 +143,30 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                         </svg>
                       </button>
                     </div>
-                    {isOpen ? productsAvailability.map((name) => (
-                      <button type="button" key={name} value={name} onClick={(e) => setProductStatus(e.currentTarget.value)}>{name} </button>
-                    )): null }
+                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'absolute z-10' : 'hidden'}`}>
+  {isOpen ? (
+    productsAvailability.map((name) => (
+      <button
+      name="status"
+        className='text-left'
+        type="button"
+        key={name}
+        value={name}
+        onClick={(e) => setProductStatus(e.currentTarget.value)}
+      >
+        {name}
+      </button>
+    ))
+  ) : null}
+</div>
                   </div>
                 </div>
+               
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
                       <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Category</label>
-                      <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                      <button name="category" type="button" className="inline-flex justify-center w-[250px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown1}
                       >
                       {productCateg}
@@ -132,21 +176,46 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                         </svg>
                       </button>
                     </div>
+                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen1 ? 'absolute z-10' : 'hidden'}`}>
                     {isOpen1 ? productsCategory.map((name) => (
-                      <button type="button" key={name} value={name} onClick={(e) => setProductCateg(e.currentTarget.value)}>{name} </button>
+                      <button className='text-left' 
+                      name="category"
+                      type="button"
+                      key={name} 
+                      value={name} 
+                      onClick={(e) => setProductCateg(e.currentTarget.value)}
+                      >
+                        {name} 
+                        </button>
                     )) : null}
                   </div>
+                  </div>
                 </div>
-                <div className="mb-6">
-                  <label htmlFor="price" className="text-sm font-medium text-gray-900 block mb-2">Email Address</label>
-                  <input type="text" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="name@gmail.com" required />
-                </div>
+
+                    <div className="mb-6 pt-9">
+                      <label htmlFor="productName" className="text-sm font-medium text-gray-900 block mb-2">Product Price</label>
+                      <input name="price" type="text" id="productQuantity" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value={products.price} onChange={(e) => setProducts(({...products, price: e.target.value}))}/>
+                    </div>
+
+                    
                 <div className="mb-6">
                   <label htmlFor="description" className="text-sm font-medium text-gray-900 block mb-2">Product Description</label>
-                  <textarea id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" placeholder="Input your product description here" required />
+                  <textarea id="descriptions" 
+                 name="descriptions" value={products.description} placeholder="Input product name" required 
+                  onChange={(e) => setProducts({
+                   ...products, description: e.target.value
+                  })}
+                  className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" aria-placeholder="Input your product description here" />
                 </div>
-                <br></br>
-                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Product</button>
+                <div className="mb-6">
+                <label className="block mb-2 text-sm font-medium text-black" htmlFor="file_input">Upload photo</label>
+                <input name="file" className="block w-80 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none" id="file_input" type="file" accept='image/*'  multiple onChange={onHandleImageUpload}/>
+                <p className="mt-1 text-sm text-gray-900 dark:text-gray-800" id="file_input_help">PNG, JPG, or JPEG</p>
+                </div>
+                
+
+                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => router.back()}>Add New Product</button>
               </form>
             </div>
 

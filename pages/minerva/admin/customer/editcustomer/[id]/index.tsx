@@ -1,11 +1,13 @@
 import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC, FormEvent, useState, useEffect} from 'react'
+import React, { FC, FormEvent, useState, useEffect, SyntheticEvent} from 'react'
 import Head from 'next/head'
 import { TbEdit, TbTrash, TbUsers } from 'react-icons/tb'
 import router from 'next/router'
 import { GetStaticPropsContext } from 'next'
+import { getStaticPaths } from 'next/dist/build/templates/pages'
+import { profileEnd } from 'console'
 
 interface InputProp {
   labelTitle: string;
@@ -14,9 +16,10 @@ interface InputProp {
 }
 
 
-
 const EditCustomerPage: FC<InputProp> = () => {
 
+
+  const [ users, setUsers ] = useState<[]>()
   const [ firstName, setFirstName ] = useState('');
   const [ middleName, setMiddleName ] = useState('');
   const [ lastName, setLastName ] = useState('');
@@ -31,25 +34,31 @@ const EditCustomerPage: FC<InputProp> = () => {
       {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
+        cache: "force-cache"
       })
 
-      const result = await res.json();
-      
-      result.map(({ profile, email}: any) => {
-   
-        setFirstName(profile.firstname);
-        setLastName(profile.lastname);
-        setEmail(email)
-        setPhoneNumber(profile.phone)
-        setShippingAddress(profile.shipping)
-    })
+      const result = await res.json();  
+      setUsers(result)
     }
     
     fetchData();
-  }, [])
+  }, [ users ])
 
+  
+  useEffect(() => {
+    users?.map(({ profile, email}: { profile: any, email: string}) => {
+       setFirstName(profile.firstname)
+       setLastName(profile.lastname)
+       setPhoneNumber(profile.phone)
+       setEmail(email)
+       setShippingAddress(profile.shipping)
+    })
+  }, [users])
 
-  const formSubmit = async () => {
+  const formSubmit = async (e: SyntheticEvent) => {
+
+    e.preventDefault();
+
     const response = await fetch(`http://localhost:3001/users/updateAccountDetails/${router.query.id}`, {
       method: "PATCH",
       headers: { 'Content-Type': 'application/json' },
@@ -62,6 +71,12 @@ const EditCustomerPage: FC<InputProp> = () => {
       })
     })
 
+
+    if(!response.ok){
+      throw new Error("There is something updating a user")
+    } else {
+      alert("Successfully Updated")
+    }
 
 
     return response.json();
@@ -94,23 +109,23 @@ const EditCustomerPage: FC<InputProp> = () => {
               <form onSubmit={formSubmit} className='grid grid-cols-1 md:grid-cols-2 gap-16'>
                 <div className="mb-6">
                   <label htmlFor="firstName" className="text-sm font-medium text-gray-900 block mb-2">First Name</label>
-                  <input type="text" id="firstName" onChange={(e) => setFirstName(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input first name" value={firstName}  required />
+                  <input type="text" id="firstName" onChange={(e) => setFirstName(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input first name" defaultValue={firstName}  required />
                 </div>
                 <div className="mb-6">
                   <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Last Name</label>
-                  <input type="text" id="lastName" onChange={(e) => setLastName(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input last name" value={lastName} required />
+                  <input type="text" id="lastName" onChange={(e) => setLastName(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input last name" defaultValue={lastName} required />
                 </div>
                 <div className="mb-6">
                   <label htmlFor="email" className="text-sm font-medium text-gray-900 block mb-2">Email Address</label>
-                  <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@gmail.com" value={email} required />
+                  <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@gmail.com" defaultValue={email} required />
                 </div>
                 <div className="mb-6">
                   <label htmlFor="shippingAddress" className="text-sm font-medium text-gray-900 block mb-2">Shipping Address</label>
-                  <input type="text" onChange={(e) => setShippingAddress(e.target.value)} id="shippingAddress" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="ex. Espana Blvd., Sampaloc, Manila, Philippines 1008." value={shippingAddress} required />
+                  <input type="text" onChange={(e) => setShippingAddress(e.target.value)} id="shippingAddress" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="ex. Espana Blvd., Sampaloc, Manila, Philippines 1008." defaultValue={shippingAddress} required />
                 </div>
                 <div className="mb-6">
                   <label htmlFor="phoneNumber" className="text-sm font-medium text-gray-900 block mb-2">Phone Number</label>
-                  <input type="tel" id="phoneNumber" onChange={(e) => setPhoneNumber(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="ex. 905-441-4300" value={phoneNumber} required />
+                  <input type="tel" id="phoneNumber" onChange={(e) => setPhoneNumber(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="ex. 905-441-4300" defaultValue={phoneNumber} required />
                 </div>
                 <br></br>
                 <button type="submit" className="relative left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Customer Profile</button>

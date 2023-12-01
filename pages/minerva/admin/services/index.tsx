@@ -120,65 +120,20 @@ const ServicePage: FC = () => {
       <div className={styles.col4}>Action</div>
     </li>
 
-    {services?.map(({ serviceID, services, description, price, }: any) => (
+    {services?.map(({ userID, serviceID, id, services, description, price, }: any) => (
 
     <li className={styles.tableRow}>
-      <div className={styles.col1} data-label="Service ID">#42235</div>
+      <div className={styles.col1} data-label="Service ID">{id}</div>
       <div className={styles.col2} data-label="Service Name">{services}</div>
       <div className={styles.col2} data-label="Service Name">{FormattedPrice(price)}</div>
       <div className={styles.col3} data-label="Email Address">Available</div>
       <div className={styles.col4} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/services/editservices")}className={styles.col4} > <TbEdit size={25}/> </button>
+      <button onClick={() => router.push(`/minerva/admin/services/editservices/${serviceID}`)}className={styles.col4} > <TbEdit size={25}/> </button>
       <button onClick={() => router.push(`/minerva/admin/services/deleteservice/${serviceID}`)} className={styles.col4} > <TbTrash size={25}/> </button>
       </div>
     </li>
 
 ))}
-    {/* <li className={styles.tableRow}>
-      <div className={styles.col1} data-label="Service ID">#42235</div>
-      <div className={styles.col2} data-label="Service Name">Preventive Maintenance</div>
-      <div className={styles.col3} data-label="Email Address">Available</div>
-      <div className={styles.col4} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/services/editservices")}className={styles.col4} > <TbEdit size={25}/> </button>
-      <button className={styles.col4} > <TbTrash size={25}/> </button>
-      </div>
-    </li>
-    <li className={styles.tableRow}>
-      <div className={styles.col1} data-label="Service ID">#42235</div>
-      <div className={styles.col2} data-label="Service Name">Preventive Maintenance</div>
-      <div className={styles.col3} data-label="Email Address">Available</div>
-      <div className={styles.col4} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/services/editservices")}className={styles.col4} > <TbEdit size={25}/> </button>
-      <button className={styles.col4} > <TbTrash size={25}/> </button>
-      </div>
-    </li>
-    <li className={styles.tableRow}>
-      <div className={styles.col1} data-label="Service ID">#42235</div>
-      <div className={styles.col2} data-label="Service Name">Preventive Maintenance</div>
-      <div className={styles.col3} data-label="Email Address">Available</div>
-      <div className={styles.col4} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/services/editservices")}className={styles.col4} > <TbEdit size={25}/> </button>
-      <button className={styles.col4} > <TbTrash size={25}/> </button>
-      </div>
-    </li>
-    <li className={styles.tableRow}>
-      <div className={styles.col1} data-label="Service ID">#42235</div>
-      <div className={styles.col2} data-label="Service Name">Preventive Maintenance</div>
-      <div className={styles.col3} data-label="Email Address">Available</div>
-      <div className={styles.col4} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/services/editservices")}className={styles.col4} > <TbEdit size={25}/> </button>
-      <button className={styles.col4} > <TbTrash size={25}/> </button>
-      </div>
-    </li>
-    <li className={styles.tableRow}>
-      <div className={styles.col1} data-label="Service ID">#42235</div>
-      <div className={styles.col2} data-label="Service Name">Preventive Maintenance</div>
-      <div className={styles.col3} data-label="Email Address">Available</div>
-      <div className={styles.col4} data-label="Action">
-      <button onClick={() => router.push("/minerva/admin/services/editservices")}className={styles.col4} > <TbEdit size={25}/> </button>
-      <button className={styles.col4} > <TbTrash size={25}/> </button>
-      </div>
-    </li> */}
   </ul>
 
 

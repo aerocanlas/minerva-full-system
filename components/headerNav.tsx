@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter} from 'next/router'
 import Link from 'next/link'
 import styles from '@/styles/Navbar/navbar.module.scss'
 import { Poppins } from 'next/font/google'
 import { TbMenu2 } from 'react-icons/tb'
 import Image from 'next/image'
-
+import Cookies from 'js-cookie'
 
 const customer = [
   { name: "Home", url: "/"},  
@@ -33,6 +33,12 @@ const poppins = Poppins({
 export default function HeaderNavbar() {
   const router = useRouter();
   const [ mobile, setMobile ] = useState(false)
+  const [ user, setUsers ] = useState("")
+
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token")
+    setUsers(cookies as any)
+  }, [ user ])
 
   const onHandleLoginBtn = () => {
       router.push("/auth/login")
@@ -83,7 +89,7 @@ export default function HeaderNavbar() {
           <Link key={name} className={router.pathname === url ? ` ${poppins.className} ${styles.active} : ${poppins.className}` : `${poppins.className}`} href={url}>{name}</Link>
         ))}
         </div>
-        <button className={styles.loginBtn} type="button" onClick={onHandleLoginBtn}>
+       <button className={styles.loginBtn} type="button" onClick={onHandleLoginBtn}>
           <span className={poppins.className}>Login</span>
         </button>
         <button className={styles.cartBtn}>

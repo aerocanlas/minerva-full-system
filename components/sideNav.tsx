@@ -4,9 +4,7 @@ import styles from '@/styles/admin/sidebar.module.scss'
 import { useRouter } from 'next/router'
 import {  Open_Sans } from 'next/font/google'
 import {TbListSearch, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbSettings  } from 'react-icons/tb'
-import { report } from 'process'
-
-
+import Cookies from 'js-cookie'
 const poppins = Open_Sans({
     weight: '500',
     subsets: ["latin"]
@@ -19,7 +17,6 @@ const routes = [
     { name: "Orders", url: "/minerva/admin/orders", icons: <TbShoppingBag size={30} />},
     { name: "Appointments", url:"/minerva/admin/appointments", icons: <TbClock size={30} />},
     { name: "Inventory", url: "/minerva/admin/inventory", icons: <TbClipboard size={30}/>},
-    { name: "Chats", url: "/minerva/admin/chats", icons: <TbMessage size={30}/>},
 ]
 
 
@@ -36,7 +33,8 @@ export default function Sidebar() {
   const [ reports, setReports ] =  useState(false)
 
   const onLogoutBtn = () => {
-
+    Cookies.remove("ecom_token")
+    router.push("/")
   }
   return (
     <div className={styles.container}>
