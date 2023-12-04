@@ -1,14 +1,27 @@
-import React, { FC, useState } from "react";
-import HomePageLayout from "@/layout/homepagelayout";
-import PageWithLayout from "@/layout/pagewithlayout";
+import { useRouter } from 'next/router'
+import React, { FC, useEffect, useState } from 'react'
+import HomePageLayout from '@/layout/homepagelayout'
+import PageWithLayout from '@/layout/pagewithlayout'
 import styles from "@/styles/customer/customer.module.scss";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { jwtDecode } from 'jwt-decode'
+import Cookies from 'js-cookie'
 
 const ProductDetails: FC = () => {
+
+  const router = useRouter();
   const [rotate, setRotate] = useState(false);
   const [count, setCount] = useState(0);
+  const [ productsTake, setProductsTake ] = useState(10)  // you can set this on default
+  const [ filters, setFilters ] = useState("")
+  const [ products, setProducts ] = useState<[]>()
+  const [ filterProducts, setFilterProducts ] = useState(null)
+  const [ search, setSearch ] = useState("")
+  const [ productSearch, setProductSearch ] = useState(null)
+  const [ page, setPage] = useState(0)
+  const [ userId, setUserId] = useState("")
 
   const addCount = () => {
     setCount((prev) => prev + 1);
@@ -29,16 +42,56 @@ const ProductDetails: FC = () => {
     slidesToScroll: 1,
   };
 
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`http://localhost:3001/product/getAllProduct/?skip=${page}&orderby=desc`, {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json' },
+        cache: "default"
+      })
+    
+    if (!res.ok) {
+      throw new Error("There something wrong while fetching data")
+    }
+
+    const result = await res.json();
+
+    setProducts(result)
+
+  }
+
+  fetchData();
+  }, [ products ])
+
+
+  if (router.isFallback) {
+    return (<p>Loading.....</p>)
+  }
+
+  // return <div>{JSON.stringify(products, null, 2)}</div>
+
   return (
     <div className={styles.bodyProducts}>
       <section className="absolute top-20" id="productdetail">
       <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 ">
       <div className="flex flex-col lg:flex-row gap-8">
+      
+      
+
             {/* Product Details Div */}
             <div className="w-full lg:w-6/12 items-center mt-8 lg:mt-0">
+              
               {/* ... (your existing code for Product Details) */}
               {/* <!-- Description Div --> */}
             <div className="w-full sm:w-96 md:w-8/12 lg:w-6/12 items-center">
+              
               <p className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-white">
                 Home / Furniture / Wooden Stool
               </p>
@@ -162,12 +215,16 @@ const ProductDetails: FC = () => {
                 {/* ... (your existing code for additional images) */}
               </div>
             </div>
+            
           </div>
         </div>
       </section>
     </div>
+
   );
+
 };
 
 (ProductDetails as PageWithLayout).layout = HomePageLayout;
 export default ProductDetails;
+

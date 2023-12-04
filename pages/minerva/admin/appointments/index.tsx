@@ -4,14 +4,18 @@ import PageWithLayout from '@/layout/pagewithlayout'
 import React, { FC, useState, useEffect } from 'react'
 import Head from 'next/head'
 import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbHexagonPlus } from 'react-icons/tb'
-import router from 'next/router'
+import router, { useRouter } from 'next/router'
 import Modal from '@/components/Modal'
 import {FormattedDate} from '@/helpers/index'
+import { jwtDecode } from 'jwt-decode'
+import Cookies from "js-cookie"
 
 
 const Appointments: FC = () => {
+
   const [ page, setPage] = useState(0)
   const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const router = useRouter();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -22,21 +26,38 @@ const Appointments: FC = () => {
   };
 
   const [ appointment, setAppointment ] = useState<[]>()
+  const [ userId, setUserId] = useState("")
+
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:3001/schedule/", {
+      const response = await fetch(`http://localhost:3001/schedule/?skip=${page}&orderby=desc`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
-        cache: "force-cache",
+        cache: "default",
       })
-      const result = await response.json()
+      if (!response.ok) {
+        throw new Error("There something wrong while fetching data")
+      }
+  
+      const result = await response.json();
+  
       setAppointment(result)
+  
     }
+  
+    fetchData();
+  }, [appointment])
 
-    fetchData()
-  }, [])
+  
 
+  console.log(appointment)
+  
   return (
     <div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
@@ -87,14 +108,15 @@ const Appointments: FC = () => {
             <div className={styles.col6}>Action</div>
           </li>
 
-          {appointment?.map(({ userID, scheduleID, service, date,  time, id, status, }: any) => (
-
+          {appointment?.map(({ scheduleID, service, date,  time, id, name, status, User}: any) => (
+            User?.profile === null ? 
+            User?.map(({ profile} : any ) => (
           <li className={styles.tableRow}>
             <div className={styles.col1} data-label="Service Id">{id}</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            {service.map((name : any) => (
-                   <div className={styles.col3} data-label="Service Name">{name}</div>
-            ))}
+            <div className={styles.col2} data-label="Customer Name">{profile.firstname} {profile.lastname}</div>
+            
+                   <div className={styles.col3} data-label="Service Name">{service}</div>
+          
             <div className={styles.col4} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
             <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>{status}</span></div>
             <div className={styles.col5} data-label="Action">
@@ -102,6 +124,19 @@ const Appointments: FC = () => {
               <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
             </div>
           </li>
+          )) :  <li className={styles.tableRow}>
+          <div className={styles.col1} data-label="Service Id">{id}</div>
+          <div className={styles.col2} data-label="Customer Name">{name}</div>
+          
+                 <div className={styles.col3} data-label="Service Name">{service}</div>
+        
+          <div className={styles.col4} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
+          <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>{status}</span></div>
+          <div className={styles.col5} data-label="Action">
+            <button onClick={() => router.push(`/minerva/admin/appointments/editappointments/${scheduleID}`)} className={styles.col4} > <TbEdit size={25} /> </button>
+            <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
+          </div>
+        </li>
         ))}   
         </ul>
 

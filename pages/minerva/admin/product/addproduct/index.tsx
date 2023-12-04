@@ -83,7 +83,13 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
       body: fd
     })
 
-    if(!response.ok) throw new Error("There something wrong while updating")
+    if(!response.ok) 
+    {
+      alert("Please complete all fields")
+    }
+   else {
+    alert("New Product Added")
+  }
 
   }
 
@@ -133,8 +139,8 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
-                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Status</label>
-                      <button type="button" className="inline-flex justify-center w-[250px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Status <span className='text-gray-400'>(Please always choose Product Status)</span></label>
+                      <button type="button" className="inline-flex justify-center w-[220px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown}
                       >
                        {productStatus === "" ? "Select Product Status" : productStatus}
@@ -144,7 +150,7 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                         </svg>
                       </button>
                     </div>
-                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'absolute z-10' : 'hidden'}`}>
+                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'w-[220px] absolute z-10' : 'hidden'}`}>
   {isOpen ? (
     productsAvailability.map((name) => (
       <button
@@ -154,7 +160,8 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
         key={name}
         value={name}
         onClick={(e) => setProductStatus(e.currentTarget.value)}
-      >
+      
+        aria-required>
         {name}
       </button>
     ))
@@ -172,8 +179,8 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
-                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Category</label>
-                      <button name="category" type="button" className="inline-flex justify-center w-[250px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Category <span className='text-gray-400'>(Please always choose Product Category)</span> </label>
+                      <button name="category" type="button" className="inline-flex justify-center w-[220px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown1}
                       >
                       {productCateg  === "" ? "Select Product Category" : productCateg}
@@ -183,7 +190,7 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                         </svg>
                       </button>
                     </div>
-                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen1 ? 'absolute z-10' : 'hidden'}`}>
+                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-white p-4 text-primary-600 ${isOpen1 ? ' w-[220px] absolute z-10' : 'hidden'}`}>
                     {isOpen1 ? productsCategory.map((name) => (
                       <button className='text-left' 
                       name="category"
@@ -191,7 +198,7 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                       key={name} 
                       value={name} 
                       onClick={(e) => setProductCateg(e.currentTarget.value)}
-                      >
+                      aria-required>
                         {name} 
                         </button>
                     )) : null}
@@ -224,7 +231,7 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                 </div>
                 
                   <br></br>
-                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => router.back()}>Add New Product</button>
+                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Product</button>
               </form>
             </div>
 

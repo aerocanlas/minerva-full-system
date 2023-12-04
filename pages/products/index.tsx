@@ -16,7 +16,9 @@ import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { IoMdArrowDropright } from "react-icons/io";
 import { FormattedPrice } from '@/helpers/index'
-
+import { jwtDecode } from 'jwt-decode'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
 
 const Products: FC = () => {
 
@@ -26,6 +28,18 @@ const Products: FC = () => {
   const [ filterProducts, setFilterProducts ] = useState(null)
   const [ search, setSearch ] = useState("")
   const [ productSearch, setProductSearch ] = useState(null)
+  const [ page, setPage] = useState(0)
+  const [ userId, setUserId] = useState("")
+
+  const router = useRouter();
+
+  const handleClick = () => {
+    // Navigate to the target page when the component is clicked
+    {products?.map(({ userId, id, productID, name, category, price, stock, image, description, }: any) => (
+    router.push(`/products/productdetail/${productID}`)
+    ))}
+  };
+
 
   // search products
 
@@ -37,6 +51,12 @@ const Products: FC = () => {
     const result = await response.json()
     setProductSearch(result)
   }
+
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
 
   //filter data w/ pagination 
 
@@ -57,19 +77,24 @@ const Products: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resposne = await fetch("http://localhost:3001/product/getAllProduct", {
+      const res = await fetch(`http://localhost:3001/product/getAllProduct/?skip=${page}&orderby=desc`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
+        cache: "default"
       })
-      if (!resposne.ok) {
-        throw new Error("There is something error")
-      }
-      const result = await resposne.json();
-      setProducts(result)
+    
+    if (!res.ok) {
+      throw new Error("There something wrong while fetching data")
     }
 
-    fetchData();
-  }, [])
+    const result = await res.json();
+
+    setProducts(result)
+
+  }
+
+  fetchData();
+  }, [ products ])
 
 
   return (
@@ -112,6 +137,7 @@ const Products: FC = () => {
                       <GiCarWheel size="40px" />
                       <span className="ml-3 text-2xl">Tires</span>
                     </a>
+                    </li>
 
                     <li>
                       <a href="#"
@@ -119,12 +145,15 @@ const Products: FC = () => {
                         <BiSolidCarBattery size="40px" />
                         <span className=" ml-3 text-2xl">Car Battery</span>					</a>
                     </li>
+                    
+                    <li>
                     <a href="#"
                       className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">
                       <GiCartwheel size="40px" />
                       <span className=" ml-3 text-2xl">Tire Mags</span>
                     </a>
                   </li>
+
                   <li>
                     <a href="#"
                       className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">
@@ -147,11 +176,15 @@ const Products: FC = () => {
         </div>
         <div className="absolute top-[120px] ml-60 left-96 grid grid-cols-1 md:grid-cols-3 gap-8 ">
 
-        {products?.map(({ productID, name, category, price, quantity, image, description, }: any) => (
-          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-            <Image src={image} alt={name} height={300} width={330} className="object-cover object-center" />
+        {products?.map(({ userId, id, productID, name, category, price, stock, image, description, }: any) => (
+          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg" onClick={handleClick}>
+           {image.length > 0 && (
+    <Image src={image[1]} alt={name} height={120} width={320} />
+  )}
             <div className="p-4">
+
               <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">{name}</h2>
+
               <p className="text-sm mb-2 dark:text-black text-black">{description}</p>
               <div className="flex items-center">
                 <p className="mr-2 text-lg font-bold flex text-black dark:text-black">{FormattedPrice(price)} </p>
@@ -163,29 +196,10 @@ const Products: FC = () => {
           ))}
 
           <div className="absolute bottom-[-120px] grid min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
-            <nav>
-              <ul className="flex">
-                <li>
-                  <a className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 hover:bg-[#FFBD59] bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#" aria-label="Previous">
-                    <span className="material-icons text-sm"><IoMdArrowDropleft /></span>
-                  </a>
-                </li>
-                <li>
-                  <a className="mx-1 flex h-9 w-9 items-center justify-center border border-blue-gray-100 rounded-full hover:bg-[#FFBD59] p-0 text-sm text-white shadow-md transition duration-150 ease-in-out" href="#">1</a>
-                </li>
-                <li>
-                  <a className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 hover:bg-[#FFBD59] bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">2</a>
-                </li>
-                <li>
-                  <a className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 hover:bg-[#FFBD59] bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">3</a>
-                </li>
-                <li>
-                  <a className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 hover:bg-[#FFBD59] bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#" aria-label="Next">
-                    <span className="material-icons text-sm"><IoMdArrowDropright /></span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+          <div className={styles.pagination}>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>
 
           </div>
 

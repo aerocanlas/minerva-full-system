@@ -165,8 +165,8 @@ const EditProductPage: FC = () => {
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
-                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Status</label>
-                      <button name="status"type="button" className="inline-flex justify-center w-[250px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Status <span className='text-gray-400'>(Please always choose Product Status)</span></label>
+                      <button name="status"type="button" className="inline-flex justify-center w-[220px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown}
                       >
                        {productStock === "" ? "Select Product Status" : productStock}
@@ -176,12 +176,12 @@ const EditProductPage: FC = () => {
                         </svg>
                       </button>
                     </div>
-                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'absolute z-50' : 'hidden'}`}>
+                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'w-[220px] absolute z-50' : 'hidden'}`}>
   {isOpen ? (
     productsAvailability.map((name) => (
       <button
       name="stock"
-        className='text-right'
+        className='text-left'
         type="button"
         key={name}
         value={name}
@@ -202,8 +202,8 @@ const EditProductPage: FC = () => {
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
-                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Category</label>
-                      <button name="category" type="button" className="inline-flex justify-center w-[250px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Category <span className='text-gray-400'>(Please always choose Product Category)</span></label>
+                      <button name="category" type="button" className="inline-flex justify-center w-[220px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown1}
                       >
                       {productCategory === "" ? "Select Product Category" : productCategory}
@@ -214,7 +214,7 @@ const EditProductPage: FC = () => {
                       </button>
                     </div>
 
-                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen1 ? 'absolute z-50' : 'hidden'}`}>
+                    <div className={`w-full flex flex-col bg-white rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen1 ? 'w-[220px] absolute z-60' : 'hidden'}`}>
                     {isOpen1 ? productsCateg.map((name) => (
                       <button name="category" className='text-left' 
                       type="button"

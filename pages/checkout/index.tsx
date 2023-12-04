@@ -1,8 +1,51 @@
 import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
 import React, { FC } from 'react'
+import Modal from '@/components/Modal';
 
 const  Checkout: FC= () => {
+    const [ isModalOpen, setIsModalOpen ] = useState(true);
+
+    const handleOpenModalCard = () => {
+        setIsModalOpen(true);
+    }
+
+    const handleCloseModalCard = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleOpenModalCash = () => {
+        setIsModalOpen(true);
+    }
+
+    const handleCloseModalCash = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleOpenModalGcash = () => {
+        setIsModalOpen(true);
+    }
+
+    const handleCloseModalGcash = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleOpenModalMaya = () => {
+        setIsModalOpen(true);
+    }
+
+    const handleCloseModalMaya = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleOpenModalBankTrans = () => {
+        setIsModalOpen(true);
+    }
+
+    const handleCloseModalBankTrans = () => {
+        setIsModalOpen(false);
+    };
+
     return ( 
     <div className="h-screen pt-24 pb-28 grid grid-cols-3">
         <div className="lg:col-span-2 col-span-3 bg-indigo-50 space-y-8 px-12">
@@ -53,12 +96,31 @@ const  Checkout: FC= () => {
                     <fieldset className="mb-3 bg-white shadow-lg rounded text-gray-600">
                                 <button className="flex items-center justify-between w-full bg-white rounded-md border-2 border-gray-200 p-4 focus:outline-none">
                                     <label className="flex items-center">
-                                        <input type="radio" className="form-radio h-5 w-5 text-yellow-600"/><span className="ml-2 text-sm text-gray-700">Pay upon Pickup (Cash or Credit Card)</span>
+                                        <input type="radio" className="form-radio h-5 w-5 text-yellow-600"/><span className="ml-2 text-sm text-gray-700">Pay upon Pickup - Card</span>
                                     </label>
                                 </button>
+
                                 <button className="flex items-center justify-between w-full bg-white rounded-md border-2 border-gray-200 p-4 focus:outline-none">
                                     <label className="flex items-center">
-                                        <input type="radio" className="form-radio h-5 w-5 text-yellow-600" /><span className="ml-2 text-sm text-gray-700">Pay via GCash or Maya e-Wallet</span>
+                                        <input type="radio" className="form-radio h-5 w-5 text-yellow-600"/><span className="ml-2 text-sm text-gray-700">Pay upon Pickup - Cash</span>
+                                    </label>
+                                </button>
+
+                                <button className="flex items-center justify-between w-full bg-white rounded-md border-2 border-gray-200 p-4 focus:outline-none">
+                                    <label className="flex items-center">
+                                        <input type="radio" className="form-radio h-5 w-5 text-yellow-600"/><span className="ml-2 text-sm text-gray-700">Pay via Maya</span>
+                                    </label>
+                                </button>
+
+                                <button className="flex items-center justify-between w-full bg-white rounded-md border-2 border-gray-200 p-4 focus:outline-none">
+                                    <label className="flex items-center">
+                                        <input type="radio" className="form-radio h-5 w-5 text-yellow-600"/><span className="ml-2 text-sm text-gray-700">Pay via Gcash</span>
+                                    </label>
+                                </button>
+
+                                <button className="flex items-center justify-between w-full bg-white rounded-md border-2 border-gray-200 p-4 focus:outline-none">
+                                    <label className="flex items-center">
+                                        <input type="radio" className="form-radio h-5 w-5 text-yellow-600" /><span className="ml-2 text-sm text-gray-700">Pay via Bank Transfer (BPI)</span>
                                     </label>
                                 </button>
                     </fieldset>

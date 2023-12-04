@@ -5,17 +5,18 @@ import React, { FC, useState, useEffect } from 'react'
 import Head from 'next/head'
 import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight } from 'react-icons/tb'
 import router from 'next/router'
-
+import { FormattedDate } from '@/helpers'
 
 const AuditLog: FC = () => {
 
   const [ page, setPage] = useState(0)
-  const [ logs, setLogs ] = useState(null)
+  const [ logs, setLogs ] = useState<[]>()
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:3001/logs/", {
+      const res = await fetch(`http://localhost:3001/logs/?skip=${page}&orderby=desc`, {
         method: "GET",
+        cache: "default",
         headers: { 'Content-Type': 'application/json' },
       })
 
@@ -24,7 +25,7 @@ const AuditLog: FC = () => {
     }
 
     fetchData();
-  }, [])
+  }, [ logs ])
 
   return (
 
@@ -43,66 +44,25 @@ const AuditLog: FC = () => {
 
         <ul className={styles.responsiveTable}>
           <li className={styles.tableHeader}>
-            <div className={styles.col1}>Log ID</div>
             <div className={styles.col2}>Name</div>
             <div className={styles.col3}>Date Created</div>
-            <div className={styles.col3}>Time</div>
             <div className={styles.col4}>Action</div>
           </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col3} data-label="Time">21:00</div>
-            <div className={styles.col4} data-label="Action"><span className={styles.badgeSuccess}>Edited User Profile</span>
+          
+          {logs?.map(({ logsID, title, createdAt}: any) => (
+          <li key={logsID} className={styles.tableRow}>
+            <div className={styles.col2} data-label="Admin Name">Need To Map Admin Name</div>
+            <div className={styles.col3} data-label="Date Created">{FormattedDate(createdAt)}</div>
+            <div className={styles.col4} data-label="Action"><span className={styles.badgeSuccess}>{title}</span>
             </div>
           </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col3} data-label="Time">18:00</div>
-            <div className={styles.col4} data-label="Action"><span className={styles.badgePending}>Update Appointment</span>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col3} data-label="Time">00:00</div>
-            <div className={styles.col4} data-label="Action"><span className={styles.badgeCancel}>Update Password</span>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col3} data-label="Time">07:00</div>
-            <div className={styles.col4} data-label="Action"><span className={styles.badgeSuccess}>Edited User Profile</span>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col3} data-label="Time">15:00</div>
-            <div className={styles.col4} data-label="Action"><span className={styles.badgeSuccess}>Edited User Profile</span>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col3} data-label="Time">23:00</div>
-            <div className={styles.col4} data-label="Action"><span className={styles.badgeSuccess}>Edited User Profile</span>
-            </div>
-          </li>
+          ))}  
         </ul>
 
 
         <div className={styles.pagination}>
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
-                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage( page - 1)}>Prev</button>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage( page + 1)}>Next</button>
         </div>
       </div>
 

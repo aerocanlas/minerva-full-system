@@ -24,8 +24,11 @@ const Orders: FC = () => {
     setIsModalOpen(false);
   };
 
-
+  const [profile, setProfile] = useState<[]>()
+  const [ users, setUsers ] = useState<[]>()
   const [ orders, setOrders ] = useState<[]>()
+  const [ userId, setUserId] = useState("") 
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +41,7 @@ const Orders: FC = () => {
       if (!response.ok) throw new Error("There is something wrong while fethcing")
 
       const result = await response.json();
+      
       setOrders(result)
     }
 
@@ -49,14 +53,10 @@ const Orders: FC = () => {
 
 
   useEffect(() => {
-    const cookies = Cookies.get("ecom_token")
-    if(cookies) {
-        const { userID } : any = jwtDecode(cookies) as any
-        setUserID(userID)
-    }
-  }, [
-    userid
-  ])
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
   
   const onSubmitDeleteProduct = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -79,7 +79,9 @@ const Orders: FC = () => {
 
     return res.json();
   }
+  console.log()
 
+  
   return (
     <div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
@@ -131,22 +133,25 @@ const Orders: FC = () => {
             </li>
               
 
-            {orders?.map(({ orderID, orders, total, payment, status, createdAt, }: any) => (
+            {orders?.map(({ userID, orderID, orders, total, payment, status, createdAt, User}: any) => (
+                User.map(({ profile }: any) => (
+                  <li className={styles.tableRow}>
+                  <div className={styles.col1} data-label="Order ID">{orders}</div>
+                  
+                  <div className={styles.col2} data-label="Customer Name"> {profile.firstname} {profile.lastname} </div>
+                  
+                  <div className={styles.col3} data-label="Date Ordered">{FormattedDate(createdAt)}</div>
+                  <div className={styles.col4} data-label="Amount">{FormattedPrice(total)}</div>
+                  <div className={styles.col5} data-label="Payment Method">{payment}</div>
+                  <div className={styles.col6} data-label="Order Status"><span>{status}</span></div>
+                  <div className={styles.col7} data-label="Action">
+                    <button onClick={() => router.push(`/minerva/admin/orders/editorders/${orderID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
+                    <button onClick={handleOpenModal} className={styles.col7}> <TbTrash size={25} /> </button>
+                  </div>
+                </li>
+                ))
+))} 
 
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Order ID">{orders}</div>
-              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
-              <div className={styles.col3} data-label="Date Ordered">{FormattedDate(createdAt)}</div>
-              <div className={styles.col4} data-label="Amount">{FormattedPrice(total)}</div>
-              <div className={styles.col5} data-label="Payment Method">{payment}</div>
-              <div className={styles.col6} data-label="Order Status"><span>{status}</span></div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push(`/minerva/admin/orders/editorders/${orderID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
-                <button onClick={handleOpenModal} className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-))}
-            
           </ul>
         </div>
 

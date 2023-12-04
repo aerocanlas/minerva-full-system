@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import styles from '@/styles/admin/sidebar.module.scss'
 import { useRouter } from 'next/router'
 import {  Open_Sans } from 'next/font/google'
 import {TbListSearch, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbSettings  } from 'react-icons/tb'
 import Cookies from 'js-cookie'
+import { jwtDecode } from 'jwt-decode'
 const poppins = Open_Sans({
     weight: '500',
     subsets: ["latin"]
@@ -28,7 +29,37 @@ const submenu = [
 
 export default function Sidebar() {
 
+    const [userId, setUserId] = useState("");
+    
+    useEffect(() => {
+        const cookies = Cookies.get("ecom_token");
+        if (cookies) {
+          const { userID }: any = jwtDecode(cookies);
+          setUserId(userID);
+        }
+      }, []);
+
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+     
+        const res = await fetch(`http://localhost:3001/user/getUsersId/${router.query.id}`, {
+          method: "GET",
+          headers: { 'Content-Type': 'application/json' },
+          cache: "default",
+        });
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch user data: ${res.status}`);
+        }
+
+        const result = await res.json();
+
+      };
+      
+    fetchData();
+  }, [router ]);
 
   const [ reports, setReports ] =  useState(false)
 
@@ -69,7 +100,7 @@ export default function Sidebar() {
                     ))}
                 </div> : null
             }
-            <button onClick={() => router.push("/minerva/admin/settings")}>
+            <button onClick={() => router.push(`/minerva/admin/settings/${userId}`)}>
                 <TbSettings size={30}/>
                 <span>Settings</span>
             </button>
