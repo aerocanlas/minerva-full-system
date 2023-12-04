@@ -1,20 +1,22 @@
-import React, { useState, SyntheticEvent } from 'react'
+import React, { useState, SyntheticEvent, useEffect } from 'react'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import router from 'next/router'
 import Modal from '@/components/Modal';
 import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
 import styles from '@/styles/customer/customer.module.scss'
-import { IoCartOutline, IoMailUnread } from "react-icons/io5";
+import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { FaUserClock } from "react-icons/fa6";
+import { IoMailUnread } from "react-icons/io5";
 import Link from 'next/link';
+import { useRouter} from 'next/router'
 
-export default function RegistrationPrompt() {
+export default function confirmation() {
 
   const router = useRouter();
   const [ isModalOpen, setIsModalOpen ] = useState(true);
-  const [ email, setEmail ] = useState("")
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   }
@@ -24,23 +26,20 @@ export default function RegistrationPrompt() {
   };
 
 
-
-
-  const onSubmitChangePass = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    const res = await fetch("http://localhost:3001/user/requestPasswordReset", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email
+  useEffect(() => {
+    const fetchData = async () => {
+      const  res = await fetch(`http://localhost:3001/user/confirmation/${router.query.id}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json'}
+        
       })
-    })
 
-    if (res) {
-      router.push("/auth/changePassReqSuccess")
+      return res
     }
-    return res.json();
-  }
+
+    fetchData();
+  }, [ router ])
+
 
   return (
     <div>
@@ -48,13 +47,13 @@ export default function RegistrationPrompt() {
         <div className=" bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
           <div className="p-4 sm:p-7 " >
             <div className="text-center">
-              <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Confirm Registration</h1>
+              <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Account Verification Successful</h1>
             </div>
 
             <div className="mt-5 flex flex-col justify-center items-center">
               <IoMailUnread size={60} className="text-white mb-3" />
               <p className="text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
-                The verification link for the registration of your account is now sent to the email you provided. Please see the email, if you cannot see an email from us, please double-check the spam folder.
+                You have successfully verified your account in Minerva Sales Corporation. We look forward to serving you.
               </p>
             </div>
           </div>
@@ -397,9 +396,9 @@ export default function RegistrationPrompt() {
                       <Link href="/services" className="hover:opacity-75 "> Services </Link>
                     </p>
                     <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-                      <Link href="" className="hover:opacity-75"> Oil Change </Link>
-                      <Link href="" className="hover:opacity-75"> Change Tire </Link>
-                      <Link href="" className="hover:opacity-75"> Alignment </Link>
+                      <a href="" className="hover:opacity-75"> Oil Change </a>
+                      <a href="" className="hover:opacity-75"> Change Tire </a>
+                      <a href="" className="hover:opacity-75"> Alignment </a>
                     </nav>
                   </div>
                   <div>
@@ -407,9 +406,9 @@ export default function RegistrationPrompt() {
                       Helpful Links
                     </p>
                     <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-                      <Link href="" className="hover:opacity-75"> Contact </Link>
-                      <Link href="" className="hover:opacity-75"> About </Link>
-                      <Link href="" className="hover:opacity-75"> Live Chat </Link>
+                      <a href="" className="hover:opacity-75"> Contact </a>
+                      <a href="" className="hover:opacity-75"> About </a>
+                      <a href="" className="hover:opacity-75"> Live Chat </a>
                     </nav>
                   </div>
                   <div>
@@ -434,4 +433,4 @@ export default function RegistrationPrompt() {
     </div>
   )
 }
-(RegistrationPrompt as unknown as PageWithLayout).layout = HomePageLayout
+(confirmation as unknown as PageWithLayout).layout = HomePageLayout

@@ -8,14 +8,13 @@ import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 
 const Settings: FC = () => {
-  const [ firstName, setFirstName ] = useState('Prince Aero');
-  const [ middleName, setMiddleName ] = useState('Tagara');
-  const [ lastName, setLastName ] = useState('Canlas');
-  const [ email, setEmail ] = useState('aerocanlas@gmail.com');
-  const [ phoneNumber, setPhoneNumber ] = useState('0905-441-4300');
-  const [ shippingAddress, setShippingAddress ] = useState('Espana Blvd., Sampaloc, Manila, Philippines 1008.');
 
-
+  const [ users, setUsers ] = useState<[]>()
+  const [ firstName, setFirstName ] = useState('');
+  const [ lastName, setLastName ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ phoneNumber, setPhoneNumber ] = useState('');
+  const [ shippingAddress, setShippingAddress ] = useState('');
 
   const [ user, setUser ] = useState(null)
   const [ userId, setUserId ] = useState("")
@@ -45,27 +44,6 @@ const Settings: FC = () => {
     fetchData()
 
   }, [ userId ])
-
-
-
-  const handleFirstNameChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setFirstName(event.target.value);
-  };
-  const handleMiddleNameChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setMiddleName(event.target.value);
-  };
-  const handleLastNameChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setLastName(event.target.value);
-  };
-  const handleEmailChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setEmail(event.target.value);
-  };
-  const handlePhoneNumberChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setPhoneNumber(event.target.value);
-  };
-  const handleShippingAddressChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setShippingAddress(event.target.value);
-  };
 
 
   const submitForm = async () => {

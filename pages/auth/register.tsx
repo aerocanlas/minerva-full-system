@@ -107,7 +107,7 @@ export default function Register() {
               <input className="pl-2 outline-none border-none" type="tel" name="" id="" placeholder="Phone Number" onChange={(e) => setRegister({ ...register, phone: e.target.value })} />
             </div>
           </div>
-          <button type="submit" className="block w-full bg-[#FFBD59] mt-4 py-2 rounded-2xl text-black font-semibold mb-2">Register</button>
+          <button type="submit" className="block w-full bg-[#FFBD59] mt-4 py-2 rounded-2xl text-black font-semibold mb-2" onClick={() => router.push("/auth/registrationPrompt")}>Register</button>
 
           <span className="text-sm ml-2"> Already have an Account? <span onClick={() => router.push("/auth/login")} className="text-sm hover:text-blue-500 cursor-pointer">Login.</span></span>
         </form>

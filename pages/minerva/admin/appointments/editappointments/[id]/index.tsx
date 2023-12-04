@@ -72,11 +72,11 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
     
     <form className='grid grid-cols-1 md:grid-cols-2 gap-16'>
         <div className="mb-6">
-            <label htmlFor="firstName" className="text-sm font-medium text-gray-900 block mb-2">First Name</label>
+            <label htmlFor="firstName" className="text-sm font-medium text-gray-900 block mb-2">Customer Name</label>
             <input type="text" id="firstName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input first name" value={customerName} onChange={handleCustomerNameChange} required />
             </div>
         <div className="mb-6">
-            <label htmlFor="middleName" className="text-sm font-medium text-gray-900 block mb-2">Middle Name</label>
+            <label htmlFor="middleName" className="text-sm font-medium text-gray-900 block mb-2">Service Name</label>
             <input type="text" id="middleName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input middle name" value={serviceName} onChange={handleServiceNameChange} required />
             </div>
         <div className="mb-5">

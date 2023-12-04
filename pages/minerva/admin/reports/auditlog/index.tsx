@@ -9,7 +9,7 @@ import router from 'next/router'
 
 const AuditLog: FC = () => {
 
-
+  const [ page, setPage] = useState(0)
   const [ logs, setLogs ] = useState(null)
 
   useEffect(() => {
@@ -101,32 +101,8 @@ const AuditLog: FC = () => {
 
 
         <div className={styles.pagination}>
-          <ul>
-
-            <li>
-              <a href="#" >&laquo;</a>
-            </li>
-
-            <li>
-              <a href="#" >1</a>
-            </li>
-            <li>
-              <a href="#" >2</a>
-            </li>
-            <li>
-              <a href="#" className={styles.active}>3</a>
-            </li>
-            <li>
-              <a href="#" >4</a>
-            </li>
-            <li>
-              <a href="#" >5</a>
-            </li>
-            <li>
-              <a href="#" >&raquo;</a>
-            </li>
-
-          </ul>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
         </div>
       </div>
 

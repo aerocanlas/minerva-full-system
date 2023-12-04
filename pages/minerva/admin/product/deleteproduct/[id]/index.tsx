@@ -22,6 +22,8 @@ const Index: FC =() => {
   }, [
     userid
   ])
+
+  console.log(userid)
   
   const onSubmitDeleteProduct = async (e: SyntheticEvent) => {
     e.preventDefault();

@@ -12,6 +12,8 @@ import { FormattedPrice, FormattedDate } from '@/helpers/index'
 
 const Orders: FC = () => {
 
+  const [ page, setPage] = useState(0)
+
   const [ isModalOpen, setIsModalOpen ] = useState(false);
 
   const handleOpenModal = () => {
@@ -27,10 +29,10 @@ const Orders: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:3001/order/", {
+      const response = await fetch(`http://localhost:3001/order/?skip=${page}&orderby=desc`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
-        cache: "force-cache"
+        cache: "default"
       })
 
       if (!response.ok) throw new Error("There is something wrong while fethcing")
@@ -139,7 +141,7 @@ const Orders: FC = () => {
               <div className={styles.col5} data-label="Payment Method">{payment}</div>
               <div className={styles.col6} data-label="Order Status"><span>{status}</span></div>
               <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
+                <button onClick={() => router.push(`/minerva/admin/orders/editorders/${orderID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
                 <button onClick={handleOpenModal} className={styles.col7}> <TbTrash size={25} /> </button>
               </div>
             </li>
@@ -149,32 +151,8 @@ const Orders: FC = () => {
         </div>
 
         <div className={styles.pagination}>
-          <ul>
-
-            <li>
-              <a href="#" >&laquo;</a>
-            </li>
-
-            <li>
-              <a href="#" >1</a>
-            </li>
-            <li>
-              <a href="#" >2</a>
-            </li>
-            <li>
-              <a href="#" className={styles.active}>3</a>
-            </li>
-            <li>
-              <a href="#" >4</a>
-            </li>
-            <li>
-              <a href="#" >5</a>
-            </li>
-            <li>
-              <a href="#" >&raquo;</a>
-            </li>
-
-          </ul>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
         </div>
 
       </div>

@@ -4,13 +4,14 @@ import styles from '@/styles/admin/content.module.scss'
 import Head from 'next/head'
 import {TbListSearch, TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbHexagonPlus   } from 'react-icons/tb'
 import React, { FC, SyntheticEvent, useEffect, useState } from 'react'
-import router, { useRouter } from 'next/router'
 import { FormattedPrice } from '@/helpers/index'
 import Modal from '@/components/Modal';
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
 
 const ServicePage: FC = () => {
+
 
   const [ isModalOpen, setIsModalOpen ] = useState(false);
 
@@ -22,30 +23,47 @@ const ServicePage: FC = () => {
     setIsModalOpen(false);
   };
 
+  const [ page, setPage] = useState(0)
   const [ services, setServices ] = useState<[]>()
-
+  const [ servicesId, setServicesId] = useState("")
   const [ userid, setUserID ] = useState("")
-  const router = useRouter();
+  const [ userId, setUserId] = useState("")
 
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
 
-  const onSubmitDeleteProduct = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    const fetchData = async () => {
+       const response = await fetch(`http://localhost:3001/services/getAllServices/?skip=${page}&orderby=desc`, {
+          method: "GET",
+          headers: { 'Content-Type': 'application/json' },
+          cache: "default"
+      })
 
-    useEffect(() => {
-      const cookies = Cookies.get("ecom_token")
-      if(cookies) {
-          const { userID } : any = jwtDecode(cookies) as any
-          setUserID(userID)
+      if (!response.ok) {
+        throw new Error("There something wrong while fetching data")
       }
-    }, [
-      userid
-    ])
+  
+      const result = await response.json();
+  
+      setServices(result)
+  
+    }
+  
+    fetchData();
+    }, [ services ])
+
+    const router = useRouter();
     
-    const res = await fetch(`http://localhost:3001/product/deleteProduct/${router.query.id}`, {
+    const onFormDelete =  async () => {
+    const res = await fetch(`http://localhost:3001/product/deleteServices/${servicesId}`, {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            userID: userid,
+            userID: userId,
         })
     })
 
@@ -54,25 +72,13 @@ const ServicePage: FC = () => {
         alert("There something wrong while updating..")
     } else {
         alert("Successfully Deleted")
-        router.push("/minerva/admin/product")
     }
 
     return res.json();
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-       const response = await fetch("http://localhost:3001/services/getAllServices", {
-          method: "GET",
-      })
-
-      const result = await response.json();
-      setServices(result)
-    }
-    fetchData()
-  }, [])
-
   return (
+
     <div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className=" bg-gray-800 rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
@@ -82,13 +88,13 @@ const ServicePage: FC = () => {
             </div>
 
             <div className="mt-5 flex flex-col justify-center items-center">
-            <form>
+            <form onSubmit={onFormDelete}>
                 <div className="grid gap-y-4">
                 <p className="text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
                 Are you sure you want to delete this product?
                 </p>
                 <div className='flex gap-2'>
-                  <button type="submit" className="py-3 px-4 flex w-40 justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={() => router.push("/auth/changePassReqSuccess")}>Yes</button>
+                  <button type="submit" className="py-3 px-4 flex w-40 justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={() => router.push("/minerva/admin/services")}>Yes</button>
                   <button type="submit" className="py-3 px-4 w-40 flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={handleCloseModal}>No</button>
                 </div>
                 </div>
@@ -120,16 +126,18 @@ const ServicePage: FC = () => {
       <div className={styles.col4}>Action</div>
     </li>
 
-    {services?.map(({ userID, serviceID, id, services, description, price, }: any) => (
+    {services?.map(({ userID, servicesID, id, services, description, price, status }: any) => (
 
     <li className={styles.tableRow}>
       <div className={styles.col1} data-label="Service ID">{id}</div>
       <div className={styles.col2} data-label="Service Name">{services}</div>
       <div className={styles.col2} data-label="Service Name">{FormattedPrice(price)}</div>
-      <div className={styles.col3} data-label="Email Address">Available</div>
+      <div className={styles.col3} data-label="Email Address">{status}</div>
       <div className={styles.col4} data-label="Action">
-      <button onClick={() => router.push(`/minerva/admin/services/editservices/${serviceID}`)}className={styles.col4} > <TbEdit size={25}/> </button>
-      <button onClick={() => router.push(`/minerva/admin/services/deleteservice/${serviceID}`)} className={styles.col4} > <TbTrash size={25}/> </button>
+      <button onClick={() => router.push(`/minerva/admin/services/editservices/${servicesID}`)}className={styles.col4} > <TbEdit size={25}/> </button>
+      <button onClick={() => {
+                              handleOpenModal();
+                              setServicesId(servicesID) }} className={styles.col4} > <TbTrash size={25}/> </button>
       </div>
     </li>
 
@@ -137,36 +145,14 @@ const ServicePage: FC = () => {
   </ul>
 
 
-<div className={styles.pagination}>
-      <ul>
-
-        <li>
-          <a href="#" >&laquo;</a>
-        </li>
-
-        <li>
-          <a href="#" >1</a>
-        </li>
-        <li>
-          <a href="#" >2</a>
-        </li>
-        <li>
-          <a href="#" className={styles.active}>3</a>
-        </li>
-        <li>
-          <a href="#" >4</a>
-        </li>
-        <li>
-          <a href="#" >5</a>
-        </li>
-        <li>
-          <a href="#" >&raquo;</a>
-        </li>
-
-      </ul>
-    </div>
+  <div className={styles.pagination}>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>
 </div>
-    </div>
+</div>
+    
+
   )
 }
 

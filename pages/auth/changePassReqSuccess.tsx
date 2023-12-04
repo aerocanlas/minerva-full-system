@@ -11,7 +11,7 @@ import { FaUserClock } from "react-icons/fa6";
 import { IoMailUnread } from "react-icons/io5";
 import Link from 'next/link';
 
-export default function ChangePassword() {
+export default function ChangePasswordReqSuccess() {
 
 
   const [ isModalOpen, setIsModalOpen ] = useState(true);
@@ -416,4 +416,4 @@ export default function ChangePassword() {
     </div>
   )
 }
-(ChangePassword as unknown as PageWithLayout).layout = HomePageLayout
+(ChangePasswordReqSuccess as unknown as PageWithLayout).layout = HomePageLayout

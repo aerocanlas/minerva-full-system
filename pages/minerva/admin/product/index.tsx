@@ -14,7 +14,7 @@ import Cookies from 'js-cookie'
 const ProductPage: FC = () => {
 
   const [ isModalOpen, setIsModalOpen ] = useState(false);
-
+  const [ page, setPage] = useState(0)
   const handleOpenModal = () => {
     setIsModalOpen(true);
   }
@@ -22,12 +22,27 @@ const ProductPage: FC = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  
+  const [ users, setUsers ] = useState<[]>()
+  const [ userid, setuserid ] = useState("")
+  const [ productid, setProductID ] = useState("")
+  const [ userId, setUserId] = useState("")
+  const [ productId, setProductId] = useState("")
+  const [ products, setProducts ] = useState<[]>()
+
 
   useEffect(() => {
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
+  
+  useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:3001/product/getAllProduct", {
+      const res = await fetch(`http://localhost:3001/product/getAllProduct/?skip=${page}&orderby=desc`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
+        cache: "default"
       })
     
     if (!res.ok) {
@@ -41,22 +56,18 @@ const ProductPage: FC = () => {
   }
 
   fetchData();
-  }, [])
-
-  // const [ userid, setUserID ] = useState("")
-  const [ productid, setProductID ] = useState("")
-  const [ products, setProducts ] = useState<[]>()
-  const [ userId, setUserId] = useState("")
-  const [ productId, setProductId] = useState("")
+  }, [ products ])
 
   const router = useRouter();
 
-  console.log(products)
 
   const onFormDelete =  async () => {
     const res = await fetch(`http://localhost:3001/product/deleteProduct/${productId}`, {
       method: "DELETE",
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userID: userId
+      })
     })
 
     if(!res.ok) {
@@ -66,39 +77,6 @@ const ProductPage: FC = () => {
     }
     return res.json()
   }
-
-
-  // useEffect(() => {
-  //   const cookies = Cookies.get("ecom_token")
-  //   if(cookies) {
-  //       const { productID } : any = jwtDecode(cookies) as any
-  //       setProductID(productID)
-  //   }
-  // }, [
-  //   productid
-  // ])
-  
-  // const onSubmitDeleteProduct = async (e: SyntheticEvent) => {
-  //   e.preventDefault();
-    
-  //   const res = await fetch(`http://localhost:3001/product/deleteProduct/${router.query.id}`, {
-  //       method: "DELETE",
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         productID: productid,
-  //       })
-  //   })
-
-
-  //   if(!res.ok) {
-  //       alert("There something wrong while updating..")
-  //   } else {
-  //       alert("Successfully Deleted")
-  //       router.push("/minerva/admin/product")
-  //   }
-
-  //   return res.json();
-  // }
   
   return (
     <div>
@@ -127,7 +105,7 @@ const ProductPage: FC = () => {
               <div className={styles.col7}>ACTION</div>
             </li>
 
-            {products?.map(({ userID, id, productID, name, category, price, stock, image, description, }: any) => (
+            {products?.map(({ userId, id, productID, name, category, price, stock, image, description, }: any) => (
               
                 <li className={styles.tableRow}>
                 <div className={styles.col1} data-label="Product Image">
@@ -157,32 +135,8 @@ const ProductPage: FC = () => {
         </div>
 
         <div className={styles.pagination}>
-          <ul>
-
-            <li>
-              <a href="#" >&laquo;</a>
-            </li>
-
-            <li>
-              <a href="#" className={styles.active}>1</a>
-            </li>
-            <li>
-              <a href="#" >2</a>
-            </li>
-            <li>
-              <a href="#">3</a>
-            </li>
-            <li>
-              <a href="#" >4</a>
-            </li>
-            <li>
-              <a href="#" >5</a>
-            </li>
-            <li>
-              <a href="#" >&raquo;</a>
-            </li>
-
-          </ul>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
         </div>
 
       </div>
@@ -194,16 +148,14 @@ const ProductPage: FC = () => {
             </div>
 
             <div className="mt-5 flex flex-col justify-center items-center">
-            <form>
+            <form onSubmit={onFormDelete}>
                 <div className="grid gap-y-4">
                 <p className="text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
-                Are you sure you want to delete this product?
+                Are you sure you want to delete this customer from the earth?
                 </p>
                 <div className='flex gap-2'>
-                <form onSubmit={onFormDelete}>
-                  <button type="submit" className="py-3 px-4 flex w-40 justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={() => router.push("/minerva/product")}>Yes</button>
+                  <button type="submit" className="py-3 px-4 flex w-40 justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={() => router.push("/minerva/admin/product")}>Yes</button>
                   <button type="button" className="py-3 px-4 w-40 flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={handleCloseModal}>No</button>
-                </form>
                 </div>
                 </div>
               </form>

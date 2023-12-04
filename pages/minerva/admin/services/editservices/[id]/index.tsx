@@ -1,13 +1,13 @@
 import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC, FormEvent, useEffect, useState } from 'react'
+import React, { FC, SyntheticEvent, useEffect, useState } from 'react'
 import Head from 'next/head'
 import { TbListSearch, TbCalendar, TbEdit, TbTrash, TbUsers, TbHexagonPlus } from 'react-icons/tb'
-import router from 'next/router'
+import { useRouter } from 'next/router'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
-
+import { Cookie } from 'next/font/google'
 
 const EditServicesPage: FC = () => {
 
@@ -17,16 +17,20 @@ const EditServicesPage: FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const [ serviceStatus, setServiceStatus ] = useState("Service Status");
-  const serviceAvailability =["Available", "Unavailable"];
-
   const [ isOpen1, setIsOpen1 ] = useState(false);
-
-  const [ userId, setUserId ] = useState("")
 
   const toggleDropdown1 = () => {
     setIsOpen1(!isOpen1);
   };
+
+  const [ servicesD, setServicesD ] = useState<[]>()
+
+  const [ serviceStatus, setServiceStatus ] = useState("");
+  const serviceAvailability =["Available", "Unavailable"];
+
+  const [ userId, setUserId ] = useState("")
+
+  const router = useRouter();
 
   useEffect(() => {
     const cookies = Cookies.get("ecom_token");
@@ -34,23 +38,71 @@ const EditServicesPage: FC = () => {
       const { userID }: any = jwtDecode(cookies)
       setUserId(userID)
     }
-  }, [])
+  }, [ userId ])
 
-  const serviceEditForm = async () => {
-    const response = await fetch(`http://localhost:3001/services/updateService/${router.query.id}`, {  //get service id
-      method: "PATCH",
+  const [ services, setServices ] = useState({
+    services: "",
+    price: "",
+    description: "",
+    status: "",
+  })
+
+  console.log(services)
+
+  const [ selectedImage, setSelectedImage ] = useState<any>([])
+
+  const onHandleImageUpload = (e: any) => {
+    setSelectedImage(Array.from(e.target.files))
+  }
+
+  const [ users, setUsers ] = useState<[]>()
+
+
+  const EditServicesForm = async (e :any) => {
+
+    e.preventDefault();
+    // const fd = new FormData();
+
+    // fd.append("services", services.services)
+    // fd.append("description", services.description);
+    // fd.append("price", services.price);
+    // fd.append("status", services.status)
+    // fd.append("userID", userId)
+    const response = await fetch(`http://localhost:3001/services/updateService/${router.query.id}`, {
+      method: "PATCH",  
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        serviceID: "",
-        description,
-        services: serviceName,
-        price,
+        ...services,
         userID: userId
       })
     })
 
-    return response.json()
-  }
+    if(!response.ok) throw new Error("There something wrong while updating")
 
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`http://localhost:3001/services/getAllServices/${router.query.id}`, {
+        method: "GET",     
+         headers: { 'Content-Type': 'application/json' },
+        cache: "force-cache",
+      })
+
+      const result = await res.json();
+      setServicesD(result)
+    }
+
+    fetchData()
+  }, [router])
+
+  useEffect(() => {
+    servicesD?.map(({ servicesID, services, status, price, description, userID, }: any) => {
+      setServices({
+        description, price, services, status
+      })
+    })
+  }, [servicesD])
+  
 
 
   return (
@@ -78,19 +130,19 @@ const EditServicesPage: FC = () => {
 
             <div className=" w-full mx-auto">
 
-              <form className='grid grid-cols-1 md:grid-cols-2 gap-16'>
+              <form encType='multipart/form-data' onSubmit={EditServicesForm} className='grid grid-cols-1 md:grid-cols-2 gap-16'>
                 <div className="mb-6">
                   <label htmlFor="productName" className="text-sm font-medium text-gray-900 block mb-2">Service Name</label>
-                  <input name="name" type="text" id="productName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input first name" required />
+                  <input name="name" type="text" id="productName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onChange={(e) => setServices({...services, services: e.target.value})} defaultValue={services.services} placeholder="Input first name" required />
                 </div>
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
-                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Product Status</label>
+                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Service Status</label>
                       <button name="status" type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown}
                       >
-                        {serviceStatus}
+                        {services.status === "" ? "Select Service Status" : services.status}
 
                         <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 011.414 0 1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -106,7 +158,7 @@ const EditServicesPage: FC = () => {
         type="button"
         key={name}
         value={name}
-        onClick={(e) => setServiceStatus(e.currentTarget.value)}
+        onClick={(e) => setServices({...services, status: e.currentTarget.value})}
       >
         {name}
       </button>
@@ -117,11 +169,11 @@ const EditServicesPage: FC = () => {
                 </div>
                 <div className="mb-6">
                   <label htmlFor="price" className="text-sm font-medium text-gray-900 block mb-2">Service Price</label>
-                  <input name="price" type="text" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="ex. PHP 999.00" required />
+                  <input name="price" type="text" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " onChange={(e) => setServices({...services, price: e.target.value})} defaultValue={services.price} placeholder="ex. PHP 999.00" required />
                 </div>
                 <div className="mb-6">
                   <label htmlFor="description" className="text-sm font-medium text-gray-900 block mb-2">Service Description</label>
-                  <textarea name="description" id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" placeholder="Input your product description here" required />
+                  <textarea name="description" id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" onChange={(e) => setServices({...services, description: e.target.value})} defaultValue={services.description} placeholder="Input your product description here" required />
                 </div>
                 <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Service Details</button>
               </form>

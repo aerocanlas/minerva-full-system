@@ -46,7 +46,7 @@ export default function Login() {
 				if (role === "admin") {
 					router.push("/minerva/admin/customer")
 				} else {
-					router.push('/minerva/customer/accountdetails')
+					router.push('/')
 				}
 			}
 		}

@@ -10,6 +10,7 @@ import {FormattedDate} from '@/helpers/index'
 
 
 const Appointments: FC = () => {
+  const [ page, setPage] = useState(0)
   const [ isModalOpen, setIsModalOpen ] = useState(false);
 
   const handleOpenModal = () => {
@@ -86,18 +87,18 @@ const Appointments: FC = () => {
             <div className={styles.col6}>Action</div>
           </li>
 
-          {appointment?.map(({ service, date,  time, id, status, }: any) => (
+          {appointment?.map(({ userID, scheduleID, service, date,  time, id, status, }: any) => (
 
           <li className={styles.tableRow}>
             <div className={styles.col1} data-label="Service Id">{id}</div>
             <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            {service.map((name) => (
+            {service.map((name : any) => (
                    <div className={styles.col3} data-label="Service Name">{name}</div>
             ))}
             <div className={styles.col4} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
             <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>{status}</span></div>
             <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/appointments/editappointments")} className={styles.col4} > <TbEdit size={25} /> </button>
+              <button onClick={() => router.push(`/minerva/admin/appointments/editappointments/${scheduleID}`)} className={styles.col4} > <TbEdit size={25} /> </button>
               <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
             </div>
           </li>
@@ -106,32 +107,8 @@ const Appointments: FC = () => {
 
 
         <div className={styles.pagination}>
-          <ul>
-
-            <li>
-              <a href="#" >&laquo;</a>
-            </li>
-
-            <li>
-              <a href="#" >1</a>
-            </li>
-            <li>
-              <a href="#" >2</a>
-            </li>
-            <li>
-              <a href="#" className={styles.active}>3</a>
-            </li>
-            <li>
-              <a href="#" >4</a>
-            </li>
-            <li>
-              <a href="#" >5</a>
-            </li>
-            <li>
-              <a href="#" >&raquo;</a>
-            </li>
-
-          </ul>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
         </div>
       </div>
 
