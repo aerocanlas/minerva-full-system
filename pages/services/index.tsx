@@ -5,15 +5,34 @@ import styles from '@/styles/customer/customer.module.scss'
 import { FaUserClock } from "react-icons/fa6";
 import Image from 'next/image'
 import { FormattedPrice } from '@/helpers/index'
+import { jwtDecode } from 'jwt-decode'
+import Cookies from 'js-cookie'
+import router from 'next/router';
 
 const Services: FC = () => {
+
+  const [ userId, setUserId] = useState("")
+  const [ page, setPage] = useState(0)
+
+  const handleClick = (servicesID: any) => {
+    // Navigate to the target page when the component is clicked
+    router.push(`/services/servicedetail/${servicesID}`);
+  };
+
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
   
   const [ services, setServices ] = useState<[]>()
 
 useEffect(() => {
   const fetchData = async () => {
-     const response = await fetch("http://localhost:3001/services/getAllServices", {
+     const response = await fetch(`http://localhost:3001/services/getAllServices/?skip=${page}&orderby=desc`, {
         method: "GET",
+        headers: { 'Content-Type': 'application/json' },
+        cache: "default"
     })
 
     const result = await response.json();
@@ -26,33 +45,45 @@ useEffect(() => {
     <>
   <div className={styles.bodyServices}>
   <section className="relative mt-4 h-screen pb-12 mb-16 flex flex-col items-center justify-center ">
-    <div className="relative top-60 mb-12 grid gap-16 lg:grid-cols-3 p-8 mx-8 gap-y-18	">
+    <div className="relative top-40 mb-12 grid gap-16 lg:grid-cols-3 p-8 mx-8 gap-y-18	">
     
-    {services?.map(({ image, services, description, userID, price }: any) => (
-
-                    <div className="w-full lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow transition-all duration-700 hover:scale-105">
+    {services?.map(({ servicesID, image, services, description, userID, price }: any) => (
+      <div key={servicesID} onClick={() => handleClick(servicesID)}>
+                    <div className="relative w-full h-[750px] lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow transition-all duration-700 hover:scale-105">
                         <div>
                         <Image src={image} alt={services} height={350} width={450} />
                         </div>
-                        <div className="p-4">
-                            <h4 className="text-xl font-semibold text-black-600 text-center">
+                        <div className="block px-10 py-10 p-4">
+                            <h4 className="pb-4 text-xl font-semibold text-black-600 text-center">
                                 {services}
                             </h4>
-                            <p className="mb-2 leading-normal text-center">
+                            <p className="pb-10 mb-2 leading-normal text-center">
                             {description}
                             </p>
-                            <p className="mr-2 text-lg font-bold text-black dark:text-black">
+                            <p className="absolute bottom-10 left-10 mr-2 text-lg font-bold text-black dark:text-black">
                             {FormattedPrice(price)}
                             </p>
-                            <button className="ml-64 px-4 py-1 bottom-0 right-0 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/>
+                            <button className="absolute bottom-10 left-10 ml-64 px-4 py-1 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/>
                             </button>
                         </div>
+                    </div>
                     </div>
                 ))}
 
             </div>
+            <div className="absolute bottom-[-220px] min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible flex gap-10">
+
+          <div className={styles.pagination}>
+        <button className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>          </div>
+
             </section>
+
+            
             </div>
+
+            
 
             {/*  */}
           <section className="relative flex flex-col items-center justify-center text-center text-white ">

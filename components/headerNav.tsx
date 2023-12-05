@@ -6,7 +6,7 @@ import { Poppins } from 'next/font/google'
 import Image from 'next/image'
 import Cookies from 'js-cookie'
 import { TbMenu2, TbCircleArrowRight , TbBrandWechat ,TbCalendar, TbShoppingBag, TbSettings } from 'react-icons/tb'
-
+import  dynamic from 'next/dynamic'
 
 const customer = [
   { name: "Home", url: "/"},  
@@ -47,6 +47,13 @@ export default function HeaderNavbar() {
   const [ mobile, setMobile ] = useState(false)
   const [ user, setUsers ] = useState("")
   const [isOpen, setIsOpen] = useState(false);
+  const [ carts, setCartLength ] = useState<[]>()
+
+
+  useEffect(() => {
+    const cartLength = JSON.parse(localStorage.getItem("products") as any)
+    if(cartLength) setCartLength(cartLength as any)
+  }, [])
 
   useEffect(() => {
     const cookies = Cookies.get("ecom_token")
@@ -58,7 +65,7 @@ export default function HeaderNavbar() {
   }
 
   const onHandleCartBtn = () => {
-    router.push("cart")
+    router.push("/cart")
 }
 
   const onHandleMobileNavigation = () => {
@@ -160,7 +167,7 @@ export default function HeaderNavbar() {
        </button>}
 
             <button className={styles.cartBtn} type="button" onClick={onHandleCartBtn}>
-            <span className={poppins.className}>Cart (0)</span>
+            <span className={poppins.className}>Cart  ({carts?.length})</span>
             </button>
            
       </div>

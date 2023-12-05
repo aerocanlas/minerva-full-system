@@ -59,7 +59,7 @@ const ServicePage: FC = () => {
     const router = useRouter();
     
     const onFormDelete =  async () => {
-    const res = await fetch(`http://localhost:3001/product/deleteServices/${servicesId}`, {
+    const res = await fetch(`http://localhost:3001/services/deleteService/${servicesId}`, {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

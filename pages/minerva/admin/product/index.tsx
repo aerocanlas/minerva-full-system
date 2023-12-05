@@ -110,7 +110,7 @@ const ProductPage: FC = () => {
                 <li className={styles.tableRow}>
                 <div className={styles.col1} data-label="Product Image">
                 {image.length > 0 && (
-    <Image src={image[0]} alt={name} height={120} width={120} />
+    <Image src={image[1]} alt={name} height={120} width={120} />
   )}
                 </div>
                 <div className={styles.col2} data-label="Product Id">{id}</div>

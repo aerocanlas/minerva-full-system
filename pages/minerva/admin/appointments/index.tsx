@@ -39,7 +39,7 @@ const Appointments: FC = () => {
       const response = await fetch(`http://localhost:3001/schedule/?skip=${page}&orderby=desc`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
-        cache: "default",
+        cache: "no-cache",
       })
       if (!response.ok) {
         throw new Error("There something wrong while fetching data")
@@ -109,13 +109,13 @@ const Appointments: FC = () => {
           </li>
 
           {appointment?.map(({ scheduleID, service, date,  time, id, name, status, User}: any) => (
-            User?.profile === null ? 
+           name === null ? 
             User?.map(({ profile} : any ) => (
           <li className={styles.tableRow}>
             <div className={styles.col1} data-label="Service Id">{id}</div>
             <div className={styles.col2} data-label="Customer Name">{profile.firstname} {profile.lastname}</div>
             
-                   <div className={styles.col3} data-label="Service Name">{service}</div>
+            <div className={styles.col3} data-label="Service Name">{service}</div>
           
             <div className={styles.col4} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
             <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>{status}</span></div>

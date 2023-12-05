@@ -73,12 +73,12 @@ const formSubmitProductQuantity = async (e: SyntheticEvent) => {
 
   e.preventDefault();
 
-    const response = await fetch(`http://localhost:3001/product/updateProductQuantity/${productId}`, {
+    const response = await fetch(`http://localhost:3001/product/updateProductQuantity/clpsbkvju00044szkftr76yh6`, {
       method: "PUT",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        "quantity": 0,
-        "userID": userId,
+        quantity: quantityToUpdate,
+        userID: userId,
       })
     });
 
@@ -89,10 +89,10 @@ const formSubmitProductQuantity = async (e: SyntheticEvent) => {
       // Close the modal after successful update
       setIsModalOpen(false);
     }
+
+    return response.json()
   
 };
-
-console.log(quantity)
 
   return (
     <div>
@@ -112,7 +112,7 @@ console.log(quantity)
                 
                 <div className="w-full gap-2">
             <input
-            name='quantity'
+            name='quantitytoUpdate'
               type="text"
               value={quantityToUpdate}
                   onChange={(e) => setQuantityToUpdate(e.target.value)}
@@ -159,9 +159,10 @@ console.log(quantity)
             {products?.map(({ userId, id, productID, name, category, price, stock, image, description, quantity }: any) => (
 
             <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Product Image">{image.map((random: any) => (
-                      <Image src={random} alt={name} height={120} width={80} />
-                  ))}</div>
+              <div className={styles.col1} data-label="Product Image">
+              {image.length > 0 && (
+    <Image src={image[2]} alt={name} height={120} width={120} />
+  )}</div>
               <div className={styles.col2} data-label="Product Id">{id}</div>
               <div className={styles.col3} data-label="Customer Name">{name}</div>
               <div className={styles.col4} data-label="Email Address">{stock}</div>

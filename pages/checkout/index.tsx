@@ -1,6 +1,6 @@
 import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import Modal from '@/components/Modal';
 
 const  Checkout: FC= () => {

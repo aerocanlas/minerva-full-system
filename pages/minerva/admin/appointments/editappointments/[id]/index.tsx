@@ -31,6 +31,7 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
   const [ appointmentD, setAppointmentD ] = useState<[]>()
 
   const [ appointment, setAppointment ] = useState({
+    id: "",
     date: "",
     service: "",
     time: "",
@@ -45,19 +46,19 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
       const { userID }: any = jwtDecode(cookies)
       setUserId(userID)
     }
-  }, [])
+  }, [ userid ])
 
   useEffect(() => {
     const fetchData = async () => {
     
-        const res = await fetch(`http://localhost:3001/schedule/getAllMyAppointments/${router.query.id}`, {
+        const res = await fetch(`http://localhost:3001/schedule/${router.query.id}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-          cache: 'force-cache',
+          cache: 'default',
         });
   
         if (!res.ok) {
-          throw new Error(`Failed to fetch product data: ${res.status}`);
+          throw new Error(`Failed to fetch appointment data: ${res.status}`);
         }
   
         const result = await res.json();
@@ -66,7 +67,9 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
     };
 
     fetchData();
-  }, [router ]);
+  }, [router, appointmentD ]);
+
+  console.log(appointment.status)
 
   const EditAppointmentForm = async (e :any) => {
 
@@ -74,15 +77,11 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
 
     const response = await fetch(`http://localhost:3001/schedule/updateSchedule/${router.query.id}`, {
 
-         method: "PATCH",
+         method: "PUT",
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({
-        "date": appointment.date,
-        "time" : appointment.time,
-        "name": appointment.name,
-        "service": appointment.service,
-        "status": appointment.status,
-        userID: userid
+          status: appointmentStatus,
+          userID: userid
         })
     })
     if(!response.ok) 
@@ -98,20 +97,33 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
     setIsOpen(!isOpen);
   };
 
+
   useEffect(() => {
-    appointmentD?.map(({ productID, date, time, name, service, status}: any) => {
+    appointmentD?.map(({userID, scheduleID, date, time, name, service, status, User}: any) => {
+      name === null ?
+      
+      User.map(({ profile }: any) => (
         setAppointment({
+          id: scheduleID,
           date: date,
           time: time,
-          name: name,
+          name: `${profile.firstname} ${profile.lastname}`,
           status: status,
           service: service
 
         })
-    })
-  }, [appointment])
+      )) : setAppointment({
+        id: scheduleID,
+        date: date,
+        time: time,
+        name: name,
+        status: status,
+        service: service
 
-  console.log(appointment)
+      }) 
+    
+    })
+  }, [  appointmentD ])
 
   return (
     
@@ -141,22 +153,26 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
 
         <div className="mb-6">
             <label htmlFor="firstName" className="text-sm font-medium text-gray-900 block mb-2">Customer Name</label>
-            <input type="text" id="firstName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input first name"  required />
+            <input type="text" id="firstName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input customer name" defaultValue={appointment.name} disabled required />
             </div>
         <div className="mb-6">
             <label htmlFor="middleName" className="text-sm font-medium text-gray-900 block mb-2">Service Name</label>
-            <input type="text" id="middleName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Input middle name"  required />
+            <input type="text" id="middleName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+            onChange={(e) => setAppointment({...appointment, service: e.target.value})}
+            placeholder="Input service name" defaultValue={appointment.service} disabled required />
             </div>
             <div className="mb-6">
-                    <label htmlFor="customerName" className="text-sm font-medium text-gray-900 block mb-2">Select Date</label>                        <input
+                    <label htmlFor="customerName" className="text-sm font-medium text-gray-900 block mb-2">Select Date</label>                      
+                   <input
+                   disabled
                           id="date"
                           type="date"
                           name="date"
-                          min="2024-06-01"
-                          max="2028-06-30"
+                          min="2023-12-6"
+                          max="2030-01-31"
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           onChange={(e) => setAppointment({...appointment, date: e.target.value})}
-                          defaultValue={appointment.name}
+                          defaultValue={appointment.date}
                         />
                       
                     </div>
@@ -164,11 +180,13 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
                 <div className="mb-6">
                 <label htmlFor="customerName" className="text-sm font-medium text-gray-900 block mb-2">Select Time</label>
                         <input
+                        disabled
                           id="time"
                           type="time"
                           name="time"
                           min="08:30"
                           max="16:30"
+                          defaultValue={appointment.time}
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           onChange={(e) => setAppointment({...appointment, time: e.target.value})}
                         />
@@ -181,24 +199,32 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
     <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
     onClick={toggleDropdown}
     >
-      Select appointment status
+      {appointmentStatus === "" ? "Select Product Status" : appointmentStatus}
       
       <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 011.414 0 1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
       </svg>
     </button>
   </div>
-  {isOpen && (
-  <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-    <div className="py-1">
-      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Completed</a>
-      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Pending</a>
-      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cancelled</a>
-    </div>
-  </div>
-  )}
+  <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'w-[220px] absolute z-50' : 'hidden'}`}>
+  {isOpen ? (
+    appointmentStatusB.map((name) => (
+      <button
+      name="stock"
+        className='text-left'
+        type="button"
+        key={name}
+        value={name}
+        onClick={(e) => setAppointmentStatus(e.currentTarget.value)}
+      >
+        {name}
+      </button>
+    ))
+  ) : null}
 </div>
 </div>
+</div>
+<br></br>
         <button type="submit" className="relative top-10 left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Appointment Details</button>
     </form>
 </div>

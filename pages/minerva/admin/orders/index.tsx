@@ -61,7 +61,7 @@ const Orders: FC = () => {
   const onSubmitDeleteProduct = async (e: SyntheticEvent) => {
     e.preventDefault();
     
-    const res = await fetch(`http://localhost:3001/product/deleteProduct/${router.query.id}`, {
+    const res = await fetch(`http://localhost:3001/order/deleteProduct/${router.query.id}`, {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
