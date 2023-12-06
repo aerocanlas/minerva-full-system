@@ -100,39 +100,39 @@ const Appointments: FC = () => {
 
         <ul className={styles.responsiveTable}>
           <li className={styles.tableHeader}>
-            <div className={styles.col1}>Appointment ID</div>
-            <div className={styles.col2}>Customer Name</div>
-            <div className={styles.col3}>Service Name</div>
-            <div className={styles.col4}>Appointment Date</div>
-            <div className={styles.col5}>Status</div>
-            <div className={styles.col6}>Action</div>
+            <div className={styles.col1A}>Appointment ID</div>
+            <div className={styles.col2A}>Customer Name</div>
+            <div className={styles.col3A}>Service Name</div>
+            <div className={styles.col4A}>Appointment Date</div>
+            <div className={styles.col5A}>Status</div>
+            <div className={styles.col6A}>Action</div>
           </li>
 
           {appointment?.map(({ scheduleID, service, date,  time, id, name, status, User}: any) => (
            name === null ? 
             User?.map(({ profile} : any ) => (
           <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Service Id">{id}</div>
-            <div className={styles.col2} data-label="Customer Name">{profile.firstname} {profile.lastname}</div>
+            <div className={styles.col1A} data-label="Service Id">{id}</div>
+            <div className={styles.col2A} data-label="Customer Name">{profile.firstname} {profile.lastname}</div>
             
-            <div className={styles.col3} data-label="Service Name">{service}</div>
+            <div className={styles.col3A} data-label="Service Name">{service}</div>
           
-            <div className={styles.col4} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
-            <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>{status}</span></div>
-            <div className={styles.col5} data-label="Action">
+            <div className={styles.col4A} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
+            <div className={styles.col6A} data-label="Order Status"><span>{status}</span></div>
+            <div className={styles.col5A} data-label="Action">
               <button onClick={() => router.push(`/minerva/admin/appointments/editappointments/${scheduleID}`)} className={styles.col4} > <TbEdit size={25} /> </button>
               <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
             </div>
           </li>
           )) :  <li className={styles.tableRow}>
-          <div className={styles.col1} data-label="Service Id">{id}</div>
-          <div className={styles.col2} data-label="Customer Name">{name}</div>
+          <div className={styles.col1A} data-label="Service Id">{id}</div>
+          <div className={styles.col2A} data-label="Customer Name">{name}</div>
           
-                 <div className={styles.col3} data-label="Service Name">{service}</div>
+                 <div className={styles.col3A} data-label="Service Name">{service}</div>
         
-          <div className={styles.col4} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
-          <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>{status}</span></div>
-          <div className={styles.col5} data-label="Action">
+          <div className={styles.col4A} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
+          <div className={styles.col6A} data-label="Order Status"><span>{status}</span></div>
+          <div className={styles.col5A} data-label="Action">
             <button onClick={() => router.push(`/minerva/admin/appointments/editappointments/${scheduleID}`)} className={styles.col4} > <TbEdit size={25} /> </button>
             <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
           </div>

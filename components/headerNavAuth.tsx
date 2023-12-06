@@ -1,10 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter} from 'next/router'
 import Link from 'next/link'
 import styles from '@/styles/Navbar/navbar.module.scss'
 import { Poppins } from 'next/font/google'
 import { TbMenu2, TbCircleArrowRight , TbBrandWechat ,TbCalendar, TbShoppingBag, TbSettings } from 'react-icons/tb'
 import Image from 'next/image'
+import { jwtDecode } from 'jwt-decode'
+import Cookies from 'js-cookie'
+
+const [userId, setUserId] = useState("");
+
+useEffect(() => {
+  const cookies = Cookies.get("ecom_token");
+  if (cookies) {
+    const { userID }: any = jwtDecode(cookies)
+    setUserId(userID)
+  }
+}, [])
 
 const customer = [
   { name: "Home", url: "/"},  
@@ -31,17 +43,26 @@ const poppins = Poppins({
 
 export default function HeaderNavbar() {
 
+  const [ userId, setUserId] = useState("")
+
+  const handleClick = (userId: any) => {
+    // Navigate to the target page when the component is clicked
+    router.push(`/minerva/customer/accountdetails/${userId}`);
+  };
+
+
+
+
   const [isOpen, setIsOpen] = useState(false);
 
   const dropdownItems = [
-    { label: 'Account Details', value: 'Account Details', icon: <TbSettings size="20px" />, url: "/minerva/customer/accountdetails" },
+    { label: 'Account Details', value: 'Account Details', icon: <TbSettings size="20px" />, url: `/pages/minerva/customer/accountdetails/${router.query.id}` },
     { label: 'View Orders', value: 'View Orders', icon: <TbShoppingBag size="20px" />, url: "/minerva/customer/vieworders" },
     { label: 'View Appointments', value: 'View Appointments', icon: <TbCalendar size="20px" />, url: "/minerva/customer/viewappointments" },
     { label: 'Chat', value: 'Chat' , icon: <TbBrandWechat size="20px" />, url: "/minerva/customer/chat" },
     { label: 'Logout', value: 'Logout' , icon: <TbCircleArrowRight size="20px" />, url: "/auth/login" },
   ];
 
-  const router = useRouter();
   const [ mobile, setMobile ] = useState(false)
 
   const onHandleLoginBtn = () => {

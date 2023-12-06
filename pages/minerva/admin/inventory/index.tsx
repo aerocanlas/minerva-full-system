@@ -146,34 +146,30 @@ const formSubmitProductQuantity = async (e: SyntheticEvent) => {
         <div className={styles.tablecontainer}>
           <ul className={styles.responsiveTable}>
             <li className={styles.tableHeader}>
-              <div className={styles.col1}>IMAGE</div>
-              <div className={styles.col2}>ID</div>
-              <div className={styles.col3}>NAME</div>
-              <div className={styles.col4}>STATUS</div>
-              <div className={styles.col5}>QUANTITY</div>
-              <div className={styles.col5}>CATEGORY</div>
-              <div className={styles.col6}>PRICE</div>
-              <div className={styles.col7}>ACTION</div>
+              <div className={styles.col1I}>PRODUCT ID</div>
+              <div className={styles.col2I}>PRODUCT NAME</div>
+              <div className={styles.col3I}>PRODUCT STATUS</div>
+              <div className={styles.col4I}>PRODUCT QUANTITY</div>
+              <div className={styles.col5I}>PRODUCT CATEGORY</div>
+              <div className={styles.col6I}>PRODUCT PRICE</div>
+              <div className={styles.col7I}>ACTION</div>
             </li>
 
             {products?.map(({ userId, id, productID, name, category, price, stock, image, description, quantity }: any) => (
 
             <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Product Image">
-              {image.length > 0 && (
-    <Image src={image[2]} alt={name} height={120} width={120} />
-  )}</div>
-              <div className={styles.col2} data-label="Product Id">{id}</div>
-              <div className={styles.col3} data-label="Customer Name">{name}</div>
-              <div className={styles.col4} data-label="Email Address">{stock}</div>
-              <div className={styles.col5} data-label="Email Address">{quantity}</div>
-              <div className={styles.col5} data-label="Email Address">{category}</div>
-              <div className={styles.col6} data-label="Email Address">{FormattedPrice(price)}</div>
-              <div className={styles.col7} data-label="Action">
+              <div className={styles.col1I} data-label="Product Id">{id}</div>
+              <div className={`${styles.col2I} ${styles.colInvName}`} data-label="Customer Name">{name}</div>
+              <div className={`${styles.col2I} ${styles.colInvStock}`} data-label="Email Address">{stock}</div>
+              <div
+  className={`${styles.col4I} ${quantity >= 10 ? styles.badgeSuccess : styles.badgeCancel}`}
+  data-label="Email Address"
+>{quantity}</div>
+              <div className={`${styles.col5I} ${styles.colInvCat}`}  data-label="Email Address">{category}</div>
+              <div className={`${styles.col6I} ${styles.colInvPrice}`}  data-label="Email Address">{FormattedPrice(price)}</div>
+              <div className={`${styles.col7I} ${styles.colInvAction}`} data-label="Action">
                 <div className="flex align-items-center">
-                <button onClick={() => {
-                  handleOpenModal()
-                setProductId(productID)}} className={styles.col7}> <TbEdit size={25} /> </button>
+                <button onClick={() => router.push(`/minerva/admin/inventory/editinventory/${productID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
                 </div>
               </div>
             </li>

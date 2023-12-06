@@ -7,6 +7,8 @@ import Image from 'next/image'
 import Cookies from 'js-cookie'
 import { TbMenu2, TbCircleArrowRight , TbBrandWechat ,TbCalendar, TbShoppingBag, TbSettings } from 'react-icons/tb'
 import  dynamic from 'next/dynamic'
+import { jwtDecode } from 'jwt-decode'
+
 
 const customer = [
   { name: "Home", url: "/"},  
@@ -32,18 +34,34 @@ const poppins = Poppins({
 })
 
 
-const dropdownItems = [
-  { label: 'Account Details', value: 'Account Details', icon: <TbSettings size="20px" />, url: "/minerva/customer/accountdetails" },
-  { label: 'View Orders', value: 'View Orders', icon: <TbShoppingBag size="20px" />, url: "/minerva/customer/vieworders" },
-  { label: 'View Appointments', value: 'View Appointments', icon: <TbCalendar size="20px" />, url: "/minerva/customer/viewappointments" },
-  { label: 'Chat', value: 'Chat' , icon: <TbBrandWechat size="20px" />, url: "/minerva/customer/chat" },
-  { label: 'Logout', value: 'Logout' , icon: <TbCircleArrowRight size="20px" />, url: "/auth/login" },
-];
+
 
 
 
 export default function HeaderNavbar() {
+
   const router = useRouter();
+
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token");
+    if (cookies) {
+      const { userID }: any = jwtDecode(cookies)
+      setUserId(userID)
+    }
+  }, [])
+
+  const dropdownItems = [
+    { label: 'Account Details', value: 'Account Details', icon: <TbSettings size="20px" />, url: `/minerva/customer/accountdetails/${userId}` },
+    { label: 'View Orders', value: 'View Orders', icon: <TbShoppingBag size="20px" />, url: "/minerva/customer/vieworders" },
+    { label: 'View Appointments', value: 'View Appointments', icon: <TbCalendar size="20px" />, url: "/minerva/customer/viewappointments" },
+    { label: 'Chat', value: 'Chat' , icon: <TbBrandWechat size="20px" />, url: "/minerva/customer/chat" },
+    { label: 'Logout', value: 'Logout' , icon: <TbCircleArrowRight size="20px" />, url: "/auth/login" },
+  ];
+
+
+
   const [ mobile, setMobile ] = useState(false)
   const [ user, setUsers ] = useState("")
   const [isOpen, setIsOpen] = useState(false);

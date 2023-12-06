@@ -54,7 +54,7 @@ const AuditLog: FC = () => {
           <li key={logsID} className={styles.tableRow}>
             <div className={styles.col2} data-label="Admin Name"> {User.profile.firstname} {User.profile.lastname}</div>
             <div className={styles.col3} data-label="Date Created">{FormattedDate(createdAt)}</div>
-            <div className={styles.col4} data-label="Action"><span className={styles.badgeSuccess}>{title}</span>
+            <div className={styles.col4} data-label="Action"><span className={styles.badgeSuccessLogs}>{title}</span>
             </div>
           </li>
           // ))

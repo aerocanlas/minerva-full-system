@@ -123,28 +123,28 @@ const Orders: FC = () => {
         <div className={styles.tablecontainer}>
           <ul className={styles.responsiveTable}>
             <li className={styles.tableHeader}>
-              <div className={styles.col1}>ORDER ID</div>
-              <div className={styles.col2}>CUSTOMER NAME</div>
-              <div className={styles.col3}>DATE ORDERED</div>
-              <div className={styles.col4}>AMOUNT</div>
-              <div className={styles.col5}>PAYMENT METHOD</div>
-              <div className={styles.col6}>ORDER STATUS</div>
-              <div className={styles.col7}>ACTION</div>
+              <div className={styles.col1O}>ORDER ID</div>
+              <div className={styles.col2O}>CUSTOMER NAME</div>
+              <div className={styles.col3O}>DATE ORDERED</div>
+              <div className={styles.col4O}>AMOUNT</div>
+              <div className={styles.col5O}>PAYMENT METHOD</div>
+              <div className={styles.col6O}>ORDER STATUS</div>
+              <div className={styles.col7O}>ACTION</div>
             </li>
               
 
             {orders?.map(({ userID, orderID, orders, total, payment, status, createdAt, User}: any) => (
                 User.map(({ profile }: any) => (
                   <li className={styles.tableRow}>
-                  <div className={styles.col1} data-label="Order ID">{orders}</div>
+                  <div className={styles.col1O} data-label="Order ID">{orders}</div>
                   
-                  <div className={styles.col2} data-label="Customer Name"> {profile.firstname} {profile.lastname} </div>
+                  <div className={styles.col2O} data-label="Customer Name"> {profile.firstname} {profile.lastname} </div>
                   
-                  <div className={styles.col3} data-label="Date Ordered">{FormattedDate(createdAt)}</div>
-                  <div className={styles.col4} data-label="Amount">{FormattedPrice(total)}</div>
-                  <div className={styles.col5} data-label="Payment Method">{payment}</div>
-                  <div className={styles.col6} data-label="Order Status"><span>{status}</span></div>
-                  <div className={styles.col7} data-label="Action">
+                  <div className={styles.col3O} data-label="Date Ordered">{FormattedDate(createdAt)}</div>
+                  <div className={styles.col4O} data-label="Amount">{FormattedPrice(total)}</div>
+                  <div className={styles.col5O} data-label="Payment Method">{payment}</div>
+                  <div className={styles.col6O} data-label="Order Status"><span>{status}</span></div>
+                  <div className={styles.col7O} data-label="Action">
                     <button onClick={() => router.push(`/minerva/admin/orders/editorders/${orderID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
                     <button onClick={handleOpenModal} className={styles.col7}> <TbTrash size={25} /> </button>
                   </div>

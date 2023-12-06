@@ -37,7 +37,7 @@ const  Cart: FC= () => {
       const res = await fetch(`http://localhost:3001/order/createOrders`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: products?.map(({ productID, quantity }: any) => {
+        body: products?.map(({ productID, quantity, userID}: any) => {
           JSON.stringify({
             userID: cookies,
             productID: productID,

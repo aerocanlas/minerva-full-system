@@ -9,86 +9,88 @@ import { useRouter } from 'next/router'
 
 const AccountDetails: FC = () => {
 
-    const router = useRouter();
-    const [userId, setUserId] = useState("");
-    const [usersId, setUsersId] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [phone, setPhone] = useState("");
-    const [shipping, setShipping] = useState("");
-    const [email, setEmail] = useState("");
-  
-    useEffect(() => {
-      const cookies = Cookies.get("ecom_token");
-      if (cookies) {
-        const { userID }: any = jwtDecode(cookies);
-        setUserId(userID);
-      }
-    }, []);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-       
-          const res = await fetch(`http://localhost:3001/user/getUsersId/${router.query.id}`, {
-            method: "GET",
-            headers: { 'Content-Type': 'application/json' },
-            cache: "default",
-          });
-  
-          if (!res.ok) {
-            throw new Error(`Failed to fetch user data: ${res.status}`);
-          }
-  
-          const result = await res.json();
-  
-          // Check if the result array is not empty
-          if (result && result.length > 0) {
-            const userProfile = result[0].profile;
-  
-            setFirstName(userProfile.firstname);
-            setLastName(userProfile.lastname);
-            setPhone(userProfile.phone);
-            setShipping(userProfile.shipping);
-            setEmail(result[0].email);
-          } else {
-            console.error("User data not found or empty array.");
-            // Handle the case where user data is not available
-          }
-        };
-        
-      fetchData();
-    }, [router ]);
-  
-    const userEditForm = async (e: SyntheticEvent) => {
-      e.preventDefault();
-  
-      const response = await fetch(`http://localhost:3001/user/updateAccountDetails/${router.query.id}`, {
-        method: "PATCH",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstname: firstName,
-          lastname: lastName,
-          phone: phone,
-          shipping: shipping,
-          email: email,
-          UserID: userId // get userId current login
-        })
-      });
-  
-      if (!response.ok) throw new Error("There is something error while updating");
-  
-      return response.json();
-    };
-  
-     // Log the values before sending the request
-     console.log('Form Values:', {
-      firstname: firstName,
-      lastname: lastName,
-      phone: phone,
-      shipping: shipping,
-      email: email,
-      adminUserID: userId
+  const router = useRouter();
+  const [userId, setUserId] = useState("");
+  const [usersId, setUsersId] = useState("");
+  const [ firstName, setFirstName ] = useState('');
+  const [ lastName, setLastName ] = useState('');
+  const [phone, setPhone] = useState("");
+  const [shipping, setShipping] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [ users, setUsers ] = useState<[]>()
+
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token");
+    if (cookies) {
+      const { userID }: any = jwtDecode(cookies)
+      setUserId(userID)
+    }
+  }, [])
+
+  console.log(userId)
+
+  useEffect(() => {
+    const fetchData = async () => {
+     
+        const res = await fetch(`http://localhost:3001/user/getUsersId/${router.query.id}`, {
+          method: "GET",
+          headers: { 'Content-Type': 'application/json' },
+          cache: "default",
+        });
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch user data: ${res.status}`);
+        }
+
+        const result = await res.json();
+        setUsers(result)
+      };
+      
+    fetchData();
+  }, [router ]);
+
+  const userEditForm = async (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    const response = await fetch(`http://localhost:3001/user/updateAccountDetails/${userId}`, {
+      method: "PATCH",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstname: firstName,
+        lastname: lastName,
+        phone: phone,
+        shipping: shipping,
+        email: email,
+        userID: userId // get userId current login
+      })
     });
+
+    if (!response.ok) throw new Error("There is something error while updating");
+
+    return response.json();
+  };
+
+   // Log the values before sending the request
+   console.log('Form Values:', {
+    firstname: firstName,
+    lastname: lastName,
+    phone: phone,
+    shipping: shipping,
+    email: email,
+    userId: userId
+  });
+
+  useEffect(() => {
+
+    users?.map(({email, profile}: any) => {
+      setEmail(email)
+      setFirstName(profile.firstname)
+      setLastName(profile.lastname)
+      setShipping(profile.shipping)
+      setPhone(profile.phone)
+    })
+  }, [ users ])
 
     return (
 
@@ -134,7 +136,7 @@ const AccountDetails: FC = () => {
                   <input name="phone" type="tel" id="phoneNumber" onChange={(e) => setPhone(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="ex. 905-441-4300" value={phone} required />
                 </div>
                 <br></br>
-                <button type="submit" className="relative left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => router.back()}>Update Customer Profile</button>
+                <button type="submit" className="relative left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Customer Profile</button>
               </form>
             </div>
           </div>
@@ -142,7 +144,7 @@ const AccountDetails: FC = () => {
       </div>
             </section>
             {/*  */}
-            <section className="relative flex flex-col items-center justify-center text-center text-white ">
+            <section className="relative mt-40 flex flex-col items-center justify-center text-center text-white ">
                 <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
                     <div className="max-w-screen-xl mt-2 px-2 py-8 mx-auto sm:px-6 lg:px-8">
                         <div className="relative top-4 grid grid-cols-1 gap-8 lg:grid-cols-3">

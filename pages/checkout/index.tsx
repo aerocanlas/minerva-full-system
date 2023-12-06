@@ -1,7 +1,11 @@
 import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC, useState } from 'react'
+import React, { FC, SyntheticEvent, useEffect, useState } from 'react'
 import Modal from '@/components/Modal';
+import { FormattedPrice } from '@/helpers/index'
+import Image from 'next/image'
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie'
 
 const  Checkout: FC= () => {
     const [ isModalOpen, setIsModalOpen ] = useState(true);
@@ -46,6 +50,49 @@ const  Checkout: FC= () => {
         setIsModalOpen(false);
     };
 
+    const [  products, setProducts ] = useState<[]>()
+    const [ cookies, setCookies ] = useState("");
+    
+    useEffect(() => {
+      const cookies = Cookies.get("ecom_token");
+      if(cookies) {
+        const { userID }: any = jwtDecode(cookies)
+        setCookies(userID)
+      }
+    }, [ cookies ])
+
+    useEffect(() => {
+     const dataProducts = JSON.parse(localStorage.getItem("products") as any)
+     if(dataProducts) {
+      setProducts(dataProducts as any)
+     }
+    }, [ ])
+
+
+    console.log(cookies)
+
+    const onHandlePlaceOrder = async (e: SyntheticEvent) => {
+      e.preventDefault();  
+      const res = await fetch(`http://localhost:3001/order/createOrders`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: products?.map(({ productID, quantity, userID}: any) => {
+          JSON.stringify({
+            userID: cookies,
+            productID: productID,
+            quantity: quantity,
+            payment: 'GCASH'
+          })
+        }) as any
+      })
+
+
+      if(!res.ok) throw new Error("There something wrong in placing order")
+
+      return res.json()
+    }
+
+
     return ( 
     <div className="h-screen pt-24 pb-28 grid grid-cols-3">
         <div className="lg:col-span-2 col-span-3 bg-indigo-50 space-y-8 px-12">
@@ -75,18 +122,6 @@ const  Checkout: FC= () => {
                                 </button>
                                 </fieldset>
                             </div>
-                        <h2 className="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">Billing Address</h2>
-                        <fieldset className="mb-3 bg-white shadow-lg rounded text-gray-600">
-                            <label className="flex border-b border-gray-200 h-12 py-3 items-center">
-                                <span className="text-right px-2">Name</span>
-                                <input name="name" className="focus:outline-none px-3" placeholder="Name" required/> 
-                            </label>
-                            <label className="flex border-b border-gray-200 h-12 py-3 items-center">
-                                <span className="text-right px-2">Phone Number</span>
-                                <input name="email" type="email" className="focus:outline-none px-3" placeholder="+63xxxxxxxxxx" required/> 
-                            </label>
-                
-                        </fieldset>
                     </section>
                 </form>
             </div>
@@ -126,60 +161,44 @@ const  Checkout: FC= () => {
                     </fieldset>
                 </section>
             </div>
-            <button className="submit-button px-4 py-3 rounded-full bg-[#FFBD59] text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors">
+            <button onSubmit={onHandlePlaceOrder} className="submit-button px-4 py-3 rounded-full bg-[#FFBD59] text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors">
                 Place Order Now
             </button>
         </div>
+        {
+        products?.map(({ productID,  name, category, price, total, quantity, image }: any) => (
+ 
         <div className="col-span-1 bg-white lg:block hidden">
             <h1 className="py-6 border-b-2 text-xl text-gray-600 px-8">Order Summary</h1>
             <ul className="py-6 border-b space-y-6 px-8">
                 <li className="grid grid-cols-6 gap-2 border-b-1">
+                    
                     <div className="col-span-1 self-center">
-                        <img src="https://bit.ly/3oW8yej" alt="Product" className="rounded w-full"/>
+                    {image.length > 0 && (
+                                <Image src={image[1]} alt={name} height={120} width={120}/>
+                              )}    
                     </div>
                     <div className="flex flex-col col-span-3 pt-2">
-                        <span className="text-gray-600 text-md font-semi-bold">Motolite</span>
-                        <span className="text-gray-400 text-sm inline-block pt-2">Oil</span>
+                        <span className="text-gray-600 text-md font-semi-bold">{name}</span>
+                        <span className="text-gray-400 text-sm inline-block pt-2">{category}</span>
                     </div>
                     <div className="col-span-2 pt-3">
                         <div className="flex items-center space-x-2 text-sm justify-between">
-                            <span className="text-gray-400">2 x PHP 1000</span>
-                            <span className="text-yellow-400 font-semibold inline-block">PHP 2000</span>
-                        </div>
-                    </div>
-                </li>
-                <li className="grid grid-cols-6 gap-1 border-b-1">
-                    <div className="col-span-1 self-center">
-                        <img src="https://bit.ly/3lCyoSx" alt="Product" className="rounded w-full"/> 
-                    </div>
-                    <div className="flex flex-col col-span-3 pt-2">
-                        <span className="text-gray-600 text-md font-semi-bold">Motolite</span>
-                        <span className="text-gray-400 text-sm inline-block pt-2">Fluid</span>
-                    </div>
-                    <div className="col-span-2 pt-3">
-                        <div className="flex items-center space-x-2 text-sm justify-between">
-                            <span className="text-gray-400">1 x PHP 785</span>
-                            <span className="text-yellow-400 font-semibold inline-block">PHP 785</span>
+                            <span className="text-gray-400">{quantity}</span>
+                            <span className="text-yellow-400 font-semibold inline-block">{FormattedPrice(total)}</span>
                         </div>
                     </div>
                 </li>
             </ul>
             <div className="px-8 border-b">
-                <div className="flex justify-between py-4 text-gray-600">
-                    <span>Subtotal</span>
-                    <span className="font-semibold text-yellow-500">PHP 2785</span>
-                </div>
-                <div className="flex justify-between py-4 text-gray-600">
-                    <span>Shipping</span>
-                    <span className="font-semibold text-yellow-500">Free</span>
-                </div>
             </div>
             <div className="font-semibold text-xl px-8 flex justify-between py-8 text-gray-600">
                 <span>Total</span>
-                <span>PHP 2785</span>
+                <span>{FormattedPrice(products?.reduce((a, b) => (a + b.total), 0) as any)}</span>
             </div>
         </div>
-    
+        ))
+        } 
     </div>
 )
     

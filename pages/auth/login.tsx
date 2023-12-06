@@ -49,52 +49,53 @@ export default function Login() {
 	}
 
 	const onHandleSubmitForm = async (e: SyntheticEvent) => {
-
 		e.preventDefault();
-
-		const res = await fetch("http://localhost:3001/user/login", {
-			method: "POST",
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				email: users.user,
-				password: users.password
-			})
-		})
-
-
-		const data = await res.json()
-
-		if (res) {
-			const cookies = Cookies.set("ecom_token", data, {
-				expires: 60 * 60 * 24 * 7,
-				path: "/",
-				sameSite: "none",
-				secure: true
-			})
-
-
-			if (cookies) {
-				const { role }: any = jwtDecode(cookies)
-				if (role === "admin") {
-					router.push("/minerva/admin/customer")
-				} else {
-					router.push('/')
-				}
-			}
-		}
-		if (!validateEmail(users.user)) {
-			setEmailError('Please enter a valid email address');
-			return;
-		  }
-		  setEmailError('');
 	  
-		  // Password validation
-		  if (!validatePassword(users.password)) {
-			setPasswordError('Password must be at least 8 characters long, with a mix of uppercase, lowercase, and numbers');
-			return;
+		// Validation block
+		if (!validateEmail(users.user)) {
+		  setEmailError('Please enter a valid email address');
+		  return;
+		}
+		setEmailError('');
+	  
+		// Password validation
+		if (!validatePassword(users.password)) {
+		  setPasswordError('Password must be at least 8 characters long, with a mix of uppercase, lowercase, and numbers');
+		  return;
+		}
+		setPasswordError('');
+	  
+		// Make the login request
+		const res = await fetch("http://localhost:3001/user/login", {
+		  method: "POST",
+		  headers: { 'Content-Type': 'application/json' },
+		  body: JSON.stringify({
+			email: users.user,
+			password: users.password
+		  })
+		})
+	  
+		const data = await res.json()
+	  
+		// Check the success of the login request
+		if (res.ok) {
+		  const cookies = Cookies.set("ecom_token", data, {
+			expires: 60 * 60 * 24 * 7,
+			path: "/",
+			sameSite: "none",
+			secure: true
+		  })
+	  
+		  if (cookies) {
+			const { role }: any = jwtDecode(cookies)
+			if (role === "admin") {
+			  router.push("/minerva/admin/customer")
+			} else {
+			  router.push('/')
+			}
 		  }
-		  setPasswordError('');
-	}
+		}
+	  }
 
 
 	return (

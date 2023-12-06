@@ -36,14 +36,12 @@ const ServiceDetails: FC = () => {
     date: "",
     service: "",
     time: "",
-    name: ""
   })
 
   const [services, setServices] = useState({
     services: '',
     status: '',
     price: '',
-    description: '',
     image: ''
   });
 
@@ -110,17 +108,23 @@ const ServiceDetails: FC = () => {
 
 
   useEffect(() => {
-    servicesD?.map(({ servicesID, image, services, price, status, descriptions, userID}: any) => {
+    servicesD?.map(({ servicesID, image, services, price, status, userID,}: any) => {
         setServices({
           image: image,
           services: services,
           price: price,
-          description: descriptions,
           status: status,
         })
     })
   }, [servicesD])
 
+  console.log({
+    'name': appointment.name,
+    'service': services.services,
+    'date': appointment.date,
+    'time': appointment.time,
+    userID: userid
+  })
 
   return (
     <div className={styles.bodyProducts}>
