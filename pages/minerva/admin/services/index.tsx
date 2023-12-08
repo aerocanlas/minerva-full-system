@@ -9,6 +9,8 @@ import Modal from '@/components/Modal';
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const ServicePage: FC = () => {
 
@@ -20,8 +22,10 @@ const ServicePage: FC = () => {
   }
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 2000);
+  }
 
   const [ page, setPage] = useState(0)
   const [ services, setServices ] = useState<[]>()
@@ -71,7 +75,11 @@ const ServicePage: FC = () => {
     if(!res.ok) {
         alert("There something wrong while updating..")
     } else {
-        alert("Successfully Deleted")
+      {services?.map(({ userID, servicesID, id, services, description, price, status }: any) => (
+
+      toast.warning(`${services} has been deleted`)
+
+      ))}
     }
 
     return res.json();
@@ -80,6 +88,7 @@ const ServicePage: FC = () => {
   return (
 
     <div>
+      <Toaster richColors  />
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className=" bg-gray-800 rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
           <div className="p-4 sm:p-7 " >
@@ -91,11 +100,11 @@ const ServicePage: FC = () => {
             <form onSubmit={onFormDelete}>
                 <div className="grid gap-y-4">
                 <p className="text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
-                Are you sure you want to delete this product?
+                Are you sure you want to delete this service?
                 </p>
                 <div className='flex gap-2'>
                   <button type="submit" className="py-3 px-4 flex w-40 justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={() => router.push("/minerva/admin/services")}>Yes</button>
-                  <button type="submit" className="py-3 px-4 w-40 flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={handleCloseModal}>No</button>
+                  <button type="button" className="py-3 px-4 w-40 flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#FFBD59] text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" onClick={handleCloseModal}>No</button>
                 </div>
                 </div>
               </form>

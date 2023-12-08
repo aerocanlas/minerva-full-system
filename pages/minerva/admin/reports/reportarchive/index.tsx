@@ -5,13 +5,14 @@ import React, { FC, useState, useEffect } from 'react'
 import Head from 'next/head'
 import { TbFilter, TbEye, TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight } from 'react-icons/tb'
 import router from 'next/router'
-
+import { FormattedDate } from '@/helpers/index'
+import { format } from 'date-fns'
 
 const ReportArchivePage: FC = () => {
   const [ page, setPage] = useState(0)
 
   const [ isOpen, setIsOpen ] = useState(false);
-  const [ archive, setArchive ] = useState(null)
+  const [ archive, setArchive ] = useState<[]>()
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -25,16 +26,17 @@ const ReportArchivePage: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`http://localhost:3001/archive/getArchive`, {
+      const res = await fetch(`http://localhost:3001/archive/getAllArchive/?skip=0`, {
         method: "GET",
-        cache: "force-cache"
+        headers: { 'Content-Type': 'application/json' },
+        cache: "no-cache"
       })
 
       const result = await res.json();
       setArchive(result)
     }
     fetchData()
-  }, [])
+  }, [ archive ])
 
   return (
 
@@ -81,65 +83,20 @@ const ReportArchivePage: FC = () => {
             <div className={styles.col4}>File Type</div>
             <div className={styles.col5}>Action</div>
           </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccess}>Generated Report</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/reports/reportarchive/viewreportarchive")} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccess}>Generated Report</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/reports/reportarchive/viewreportarchive")} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
 
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccess}>Generated Report</span></div>
+          {archive?.map(({ archiveID, id, startDate, endDate, createdAt, User }: any) => (
+            <li key={archiveID} className={styles.tableRow}>
+            <div className={styles.col1} data-label="Job Id">{id}</div>
+            <div className={styles.col2} data-label="Customer Name">{User.profile.firstname} {User.profile.lastname}</div> 
+            <div className={styles.col3} data-label="Date Created">{FormattedDate(createdAt)}</div> 
+            <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccessArchive}>Generated Report</span></div>
             <div className={styles.col5} data-label="Action">
               <button onClick={() => router.push("/minerva/admin/reports/reportarchive/viewreportarchive")} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
-
             </div>
           </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccess}>Generated Report</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/reports/reportarchive/viewreportarchive")} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
+          ))}
+          
 
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccess}>Generated Report</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/reports/reportarchive/viewreportarchive")} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
-
-            </div>
-          </li>
-          <li className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">#42235</div>
-            <div className={styles.col2} data-label="Customer Name">John Doe</div>
-            <div className={styles.col3} data-label="Date Created">21 Oct 2023</div>
-            <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccess}>Generated Report</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/reports/reportarchive/viewreportarchive")} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
-
-            </div>
-          </li>
         </ul>
 
 

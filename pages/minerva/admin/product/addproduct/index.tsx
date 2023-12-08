@@ -9,7 +9,8 @@ import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 import { useDropzone } from 'react-dropzone';
 import { IoIosAttach } from "react-icons/io";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 interface InputProp {
   labelTitle: string;
@@ -61,6 +62,8 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
     setSelectedImage(Array.from(e.target.files))
   }
 
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
+
   const AddProductForm = async (e :any) => {
 
     e.preventDefault();
@@ -88,7 +91,13 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
       alert("Please complete all fields")
     }
    else {
-    alert("New Product Added")
+          toast.promise(promise, {
+          loading: 'Loading...',
+          success: (products) => {
+            return `Added a new product succesfully`;
+          },
+          error: 'Error',
+        });
   }
 
   }
@@ -231,7 +240,9 @@ const AddProductPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormVal
                 </div>
                 
                   <br></br>
+                  
                 <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Product</button>
+                <Toaster richColors  />
               </form>
             </div>
 

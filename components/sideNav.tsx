@@ -70,11 +70,11 @@ export default function Sidebar() {
   return (
     <div className={styles.container}>
 
-            
        <div onClick={() => router.push("/minerva/admin/customer")}className={styles.sidebarHeader}>
             <Image src="/logo.png" alt="" height={60} width={150} />
-            <span className='text-center'>Minerva Sales Corporations</span>
+            <span className='inline-flex text-center'>Minerva Sales Corporations</span>
        </div>
+       
        <div className={styles.sidebarNav}>
             {routes.map(({ name, url, icons}) => (
                 <button  onClick={() => router.push(`${url}`)} className={styles.siderBar}>

@@ -9,6 +9,8 @@ import Modal from '@/components/Modal'
 import {FormattedDate} from '@/helpers/index'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from "js-cookie"
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 
 const Appointments: FC = () => {
@@ -22,8 +24,10 @@ const Appointments: FC = () => {
   }
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 5000);
+  }
 
   const [ appointment, setAppointment ] = useState<[]>()
   const [ userId, setUserId] = useState("")
@@ -39,7 +43,7 @@ const Appointments: FC = () => {
       const response = await fetch(`http://localhost:3001/schedule/?skip=${page}&orderby=desc`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
-        cache: "no-cache",
+        cache: "default",
       })
       if (!response.ok) {
         throw new Error("There something wrong while fetching data")
@@ -52,14 +56,11 @@ const Appointments: FC = () => {
     }
   
     fetchData();
-  }, [appointment])
-
-  
-
-  console.log(appointment)
+  }, [ userId,  appointment])
   
   return (
     <div>
+      <Toaster richColors  />
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className=" bg-gray-800 rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
           <div className="p-4 sm:p-7 " >
@@ -103,30 +104,15 @@ const Appointments: FC = () => {
             <div className={styles.col1A}>Appointment ID</div>
             <div className={styles.col2A}>Customer Name</div>
             <div className={styles.col3A}>Service Name</div>
-            <div className={styles.col4A}>Appointment Date</div>
+            <div className={styles.col4A}> Date</div>
             <div className={styles.col5A}>Status</div>
             <div className={styles.col6A}>Action</div>
           </li>
 
           {appointment?.map(({ scheduleID, service, date,  time, id, name, status, User}: any) => (
-           name === null ? 
-            User?.map(({ profile} : any ) => (
-          <li className={styles.tableRow}>
-            <div className={styles.col1A} data-label="Service Id">{id}</div>
-            <div className={styles.col2A} data-label="Customer Name">{profile.firstname} {profile.lastname}</div>
-            
-            <div className={styles.col3A} data-label="Service Name">{service}</div>
-          
-            <div className={styles.col4A} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
-            <div className={styles.col6A} data-label="Order Status"><span>{status}</span></div>
-            <div className={styles.col5A} data-label="Action">
-              <button onClick={() => router.push(`/minerva/admin/appointments/editappointments/${scheduleID}`)} className={styles.col4} > <TbEdit size={25} /> </button>
-              <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
-            </div>
-          </li>
-          )) :  <li className={styles.tableRow}>
+           <li className={styles.tableRow}>
           <div className={styles.col1A} data-label="Service Id">{id}</div>
-          <div className={styles.col2A} data-label="Customer Name">{name}</div>
+          <div className={styles.col2A} data-label="Customer Name">{User.length === 0? name: `${User[0].profile.firstname} ${User[0].profile.lastname}`}</div>
           
                  <div className={styles.col3A} data-label="Service Name">{service}</div>
         
@@ -134,7 +120,7 @@ const Appointments: FC = () => {
           <div className={styles.col6A} data-label="Order Status"><span>{status}</span></div>
           <div className={styles.col5A} data-label="Action">
             <button onClick={() => router.push(`/minerva/admin/appointments/editappointments/${scheduleID}`)} className={styles.col4} > <TbEdit size={25} /> </button>
-            <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button>
+            {/* <button onClick={handleOpenModal} className={styles.col4} > <TbTrash size={25} /> </button> */}
           </div>
         </li>
         ))}   
@@ -142,7 +128,7 @@ const Appointments: FC = () => {
 
 
         <div className={styles.pagination}>
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+        <button disabled={page === 0 } className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
                  <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
         </div>
       </div>

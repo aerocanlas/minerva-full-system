@@ -8,8 +8,10 @@ import router, { useRouter } from 'next/router'
 import Image from 'next/image'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
-import { FormattedPrice } from '@/helpers/index'
+import { FormattedDate, FormattedPrice } from '@/helpers/index'
 import Modal from '@/components/Modal';
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const Inventory: FC = () => {
 
@@ -51,7 +53,7 @@ const Inventory: FC = () => {
       const res = await fetch(`http://localhost:3001/product/getAllProduct/?skip=${page}&orderby=desc`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
-        cache: "default"
+        cache: "no-cache"
       })
     
     if (!res.ok) {
@@ -85,7 +87,7 @@ const formSubmitProductQuantity = async (e: SyntheticEvent) => {
     if (!response.ok) {
       alert("There was an error while updating");
     } else {
-      alert("Successfully Updated");
+      toast.success('Customer Account has been deleted')
       // Close the modal after successful update
       setIsModalOpen(false);
     }
@@ -146,28 +148,30 @@ const formSubmitProductQuantity = async (e: SyntheticEvent) => {
         <div className={styles.tablecontainer}>
           <ul className={styles.responsiveTable}>
             <li className={styles.tableHeader}>
-              <div className={styles.col1I}>PRODUCT ID</div>
-              <div className={styles.col2I}>PRODUCT NAME</div>
-              <div className={styles.col3I}>PRODUCT STATUS</div>
-              <div className={styles.col4I}>PRODUCT QUANTITY</div>
-              <div className={styles.col5I}>PRODUCT CATEGORY</div>
-              <div className={styles.col6I}>PRODUCT PRICE</div>
-              <div className={styles.col7I}>ACTION</div>
+              <div className={styles.col1I}> ID</div>
+              <div className={styles.col2I}> NAME</div>
+              <div className={styles.col3I}> STATUS</div>
+              <div className={styles.col4I}> QUANTITY</div>
+              <div  className={styles.col5I} >Updated AT</div>
+              <div className={styles.col6I}> CATEGORY</div>
+              <div className={styles.col7I}> PRICE</div>
+              <div className={styles.col8I}>ACTION</div>
             </li>
 
-            {products?.map(({ userId, id, productID, name, category, price, stock, image, description, quantity }: any) => (
+            {products?.map(({ userId, id, productID, name, category, price, stock, image, description, quantity, updatedAt}: any) => (
 
             <li className={styles.tableRow}>
               <div className={styles.col1I} data-label="Product Id">{id}</div>
               <div className={`${styles.col2I} ${styles.colInvName}`} data-label="Customer Name">{name}</div>
               <div className={`${styles.col2I} ${styles.colInvStock}`} data-label="Email Address">{stock}</div>
               <div
-  className={`${styles.col4I} ${quantity >= 10 ? styles.badgeSuccess : styles.badgeCancel}`}
+  className={`${styles.col4I} ${styles.colInvQ} ${quantity >= 10 ? styles.badgeSuccess : styles.badgeCancel}`}
   data-label="Email Address"
 >{quantity}</div>
-              <div className={`${styles.col5I} ${styles.colInvCat}`}  data-label="Email Address">{category}</div>
-              <div className={`${styles.col6I} ${styles.colInvPrice}`}  data-label="Email Address">{FormattedPrice(price)}</div>
-              <div className={`${styles.col7I} ${styles.colInvAction}`} data-label="Action">
+              <div className={`${styles.col5I} ${styles.colInvDate}`}>{FormattedDate(updatedAt)}</div>
+             <div className={`${styles.col6I} ${styles.colInvCat}`}  data-label="Email Address">{category}</div>
+              <div className={`${styles.col7I} ${styles.colInvPrice}`}  data-label="Email Address">{FormattedPrice(price)}</div>
+              <div className={`${styles.col8I} ${styles.colInvAction}`} data-label="Action">
                 <div className="flex align-items-center">
                 <button onClick={() => router.push(`/minerva/admin/inventory/editinventory/${productID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
                 </div>
@@ -188,7 +192,7 @@ const formSubmitProductQuantity = async (e: SyntheticEvent) => {
         </div>
 
       </div>
-
+      <Toaster richColors  />
     </div>
   )
 }

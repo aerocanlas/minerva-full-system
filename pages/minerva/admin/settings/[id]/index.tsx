@@ -7,6 +7,8 @@ import styles from '@/styles/admin/content.module.scss'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/router'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const Settings: FC = () => {
 
@@ -60,6 +62,7 @@ const Settings: FC = () => {
     })
   }, [ users ])
 
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
 
   const userEditForm = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -77,10 +80,20 @@ const Settings: FC = () => {
       })
     });
 
-    if (!response.ok) throw new Error("There is something error while updating");
+    if (!response.ok) {throw new Error("There is something error while updating");}
+
+    else {
+      toast.promise(promise, {
+      loading: 'Loading...',
+      success: (products) => {
+        return `Updated administrator profile succesfully`;
+      },
+      error: 'Error',
+    });
 
     return response.json();
   };
+}
 
 
   return (
@@ -138,7 +151,8 @@ const Settings: FC = () => {
                   <input name="phone" type="tel" id="phoneNumber" onChange={(e) => setPhone(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="ex. 905-441-4300" value={phone} required />
                 </div>
                 <br></br>
-                <button type="submit" className="relative left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => router.back()}>Update Administrator Profile</button>
+                <button type="submit" className="relative left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Administrator Profile</button>
+                <Toaster richColors  />
               </form>
             </div>
 

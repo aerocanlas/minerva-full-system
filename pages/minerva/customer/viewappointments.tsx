@@ -7,9 +7,12 @@ import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, 
 import Head from 'next/head'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+import { FormattedDate } from '@/helpers'
 
 
 const ViewAppointments: FC = () => {
+
+  const [ page, setPage] = useState(0)
 
   const [ appointment, setAppointment ] = useState(null)
 
@@ -25,16 +28,18 @@ const ViewAppointments: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:3001/schedule/getAllMyAppointments/${userId}`, {
+      const response = await fetch(`http://localhost:3001/schedule/getAllMyAppointments/${userId}/?skip=${page}`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
+        cache: "default"
       })
       const result = await response.json()
       setAppointment(result)
     }
 
     fetchData();
-  }, [ userId ])
+  }, [ userId, appointment ])
+
   return (
 
     <div className={styles.bodyProducts}>
@@ -59,99 +64,24 @@ const ViewAppointments: FC = () => {
               <div className={styles.col3}>Service Name</div>
               <div className={styles.col4}>Appointment Date</div>
               <div className={styles.col5}>Status</div>
-              <div className={styles.col6}>Action</div>
             </li>
+
+            {appointment?.map(({ userID, id, date, time, name, status, User, service}: any) => (
+   
             <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Job Id">#42235</div>
-              <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-              <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
-              <div className={styles.col5} data-label="Action">
-                <button onClick={() => router.push("")} className={styles.col4} > <TbEdit size={25} /> </button>
-                <button className={styles.col4} > <TbTrash size={25} /> </button>
-              </div>
+              <div className={styles.col1} data-label="Job Id">{id}</div>
+              <div className={styles.col3} data-label="Service Name">{service}</div>
+              <div className={styles.col4} data-label="Appointment Date">{FormattedDate(date)} {time}</div>
+              <div className={styles.col6} data-label="Order Status"><span>{status}</span></div>
             </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Job Id">#42235</div>
-              <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-              <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
-              <div className={styles.col5} data-label="Action">
-                <button onClick={() => router.push("")} className={styles.col4} > <TbEdit size={25} /> </button>
-                <button className={styles.col4} > <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Job Id">#42235</div>
-              <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-              <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeCancel}>Cancelled</span></div>
-              <div className={styles.col5} data-label="Action">
-                <button onClick={() => router.push("")} className={styles.col4} > <TbEdit size={25} /> </button>
-                <button className={styles.col4} > <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Job Id">#42235</div>
-              <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-              <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
-              <div className={styles.col5} data-label="Action">
-                <button onClick={() => router.push("")} className={styles.col4} > <TbEdit size={25} /> </button>
-                <button className={styles.col4} > <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Job Id">#42235</div>
-              <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-              <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
-              <div className={styles.col5} data-label="Action">
-                <button onClick={() => router.push("")} className={styles.col4} > <TbEdit size={25} /> </button>
-                <button className={styles.col4} > <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Job Id">#42235</div>
-              <div className={styles.col3} data-label="Service Name">Preventive Maintenance</div>
-              <div className={styles.col4} data-label="Appointment Date">27 Sep 2023</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Completed</span></div>
-              <div className={styles.col5} data-label="Action">
-                <button onClick={() => router.push("")} className={styles.col4} > <TbEdit size={25} /> </button>
-                <button className={styles.col4} > <TbTrash size={25} /> </button>
-              </div>
-            </li>
+            ))}
           </ul>
 
 
           <div className={styles.pagination}>
-            <ul>
-
-              <li>
-                <a href="#" >&laquo;</a>
-              </li>
-
-              <li>
-                <a href="#" >1</a>
-              </li>
-              <li>
-                <a href="#" >2</a>
-              </li>
-              <li>
-                <a href="#" className={styles.active}>3</a>
-              </li>
-              <li>
-                <a href="#" >4</a>
-              </li>
-              <li>
-                <a href="#" >5</a>
-              </li>
-              <li>
-                <a href="#" >&raquo;</a>
-              </li>
-
-            </ul>
-          </div>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>
         </div>
 
       </div>

@@ -10,16 +10,22 @@ import React from 'react';
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { FaUserClock } from "react-icons/fa6";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const Home: FC = () => {
 
+  const [ products, setProducts ] = useState<[]>()
+  const [ productCategory, setProductCategory ] =useState(null)
+  const [ category, setCategory ] = useState("")
+  const [ page, setPage] = useState(0)
+  const [ userId, setUserId] = useState("")
 
   return (
-
-    <div className={styles.bodyHome}>
-
-      <section className="relative h-screen flex flex-col items-center justify-center text-center text-white ">
+<div className={styles.bodyHome}>
+<Toaster richColors  />
+<section className="relative h-screen flex flex-col items-center justify-center text-center text-white ">
+  
           <div className={styles.videoDocker}>
               <video 
               autoPlay muted loop className="min-w-full min-h-full absolute object-cover"> 
@@ -30,9 +36,9 @@ const Home: FC = () => {
               <span className={styles.welcome}>Welcome</span>
               <span className={styles.tagline}>Road Safety & Roadworthiness 
               <br></br>at your fingertips</span>
-              <span className={styles.comment}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-              when an unknown printer took a galley of type.</span>
+              <span className={styles.comment}>Drive with Confidence Knowing Minerva Sales Corporation 
+              is Always by Your Side. We Take Pride in Offering Comprehensive Solutions 
+              to Enhance Your Vehicle’s Performance, Longevity, and Efficiency.</span>
           </div>
       </section>
 
@@ -47,16 +53,15 @@ const Home: FC = () => {
                 <div className={styles.contentText}>
                   <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
                   standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
+                  standard dummy text ever since the 1500s
                   </span>
                 </div>
               </div>
       </section>
 
-      <section className="relative h-60 flex flex-col items-center justify-center text-center text-white ">
-        <div className={styles.section3}>
+      <section className="relative -mb-96 h-32 flex flex-col items-center justify-center text-center text-white ">
+
+    <div className={styles.section3}>
       <img src="/section-3.jpeg"></img>
       </div>
       </section>
@@ -66,7 +71,7 @@ const Home: FC = () => {
 
       {/* contact */}
       
-      <section className="relative pt-12 top-80 mt-16 -mb-4 h-screen flex flex-col items-center justify-center text-center text-black ">
+      <section className="relative pt-12 top-[900px] mt-16 -mb-4 h-[1350px] flex flex-col items-center justify-center text-center text-black ">
         
       <iframe className={styles.map}src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3865.685100620232!2d121.07044808579853!3d14.329715147891662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d75e4116aa53%3A0xc60e02b60387b51a!2sMinerva%20Sales%20Corp.%20-%20Dunlop%20Concept%20Shop!5e0!3m2!1sen!2sph!4v1700566977340!5m2!1sen!2sph" 
       width="600" height="450"  loading="lazy" ></iframe>
@@ -80,9 +85,11 @@ const Home: FC = () => {
     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
   </svg>
                           </span>
+                          
                           <p className="text-2xl font-extrabold text-dark-grey-900">Phone</p>
                           <p className="text-base leading-7 text-dark-grey-600 font-medium">Reach out to us by phone</p>
                           <a className="text-lg font-bold text-purple-blue-500">0917 865 7346</a>
+                        
                           </div>  
                       </div>
 
@@ -111,21 +118,22 @@ const Home: FC = () => {
   </svg>
                           </span>
                           <p className="text-2xl font-extrabold text-dark-grey-900">Office Hours</p>
-                          <p className="text-base leading-7 text-dark-grey-600 font-medium">Visit us during these Hours</p>
+                          <span className="text-base leading-7 text-dark-grey-600 font-medium">Visit us during these Hours</span>
                           <a className="text-lg font-bold text-purple-blue-500">
-                              <span className='relative -left-24'>Open Mon-Sat <br></br>
+                              <a className='relative -left-24'>Open Mon-Sat <br></br>
                               8:00am - 5:00pm
-                              </span>
+                              </a>
                               <br></br>
-                              <span className='relative -top-14 left-24'>Open Sun    <br></br>
+                              <a className='relative -top-14 left-24'>Open Sun    <br></br>
                               8:30am - 3:00pm
-                                    <br></br></span>
+                                    <br></br></a>
                               
                             </a>
                           </div>  
                       </div>
             
         </ul>
+        
         {/* <div className="w-full draggable">
         <div className="container flex flex-col items-center gap-2 mx-2 my-32">
                       <div className="grid w-full grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3">
@@ -179,17 +187,17 @@ const Home: FC = () => {
 
       {/* Products */}
 
-      <section className="relative h-60 mb-28 flex flex-col items-center justify-center text-center text-white ">
+      <section className="relative h-60 top-96 mb-28 flex flex-col items-center justify-center text-center text-white ">
 <div className={styles.videoDocker2}>
               <video 
-              autoPlay muted loop className="min-w-full min-h-full absolute object-cover"> 
+              autoPlay muted loop className="max-w-full max-h-full  absolute object-cover"> 
               <source src="/productvid.mp4" 
               type="video/mp4"/></video>
           </div>
       </section>
 
-      <section className="relative mb-28 -top-70 h-screen flex flex-col items-center justify-center text-center text-black ">
-    <div className="absolute -top-40 -right-40 lg:w-2/3 w-full h-80 -z-10">
+      <section className="relative mb-28 top-20 h-[1200px] flex flex-col items-center justify-center text-center text-black ">
+    <div className="absolute -top-40 lg:w-2/3 w-full h-80 -z-10">
     </div>
 
     <div
@@ -251,14 +259,14 @@ const Home: FC = () => {
       <section className="relative -top-12 h-60  mb-2 flex flex-col items-center justify-center text-center text-white ">
       <div className={styles.videoDocker1}>
                     <video 
-                    autoPlay muted loop className="min-w-full min-h-full absolute object-cover"> 
+                    autoPlay muted loop className="max-w-full max-h-full  absolute object-cover"> 
                     <source src="/services.MOV" 
                     type="video/mp4"/></video>
                 </div>
             </section>
 
-      <section className="relative top-12 mb-20 h-screen flex flex-col items-center justify-center text-center text-black ">
-    <div className="absolute -top-40 -right-40 lg:w-2/3 w-full h-80 -z-10">
+      <section className="relative -top-36 mb-20 h-screen flex flex-col items-center justify-center text-center text-black ">
+    <div className="absolute -top-40 lg:w-2/3 w-full h-80 -z-10">
     </div>
 
     <div
@@ -387,7 +395,6 @@ const Home: FC = () => {
 </footer>
           </section>
     </div>
-
     
   )
 }

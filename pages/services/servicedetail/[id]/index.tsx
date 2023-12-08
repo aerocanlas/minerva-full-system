@@ -9,6 +9,8 @@ import { useRouter } from 'next/router';
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
 import { FormattedPrice } from '@/helpers/index'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const ServiceDetails: FC = () => {
   
@@ -64,10 +66,11 @@ const ServiceDetails: FC = () => {
 
     if(!response.ok) 
     {
-      alert("Please complete all fields")
+      toast.error('Please make sure to provide necessary details')
     }
    else {
-    alert("New Appointment Added")
+    toast.success('Appontment has been created')
+    return response.json()
   }
   }
 
@@ -118,14 +121,6 @@ const ServiceDetails: FC = () => {
     })
   }, [servicesD])
 
-  console.log({
-    'name': appointment.name,
-    'service': services.services,
-    'date': appointment.date,
-    'time': appointment.time,
-    userID: userid
-  })
-
   return (
     <div className={styles.bodyProducts}>
 
@@ -151,7 +146,7 @@ const ServiceDetails: FC = () => {
           {services.status}
           </p>
           <p className="mr-2 text-lg font-bold text-black dark:text-black">
-          {FormattedPrice(services.price)}
+          {FormattedPrice(services.price as any) }
           </p>
         </div>
       </div>
@@ -164,7 +159,7 @@ const ServiceDetails: FC = () => {
                           id="date"
                           type="date"
                           name="date"
-                          min="2023-12-6"
+                          min="2023-12-9"
                           max="2030-01-31"
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           onChange={(e) => setAppointment({...appointment, date: e.target.value})}
@@ -205,8 +200,9 @@ const ServiceDetails: FC = () => {
             ))}
           </div>
         </div> */}
-
+      <Toaster richColors  />
         <button
+        type="submit"
           className="mt-8 w-56 rounded-full border-6 border-yellow-100 bg-[#FFBD59] px-16 py-4 text-base font-bold text-white transition hover:translate-y-1"
         >
           Schedule

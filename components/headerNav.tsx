@@ -56,7 +56,6 @@ export default function HeaderNavbar() {
     { label: 'Account Details', value: 'Account Details', icon: <TbSettings size="20px" />, url: `/minerva/customer/accountdetails/${userId}` },
     { label: 'View Orders', value: 'View Orders', icon: <TbShoppingBag size="20px" />, url: "/minerva/customer/vieworders" },
     { label: 'View Appointments', value: 'View Appointments', icon: <TbCalendar size="20px" />, url: "/minerva/customer/viewappointments" },
-    { label: 'Chat', value: 'Chat' , icon: <TbBrandWechat size="20px" />, url: "/minerva/customer/chat" },
     { label: 'Logout', value: 'Logout' , icon: <TbCircleArrowRight size="20px" />, url: "/auth/login" },
   ];
 
@@ -68,15 +67,18 @@ export default function HeaderNavbar() {
   const [ carts, setCartLength ] = useState<[]>()
 
 
-  useEffect(() => {
-    const cartLength = JSON.parse(localStorage.getItem("products") as any)
-    if(cartLength) setCartLength(cartLength as any)
-  }, [])
+  // useEffect(() => {
+  //   const cartLength = JSON.parse(localStorage.getItem("products") as any)
+  //   if(cartLength) setCartLength(cartLength as any)
+  // }, [])
 
   useEffect(() => {
     const cookies = Cookies.get("ecom_token")
     setUsers(cookies as any)
   }, [ user ])
+
+
+  
 
   const onHandleLoginBtn = () => {
       router.push("/auth/login")
@@ -185,7 +187,7 @@ export default function HeaderNavbar() {
        </button>}
 
             <button className={styles.cartBtn} type="button" onClick={onHandleCartBtn}>
-            <span className={poppins.className}>Cart  ({carts?.length})</span>
+            <span className={poppins.className}>Cart</span>
             </button>
            
       </div>

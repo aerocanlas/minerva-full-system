@@ -3,6 +3,11 @@
     height: 100vh;
     position: sticky;
     top: 0;
+
+    @media screen and (max-width: 1200px) {
+        display: none;
+        
+    }
     .sidebarHeader{
         width: 100%;
         height: 150px;

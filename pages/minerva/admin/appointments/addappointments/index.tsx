@@ -7,6 +7,8 @@ import { TbClock, TbEdit, TbTrash, TbUsers } from 'react-icons/tb'
 import router from 'next/router'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 
 interface InputProp {
@@ -43,6 +45,8 @@ const AddAppointmentsPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFo
     name: ""
   })
 
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
+
   const AddAppointmentForm = async (e :any) => {
 
     e.preventDefault();
@@ -63,9 +67,30 @@ const AddAppointmentsPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFo
     {
       alert("Please complete all fields")
     }
-   else {
-    alert("New Appointment Added")
+  //  else {
+  //         toast.promise(promise, {
+  //         loading: 'Loading...',
+  //         success: (products) => {
+  //           return `Added new manual appointment succesfully`;
+  //         },
+  //         error: 'Error',
+  //       });
+  // }
   }
+
+  const handleGoBack = () => {
+    // Delay the router.back() function by 2000 milliseconds
+    setTimeout(() => {
+      router.back();
+  
+      toast.promise(promise, {
+        loading: 'Loading...',
+        success: (productsD) => {
+          return `Added new manual appointment successfully`;
+        },
+        error: 'Error',
+      });
+    }, 2000);
   }
 
 
@@ -174,7 +199,8 @@ const AddAppointmentsPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFo
                 </div> */}
                 
 
-                <button type="submit" className="relative top-10 left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Appointment</button>
+                <button type="submit" className="relative top-10 left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleGoBack}>Add New Appointment</button>
+                <Toaster richColors  />
               </form>
             </div>
 

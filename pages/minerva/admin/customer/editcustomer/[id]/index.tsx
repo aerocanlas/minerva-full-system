@@ -264,6 +264,8 @@ import { TbUsers } from 'react-icons/tb'
 import { useRouter } from 'next/router'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const EditCustomerPage: FC = () => {
 

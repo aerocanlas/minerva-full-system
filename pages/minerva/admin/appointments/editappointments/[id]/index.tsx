@@ -7,6 +7,8 @@ import {TbClock, TbEdit, TbTrash, TbUsers } from 'react-icons/tb'
 import router from 'next/router'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 interface InputProp {
   labelTitle: string;
@@ -21,9 +23,7 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [ appointmentStatus, setAppointmentStatus ] = useState("");
-  const appointmentStatusB =["Pending", "Completed", "Cancelled"];
-
+ 
   const [ userid, setUserId ] = useState("")
   const [usersId, setUsersId] = useState("");
 
@@ -38,6 +38,9 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
     name: "",
     status: ""
   })
+
+  const [ appointmentStatus, setAppointmentStatus ] = useState(appointment.status || "");
+  const appointmentStatusB =["Pending", "Completed", "Cancelled"];
 
 
   useEffect(() => {
@@ -63,6 +66,8 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
   
         const result = await res.json();
         setAppointmentD(result)
+
+        
       
     };
 
@@ -88,9 +93,6 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
     {
       alert("Please complete all fields")
     }
-   else {
-    alert("Appointment Updated")
-  }
   }
 
   const toggleDropdown = () => {
@@ -124,6 +126,22 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
     
     })
   }, [  appointmentD ])
+
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const handleGoBack = () => {
+    // Trigger the router.back() function
+    router.back();
+
+    toast.promise(promise, {
+      loading: 'Loading...',
+      success: (productsD) => {
+        
+        return `Updated appointment status succesfully`;
+      },
+      error: 'Error',
+    });
+  }
 
   return (
     
@@ -199,7 +217,7 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
     <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
     onClick={toggleDropdown}
     >
-      {appointmentStatus === "" ? "Select Product Status" : appointmentStatus}
+      {appointmentStatus === "" ? "Select Appointment Status" : appointmentStatus}
       
       <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 011.414 0 1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -208,24 +226,25 @@ const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFo
   </div>
   <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'w-[220px] absolute z-50' : 'hidden'}`}>
   {isOpen ? (
-    appointmentStatusB.map((name) => (
-      <button
-      name="stock"
-        className='text-left'
-        type="button"
-        key={name}
-        value={name}
-        onClick={(e) => setAppointmentStatus(e.currentTarget.value)}
-      >
-        {name}
-      </button>
-    ))
-  ) : null}
+              appointmentStatusB.map((name) => (
+                <button
+                  name="stock"
+                  className='text-left'
+                  type="button"
+                  key={name}
+                  value={name}
+                  onClick={(e) => setAppointmentStatus(e.currentTarget.value)}
+                >
+                  {name}
+                </button>
+              ))
+            ) : null}
 </div>
 </div>
 </div>
 <br></br>
-        <button type="submit" className="relative top-10 left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Appointment Details</button>
+        <button type="submit" className="relative top-10 left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleGoBack}>Update Appointment Details</button>
+        <Toaster richColors  />
     </form>
 </div>
 

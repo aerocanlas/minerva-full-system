@@ -1,6 +1,6 @@
 .titleHead {
   position: absolute;
-  top: 10px;
+  top: 50px;
   left: 405px;
   font-family: 'poppins', sans-serif;
   font-size: 32px;
@@ -10,12 +10,52 @@
   .icon{
      padding-right: 10px;
   }
+
+  @media screen and (max-width: 1920px) {
+    position: absolute;
+    margin-top: -15px;
   
 }
 
+@media screen and (max-width: 1536px) {
+  position: absolute;
+  margin-top: -15px;
+  display: flex;
+  font-size: 23px;
+  position: absolute;
+  top: 50px;
+  left: 400px;
+  
+    .icon{
+
+    width: 20px;
+   margin-right: 50px;
+   margin-top: -5px;
+}
+
+}  
+  @media screen and (max-width: 1200px) {
+    display: flex;
+    font-size: 23px;
+    position: absolute;
+    top: 40px;
+    left: 5px;
+    }
+      .icon{
+
+      width: 20px;
+     margin-right: 50px;
+     margin-top: -5px;
+  }
+
+
+  
+}
+
+
 .container {
   width: 1470px;
-  height: 1250px;
+  height: 1100px;
   position: absolute;
   top: 130px;
   left: 400px;
@@ -23,6 +63,20 @@
   border-radius: 10px;
   margin-left: 10px;
   box-shadow: 0px 0px 10px 0px #ccc;
+
+  @media screen and (max-width: 1920px) {
+    width: 78%;
+    }
+
+    @media screen and (max-width: 1536px) {
+      width: 95%;
+      }
+
+  @media screen and (max-width: 1200px) {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    }
 }
 
 .chatContainer {
@@ -96,10 +150,34 @@
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.03em;
+      @media screen and (max-width: 1920px) {
+
+      display: flex;
+      gap: 20px;
+      font-size: 15px;
+  
+}
+    @media screen and (max-width: 1537px) {
+      display: flex;
+      gap: 20px;
+      font-size: 11x;
+    }
   }
   .tableRow {
     background-color: #ffffff;
     box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+          @media screen and (max-width: 1920px) {
+
+      display: flex;
+      gap: 20px;
+      font-size: 15px;
+  
+}
+    @media screen and (max-width: 1537px) {
+      display: flex;
+      gap: 20px;
+      font-size: 11x;
+    }
   }
   .col1O {
     margin-left: 20px;
@@ -164,6 +242,16 @@
   .col3I {
    margin-left: 20px;
     flex-basis: 20%;
+    @media screen and (max-width: 1920px) {
+      margin-left: 10px;
+      width: 100%;
+      padding-right: 10px;
+      }
+    @media screen and (max-width: 1200px) {
+      margin-left: 10px;
+      width: 100%;
+      padding-right: 20px;
+      }
   }
   .col4I {
     flex-basis: 20%;
@@ -190,6 +278,10 @@
     margin-left: -60px;
     margin-right: 80px;
     flex-basis: 15%;
+    @media screen and (max-width: 1200px) {
+      margin-left: 15px;
+      width: 100%;
+      }
   }
   .col4 {
     flex-basis: 15%;
@@ -207,19 +299,59 @@
   
   .colInvName{
     margin-left: -20px;
+    @media screen and (max-width: 1200px) {
+      margin-left: 35px;
+      width: 100%;
+      }
   }
 
   .colInvCat{
     padding-left: 70px;
+        @media screen and (max-width: 1200px) {
+    position: relative;
+    left: -20px;
+      width: 100%;
+      padding-right: 20px;
+      }
   }
 
     .colInvStock{
     margin-right: 20px;
-    padding-left: 30px;
+    padding-left: 20px;
+    @media screen and (max-width: 1920px) {
+      position: relative;
+      left: 40px;
+      width: 100%;
+      }
+    @media screen and (max-width: 1200px) {
+      margin-left: 50px;
+      width: 100%;
+      padding-right: 20px;
+      }
+  }
+
+  .colInvQ{
+    margin-left: 10px;
+    @media screen and (max-width: 1920px) {
+      position: relative;
+      left: -10px;
+      width: 100%;
+      }
+  }
+
+    .colInvDate{
+    margin-left: 10px;
+
   }
 
       .colInvPrice{
     padding-left: 40px;
+    @media screen and (max-width: 1200px) {
+      position: relative;
+      left: -20px;
+        width: 100%;
+        padding-right: 20px;
+        }
   }
 
       .colInv{
@@ -229,7 +361,6 @@
     padding-left: 30px;
   }
 
-  @media all and (max-width: 767px) {
     .table-header {
       display: none;
     }
@@ -256,7 +387,7 @@
       }
     }
   }
-}
+
 
 .pagination {
   position: absolute;
@@ -336,6 +467,23 @@
   max-width: 100px;
 }
 
+.badgeSuccessArchive {
+  justify-content: center;
+  margin-left: -70px;
+  margin-right: 50px;
+  -webkit-text-fill-color: white;
+  display: inline-flex; /* Use flex display */
+  align-items: center; /* Center the content vertically */
+  padding: 20px 20px;
+  border-radius: 12px; // Equivalent to rounded-pill
+  background-color: green; // Assuming $primary is defined elsewhere
+  color: green($color: #000000); // Assuming $primary-contrast is defined elsewhere
+  font-weight: bold;
+  font-size: 14px;
+  height: 30px;
+  max-width: 250px;
+}
+
 .badgePending {
   -webkit-text-fill-color: white;
   display: inline-block;
@@ -348,6 +496,23 @@
 }
 
 .badgeCancelLogs {
+  justify-content: center;
+  margin-left: -70px;
+  margin-right: 50px;
+  -webkit-text-fill-color: white;
+  display: inline-flex; /* Use flex display */
+  align-items: center; /* Center the content vertically */
+  padding: 10px 10px;
+  border-radius: 12px; // Equivalent to rounded-pill
+  background-color: rgb(235, 32, 49); // Assuming $primary is defined elsewhere
+  color: green($color: #000000); // Assuming $primary-contrast is defined elsewhere
+  font-weight: bold;
+  font-size: 14px;
+  height: 30px;
+  max-width: 150px;
+}
+
+.badgeCancelArchive {
   justify-content: center;
   margin-left: -70px;
   margin-right: 50px;
@@ -381,7 +546,7 @@
   max-width: 100px;
 }
 
-.generateReportContainer{
+.generateReportContainer {
   width: 800px;
   height: 780px;
   position: absolute;
@@ -391,6 +556,26 @@
   border-radius: 10px;
   margin-left: 10px;
   box-shadow: 0px 0px 10px 0px #ccc;
+  overflow-x: auto;
+
+  @media screen and (max-width: 1920px) {
+    position: absolute;
+    top: 300px;
+    left: 900px;
+    }
+    @media screen and (max-width: 1536px) {
+      position: absolute;
+      margin-left: 30px;
+      top: 300px;
+      left: 950px;
+      }
+    @media screen and (max-width: 1200px) {
+      position: absolute;
+      margin-left: 120px;
+      left: 250px;
+        padding-right: 20px;
+        }
+
   .dividerPreview {
     width: 90%;
     background-color: rgb(255, 255, 255);
@@ -398,7 +583,7 @@
     height: 5px;
     margin-top: 10%;
     margin-left: 5%;
-    margin-bottom: 1%;
+    margin-bottom: 5%;
   }
   .titlePreview {
     font-family: 'poppins', sans-serif;
@@ -410,3 +595,4 @@
     flex-direction: flex;
   }
 }
+

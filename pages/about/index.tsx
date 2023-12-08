@@ -119,7 +119,7 @@ const  About: FC = () => {
 </section>
 
 {/* Footer */}
-<section className="absolute top-[1500px] left-[500px] flex flex-col items-center justify-center text-center text-white ">
+<section className="absolute w-full top-[1500px] flex flex-col items-center justify-center text-center text-white ">
     <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
       <div className="max-w-screen-xl mt-2 px-2 py-8 mx-auto sm:px-6 lg:px-8">
         <div className="relative top-4 grid grid-cols-1 gap-8 lg:grid-cols-3">

@@ -8,6 +8,8 @@ import { useRouter} from 'next/router'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 import { FormattedPrice, FormattedDate } from '@/helpers/index'
+import { format } from 'date-fns'
+import { Toaster, toast } from 'sonner'
 
 const EditOrdersPage: FC = ({}) => {
 
@@ -58,14 +60,19 @@ const EditOrdersPage: FC = ({}) => {
       const res = await fetch(`http://localhost:3001/order/getmyorders/${router.query.id}`, {
         method: "GET",      
         headers: { 'Content-Type': 'application/json' },
+        cache: "default"
       })
 
       const result = await res.json();
       setOrdersD(result)
+
+      if (result && result.length > 0) {
+        setStatus(result[0].status);
     }
+  }
 
     fetchData()
-  }, [])
+  }, [router, orders.total])
 
   const [ users, setUsers ] = useState<[]>()
   const [ productStatus, setProductStatus ] = useState('');
@@ -85,6 +92,7 @@ const EditOrdersPage: FC = ({}) => {
     })
   }, [ordersD])
 
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 5000));
 
   const orderEditForm = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -104,13 +112,26 @@ const EditOrdersPage: FC = ({}) => {
     return response.json();
   }
 
+  const handleGoBack = () => {
+    // Trigger the router.back() function
+    router.back();
+
+    toast.promise(promise, {
+      loading: 'Loading...',
+      success: (productsD) => {
+        return `Updated order status succesfully`;
+      },
+      error: 'Error',
+    });
+  }
+
   return (
 
     <div>
       <Head>
         <title>Edit Order</title>
       </Head>
-
+      <Toaster richColors  />
       <div className={styles.titleHead}>
         <div className={styles.icon}><TbShoppingBag size={50} /></div>
         Orders
@@ -138,7 +159,8 @@ const EditOrdersPage: FC = ({}) => {
 
                 <div className="mb-6">
                   <label htmlFor="date" className="text-sm font-medium text-gray-900 block mb-2">Date Ordered</label>
-                  <input type="text" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" defaultValue={orders.createdAt} disabled />
+                  <input type="text" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                   defaultValue={orders.createdAt ? format(new Date(orders.createdAt), 'dd MMM yyyy') : ''}disabled />
                 </div>
 
                 <div className="mb-6">
@@ -148,14 +170,15 @@ const EditOrdersPage: FC = ({}) => {
 
                 <div className="mb-6">
                   <label htmlFor="amount" className="text-sm font-medium text-gray-900 block mb-2">Amount</label>
-                  <input type="text" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" defaultValue={`PHP ${orders.total}.00`} disabled />
+                  <input type="text" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                  defaultValue={isFinite(parseFloat((orders.total))) ? FormattedPrice(parseFloat(orders.total)) : ''} disabled />
                 </div>
 
                 <div className="mb-6">
                   <div className="relative inline-block text-left">
                     <div>
                       <label htmlFor="status" className="text-sm font-medium text-gray-900 block mb-2">Order Status</label>
-                      <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                      <button type="button" className="w-[180px] inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown}
                       >
                         {status === "" ? "Set Order Status" : status}
@@ -184,7 +207,7 @@ const EditOrdersPage: FC = ({}) => {
                   </div>
                 </div>
 
-                <button type="submit" onClick={() => router.back()} className="relative top-20 left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Update Order Details</button>
+                <button type="submit" onClick={handleGoBack} className="relative top-20 left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Update Order Details</button>
               </form>
             </div>
 

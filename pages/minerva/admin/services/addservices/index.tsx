@@ -7,6 +7,8 @@ import { TbListSearch, TbCalendar, TbEdit, TbTrash, TbUsers } from 'react-icons/
 import router from 'next/router'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const AddServicesPage: FC = () => {
 
@@ -45,6 +47,7 @@ const AddServicesPage: FC = () => {
 
   })
 
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
 
   const onHandleImageUpload = (e: any) => {
     setSelectedImage(Array.from(e.target.files))
@@ -70,7 +73,23 @@ const AddServicesPage: FC = () => {
       body: fd
     })
 
-    if(!response.ok) throw new Error("There something wrong while updating")
+    if(!response.ok) {
+      throw new Error("There something wrong while updating")
+  }
+
+  }
+
+  const handleGoBack = () => {
+    // Trigger the router.back() function
+    router.back();
+
+    toast.promise(promise, {
+      loading: 'Loading...',
+      success: (products) => {
+        return `Added a new service succesfully`;
+      },
+      error: 'Error',
+    });
   }
 
   console.log({
@@ -156,7 +175,8 @@ const AddServicesPage: FC = () => {
                 <p className="mt-1 text-sm text-gray-900 dark:text-gray-800" id="file_input_help">PNG, JPG, or JPEG</p>
                 </div>
 <br></br>
-                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Service</button>
+                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleGoBack}>Add New Service</button>
+                <Toaster richColors  />
               </form>
             </div>
 

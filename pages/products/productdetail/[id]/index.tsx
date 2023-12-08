@@ -13,10 +13,13 @@ import { FormattedPrice } from '@/helpers/index'
 import Image from 'next/image'
 import image from 'next/image'
 import { useLocalStorageValue } from '@react-hookz/web'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const ProductDetails: FC = () => {
 
   const [products, setProducts] = useState({
+    productID: '',
     name: '',
     quantity: '',
     price: '',
@@ -38,8 +41,47 @@ const ProductDetails: FC = () => {
   const [ userId, setUserId] = useState("")
   const [ productsD, setProductsD ] = useState<[]>()
 
-  const cartProduct = useLocalStorageValue<any> ("products")
+  const [ cartPr, setCartPr ] = useState<[]>([])
+  const cartProduct = useLocalStorageValue("products")
 
+  useEffect(() => {
+    setCartPr(cartProduct.value as unknown as any)
+  }, [ cartProduct.value ])
+
+
+  useEffect(() => {
+    setCartPr(cartProduct.value as unknown as any)
+  }, [])
+
+
+  const onHandleCartItems = () => {
+    if(!Array.isArray(cartPr)){
+      cartProduct.set([
+        {
+          productID: products.productID,
+          name: products.name,
+          description: products.description,
+          quantity: count,
+          total: products.price as any * count,
+          price: products.price,
+          image: products.image,
+          category: products.category,
+        }
+      ])
+    } else {
+      cartProduct.set([...cartPr,   {
+        productID: products.productID,
+        name: products.name,
+        description: products.description,
+        quantity: count,
+        total: products.price as any * count,
+        price: products.price,
+        image: products.image,
+        category: products.category,
+      } ])
+    }
+    toast.success('Product added to cart succesfully')
+  }
   const addCount = () => {
     setCount((prev) => prev + 1);
   };
@@ -81,9 +123,11 @@ const ProductDetails: FC = () => {
         if (!res.ok) {
           throw new Error(`Failed to fetch product data: ${res.status}`);
         }
-  
+
         const result = await res.json();
         setProductsD(result);
+
+        
       } catch (error) {
         console.error('Error fetching product data:', error);
       }
@@ -95,6 +139,7 @@ const ProductDetails: FC = () => {
   useEffect(() => {
     productsD?.map(({ productID, image, name, quantity, price, descriptions, category, userID, stock}: any) => {
         setProducts({
+          productID: productID,
           image: image,
           name: name,
           quantity: quantity,
@@ -108,6 +153,7 @@ const ProductDetails: FC = () => {
 
   return (
     <div className={styles.bodyProducts}>
+      <Toaster richColors  />
       <section className="absolute top-20" id="productdetail">
       <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 ">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -127,7 +173,7 @@ const ProductDetails: FC = () => {
               </h2>
 
                     <p className="w-[750px] font-normal text-base leading-6 text-white mt-7">{products.description}</p>
-                    <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white mt-6 ">{FormattedPrice(products.price)}</p>
+                    <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white mt-6 ">{FormattedPrice(parseInt(products.price))}</p>
 
                     <div className="lg:mt-11 mt-10">
                     <div className="flex flex-row justify-between">
@@ -158,16 +204,7 @@ const ProductDetails: FC = () => {
                         <hr className="bg-white w-full mt-4" />
                     </div>
 
-                    <button  onClick={() => {
-                      cartProduct.set([{
-                        productID: router.query.id,
-                        name: products.name,
-                        category: products.category,
-                        total: parseInt(products.price) * count, 
-                        quantity: count,
-                        image: products.image
-                      }])
-                }}
+                    <button  onClick={onHandleCartItems}
                 className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-white-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6" >Add to Cart</button>
             </div>
             </div>
@@ -181,22 +218,24 @@ const ProductDetails: FC = () => {
               <Slider {...carouselSettings}>
                 <div>
                 {products.image.length > 0 && (
-    <Image src={products.image[2]} alt={products.name} height={120} width={520} />
-  )}
+                    <Image src={products.image[2]} alt={products.name} height={120} width={520} />
+                  )}
+                                </div>
+                                <div>
+                                {products.image.length > 0 && (
+                    <Image src={products.image[1]} alt={products.name} height={120} width={520} />
+                  )}
                 </div>
                 <div>
-                {products.image.length > 0 && (
-    <Image src={products.image[1]} alt={products.name} height={120} width={520} />
-  )}
-                </div>
-                <div>
-                {products.image.length > 0 && (
-    <Image src={products.image[0]} alt={products.name} height={120} width={520} />
-  )}
+                {products.image.length > 0 ?  
+                    <Image src={products.image[0]} alt={products.name} height={120} width={520} /> : null
+                    
+                  }
                 </div>
                 {/* Add more image items as needed */}
               </Slider>
               </div>
+              
 
               {/* ... (remaining existing code) */}
 

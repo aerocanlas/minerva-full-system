@@ -7,6 +7,7 @@ import { TbEdit, TbFile, TbFiles, TbTrash, TbUsers } from 'react-icons/tb'
 import { useRouter } from 'next/router'
 import Cookie from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+import { Toaster, toast } from 'sonner'
 
 const EditInventoryPage: FC = () => {
 
@@ -52,7 +53,10 @@ const EditInventoryPage: FC = () => {
     description: '',
     category: '',
     stock: '',
+
   });
+
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
 
   console.log(products, productStock, productCategory)
   const [ selectedImage, setSelectedImage ] = useState<any>([])
@@ -61,7 +65,18 @@ const EditInventoryPage: FC = () => {
     setSelectedImage(Array.from(e.target.files))
   }
 
+  const handleGoBack = () => {
+    // Trigger the router.back() function
+    router.back();
 
+    toast.promise(promise, {
+      loading: 'Loading...',
+      success: (productsD) => {
+        return `Updated product quantity succesfully`;
+      },
+      error: 'Error',
+    });
+  }
 
 
   useEffect(() => {
@@ -70,7 +85,7 @@ const EditInventoryPage: FC = () => {
         const res = await fetch(`http://localhost:3001/product/getProductById/${router.query.id}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-          cache: 'force-cache',
+          cache: 'default',
         });
   
         if (!res.ok) {
@@ -79,6 +94,12 @@ const EditInventoryPage: FC = () => {
   
         const result = await res.json();
         setProductsD(result)
+
+        if (result && result.length > 0) {
+          const { stock, category } = result[0];
+          setProductStock(stock);
+          setProductCategory(category);
+        }
       
     };
 
@@ -89,35 +110,21 @@ const EditInventoryPage: FC = () => {
 
   const EditInventoryForm = async (e: any) => {
     e.preventDefault();
-    
-    // Use products state directly here
-    // const fd = new FormData();
-    // fd.append('name', products.name);
-    // fd.append('descriptions', products.description);
-    // fd.append('category', productCategory);
-    // fd.append('price', products.price);
-    // fd.append('stock', productStock);
-    // fd.append('quantity', products.quantity);
-    // fd.append('userID', userId);
 
-      const response = await fetch(`http://localhost:3001/product/updateProduct/${router.query.id}`, {
-        method: 'PATCH',
+      const response = await fetch(`http://localhost:3001/product/updateProductQuantity/${router.query.id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          "name":  products.name,
-          "descriptions": products.description,
-          "category": productCategory,
-          "price": products.price,
-          "stock": productStock,
-          "quantity": products.quantity,
-          "userID": userId
+          quantity: parseInt(products.quantity),
+          userID: userId
         }),
       });
 
       if (!response.ok) {
         throw new Error('There was an error while updating');
       }
-  
+
+      response.json();
   };
 
   useEffect(() => {
@@ -140,14 +147,14 @@ const EditInventoryPage: FC = () => {
       <Head>
         <title>Edit Product</title>
       </Head>
-
+      <Toaster richColors  />
       <div className={styles.titleHead}>
         <div className={styles.icon}><TbFiles size={50} /></div>
         Product Management
       </div>
 
       <div className={styles.container}>
-        <div className={styles.title}>Edit Inventory (Add Quantity)</div>
+        <div className={styles.title}>Edit Inventory</div>
         <div className={styles.divider}></div>
 
         <div className="flex lg:flex-row flex-col items-center py-6 px-4">
@@ -231,9 +238,9 @@ const EditInventoryPage: FC = () => {
                 </div>
 
                 <div className="mb-6">
-                      <label htmlFor="productQuantity" className="text-sm font-medium text-gray-900 block mb-2">Add Product Quantity</label>
+                      <label htmlFor="productQuantity" className="text-sm font-medium text-gray-900 block mb-2">Product Quantity</label>
                       <input name="quantity" type="text" id="productQuantity" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
-                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder='Input value to add to current product quantity' defaultValue={products.quantity} onChange={(e) => setProducts({...products, quantity: e.target.value})}/>
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder='Input product quantity' defaultValue={products.quantity} onChange={(e) => setProducts({...products, quantity: e.target.value})}/>
                     </div>
 
                 
@@ -242,7 +249,7 @@ const EditInventoryPage: FC = () => {
                   <textarea disabled defaultValue={products.description} onChange={(e) => setProducts({...products, description: e.target.value})} name="description" id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" placeholder="Input your product description here" required />
                 </div>
                 
-                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Update Product Details</button>
+                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleGoBack}>Update Product Details</button>
               </form>
             </div>
 

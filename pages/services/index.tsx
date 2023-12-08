@@ -71,7 +71,7 @@ useEffect(() => {
                 ))}
 
             </div>
-            <div className="absolute bottom-[-220px] min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible flex gap-10">
+            <div className="absolute bottom-[200px] min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible flex gap-10">
 
           <div className={styles.pagination}>
         <button className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>

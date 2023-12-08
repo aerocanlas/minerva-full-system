@@ -8,6 +8,8 @@ import { useRouter } from 'next/router'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
 import { Cookie } from 'next/font/google'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const EditServicesPage: FC = () => {
 
@@ -57,6 +59,20 @@ const EditServicesPage: FC = () => {
 
   const [ users, setUsers ] = useState<[]>()
 
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const handleGoBack = () => {
+    // Trigger the router.back() function
+    router.back();
+
+    toast.promise(promise, {
+      loading: 'Loading...',
+      success: (servicesD) => {
+        return `Updated ${services.services} succesfully`;
+      },
+      error: 'Error',
+    });
+  }
 
   const EditServicesForm = async (e :any) => {
 
@@ -85,7 +101,7 @@ const EditServicesPage: FC = () => {
       const res = await fetch(`http://localhost:3001/services/getAllServices/${router.query.id}`, {
         method: "GET",     
          headers: { 'Content-Type': 'application/json' },
-        cache: "force-cache",
+        cache: "default",
       })
 
       const result = await res.json();
@@ -175,7 +191,8 @@ const EditServicesPage: FC = () => {
                   <label htmlFor="description" className="text-sm font-medium text-gray-900 block mb-2">Service Description</label>
                   <textarea name="description" id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" onChange={(e) => setServices({...services, description: e.target.value})} defaultValue={services.description} placeholder="Input your product description here" required />
                 </div>
-                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Service Details</button>
+                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleGoBack}>Update Service Details</button>
+                <Toaster richColors  />
               </form>
             </div>
 

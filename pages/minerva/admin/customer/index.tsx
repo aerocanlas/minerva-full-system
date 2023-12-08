@@ -7,6 +7,9 @@ import Head from 'next/head'
 import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight } from 'react-icons/tb'
 import router from 'next/router'
 import Modal from '@/components/Modal';
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
+
 
 const CustomerPage: FC = () => {
 
@@ -23,10 +26,11 @@ const CustomerPage: FC = () => {
   const handleOpenModal = () => {
     setIsModalOpen(true);
   }
-
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 5000);
+  }
 
 
   useEffect(() => {
@@ -55,8 +59,6 @@ const CustomerPage: FC = () => {
     setConfirmationInput(e.target.value);
   };
 
-  console.log(users)
-
   const onFormDelete =  async () => {
     
     const res = await fetch(`http://localhost:3001/user/deleteUser/${userId}`, {
@@ -67,7 +69,7 @@ const CustomerPage: FC = () => {
     if(!res.ok) {
       alert("There something is eror while updating")
     } else {
-      alert("Successfully Deleted")
+      toast.warning(`Customer account has been deleted`)
     }
     if (confirmationInput.toLowerCase() === correctInputValue) {
       // Proceed with the delete operation
@@ -87,7 +89,7 @@ const CustomerPage: FC = () => {
   return (
 
     <div>
-
+<Toaster richColors  />
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className=" bg-gray-800 rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
           <div className="p-4 sm:p-7 " >

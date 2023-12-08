@@ -7,6 +7,8 @@ import { TbEdit, TbFile, TbFiles, TbTrash, TbUsers } from 'react-icons/tb'
 import { useRouter } from 'next/router'
 import Cookie from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 
 const EditProductPage: FC = () => {
 
@@ -69,7 +71,7 @@ const EditProductPage: FC = () => {
         const res = await fetch(`http://localhost:3001/product/getProductById/${router.query.id}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-          cache: 'force-cache',
+          cache: 'default',
         });
   
         if (!res.ok) {
@@ -78,7 +80,15 @@ const EditProductPage: FC = () => {
   
         const result = await res.json();
         setProductsD(result)
+
+        if (result && result.length > 0) {
+          const { stock, category } = result[0];
+          setProductStock(stock);
+          setProductCategory(category);
       
+    }
+
+    
     };
 
     fetchData();
@@ -86,6 +96,8 @@ const EditProductPage: FC = () => {
 
   console.log(products)
 
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
+  
   const EditProductForm = async (e: any) => {
     e.preventDefault();
     
@@ -113,11 +125,26 @@ const EditProductPage: FC = () => {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('There was an error while updating');
-      }
-  
-  };
+      if(!response.ok) 
+    {
+      alert("Please complete all fields")
+    }
+
+
+  }
+
+  const handleGoBack = () => {
+    // Trigger the router.back() function
+    router.back();
+
+    toast.promise(promise, {
+      loading: 'Loading...',
+      success: (productsD) => {
+        return `Updated ${products.name} succesfully`;
+      },
+      error: 'Error',
+    });
+  }
 
   useEffect(() => {
     productsD?.map(({ productID, name, quantity, price, descriptions, category, userID, stock}: any) => {
@@ -241,7 +268,8 @@ const EditProductPage: FC = () => {
                   <textarea defaultValue={products.description} onChange={(e) => setProducts({...products, description: e.target.value})} name="description" id="description" className="h-40 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 start-0" placeholder="Input your product description here" required />
                 </div>
                 
-                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >Update Product Details</button>
+                <button type="submit" className="relative left-80 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleGoBack}>Update Product Details</button>
+                <Toaster richColors  />
               </form>
             </div>
 

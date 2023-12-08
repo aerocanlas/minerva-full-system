@@ -4,11 +4,16 @@ import { useRouter } from 'next/router'
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie'
 import ReCAPTCHA from "react-google-recaptcha";
+import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
+import { useLocalStorageValue } from '@react-hookz/web'
+
 
 export default function Login() {
 
 	const [showPassword, setShowPassword] = useState(false);
 
+	const usersD = useLocalStorageValue("userId")
 	const togglePasswordVisibility = () => {
 	  setShowPassword(!showPassword);
 	};
@@ -76,7 +81,7 @@ export default function Login() {
 		})
 	  
 		const data = await res.json()
-	  
+		const promise = () => new Promise((resolve) => setTimeout(resolve, 5000));
 		// Check the success of the login request
 		if (res.ok) {
 		  const cookies = Cookies.set("ecom_token", data, {
@@ -87,13 +92,26 @@ export default function Login() {
 		  })
 	  
 		  if (cookies) {
-			const { role }: any = jwtDecode(cookies)
+			const { role, userID }: any = jwtDecode(cookies)
 			if (role === "admin") {
+			usersD.set(userID)
 			  router.push("/minerva/admin/customer")
 			} else {
+				usersD.set(userID)
 			  router.push('/')
 			}
+			
 		  }
+		  
+	}
+	else {
+		toast.promise(promise, {
+		loading: 'Loading...',
+		success: (products) => {
+		  return `You have logged in successfully`;
+		},
+		error: 'Error',
+	  });
 		}
 	  }
 
@@ -154,6 +172,7 @@ export default function Login() {
 					<span className="text-sm ml-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push("/auth/changePassword")}>Forgot Password?</span>
 					<br></br>
 					<span className="text-sm ml-2"> Don{"'"}t have an Account? <span onClick={() => router.push("/auth/register")} className="text-sm hover:text-blue-500 cursor-pointer">Sign Up.</span></span>
+					<Toaster richColors  />
 				</form>
 			</div>
 		</div>

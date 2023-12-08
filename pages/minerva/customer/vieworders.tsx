@@ -7,13 +7,17 @@ import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, 
 import router from 'next/router'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+import {FormattedDate, FormattedPrice } from '@/helpers/index'
 
 
 const ViewOrders: FC = () => {
+
+  const [ page, setPage] = useState(0)
   const [ orders, setOrders ] = useState(null)
 
 
   const [ userId, setUserId ] = useState("")
+
 
   useEffect(() => {
     const cookies = Cookies.get("ecom_token");
@@ -21,23 +25,26 @@ const ViewOrders: FC = () => {
       const { userID }: any = jwtDecode(cookies)
       setUserId(userID)
     }
-  }, [])
+  }, [ ])
 
   useEffect(() => {
+
+    if(!userId) return
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:30001/orders/getAllMyOrders/${userId}`, {
+      const response = await fetch(`http://localhost:3001/order/getAllMyOrders/${userId}/?skip=${page}`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
+        cache: "no-cache"
       })
 
-      if (!response.ok) throw new Error("There is something wrong while fethcing")
+      if (!response.ok) throw new Error("There is something wrong while fetching")
 
       const result = await response.json();
       setOrders(result)
     }
 
     fetchData();
-  }, [])
+  }, [ userId, orders ])
 
   return (
 
@@ -59,119 +66,27 @@ const ViewOrders: FC = () => {
               <div className={styles.col4}>AMOUNT</div>
               <div className={styles.col5}>PAYMENT METHOD</div>
               <div className={styles.col6}>ORDER STATUS</div>
-              <div className={styles.col7}>ACTION</div>
+
             </li>
               
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Order ID">#42442</div>
-              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-              <div className={styles.col5} data-label="Payment Method">GCash</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Order ID">#42442</div>
-              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
-              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-              <div className={styles.col5} data-label="Payment Method">GCash</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Order ID">#42442</div>
-              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
-              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-              <div className={styles.col5} data-label="Payment Method">GCash</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Order ID">#42442</div>
-              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
-              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-              <div className={styles.col5} data-label="Payment Method">GCash</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgePending}>Pending</span></div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Order ID">#42442</div>
-              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
-              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-              <div className={styles.col5} data-label="Payment Method">GCash</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeCancel}>Cancelled</span></div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
-            <li className={styles.tableRow}>
-              <div className={styles.col1} data-label="Order ID">#42442</div>
-              <div className={styles.col2} data-label="Customer Name">Juan Dela Cruz</div>
-              <div className={styles.col3} data-label="Date Ordered"> 21 Oct 2023</div>
-              <div className={styles.col4} data-label="Amount">PHP 23,989.00</div>
-              <div className={styles.col5} data-label="Payment Method">GCash</div>
-              <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>Success</span></div>
-              <div className={styles.col7} data-label="Action">
-                <button onClick={() => router.push("/minerva/admin/orders/editorders")} className={styles.col7}> <TbEdit size={25} /> </button>
-
-                <button className={styles.col7}> <TbTrash size={25} /> </button>
-              </div>
-            </li>
+            {orders?.map(({ orders, createdAt, total, payment, status}: any) => (
+                <li className={styles.tableRow}>
+                <div className={styles.col1} data-label="Order ID">{orders}</div>
+                <div className={styles.col3} data-label="Date Ordered"> {FormattedDate(createdAt)} </div>
+                <div className={styles.col4} data-label="Amount">{FormattedPrice(total)}</div>
+                <div className={styles.col5} data-label="Payment Method">{payment}</div>
+                <div className={styles.col6} data-label="Order Status"><span className={styles.badgeSuccess}>{status}</span></div>
+                
+              </li>
+            ))}
 
 
           </ul>
         </div>
 
         <div className={styles.pagination}>
-          <ul>
-
-            <li>
-              <a href="#" >&laquo;</a>
-            </li>
-
-            <li>
-              <a href="#" >1</a>
-            </li>
-            <li>
-              <a href="#" >2</a>
-            </li>
-            <li>
-              <a href="#" className={styles.active}>3</a>
-            </li>
-            <li>
-              <a href="#" >4</a>
-            </li>
-            <li>
-              <a href="#" >5</a>
-            </li>
-            <li>
-              <a href="#" >&raquo;</a>
-            </li>
-
-          </ul>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
         </div>
 
       </div>

@@ -36,13 +36,26 @@ interface Product {
 const Products: FC = () => {
 
   const [ productsTake, setProductsTake ] = useState(10)  // you can set this on default
-  const [ filters, setFilters ] = useState("")
   const [ products, setProducts ] = useState<[]>()
-  const [ filterProducts, setFilterProducts ] = useState(null)
+  const [ filterProducts, setFilterProducts ] = useState("asc")
   const [ search, setSearch ] = useState("")
   const [ productSearch, setProductSearch ] = useState(null)
+  const [ productCategory, setProductCategory ] =useState(null)
+  const [ category, setCategory ] = useState("")
   const [ page, setPage] = useState(0)
   const [ userId, setUserId] = useState("")
+
+  const productCategoryLInk = [
+    { name: "View All", icon: <IoListSharp size="40px"  />, value: ""  },
+    { name: "Tires", icon: <GiCarWheel size="40px" />, value: "Tire"},
+    { name: "Car Battery", icon: <BiSolidCarBattery size="40px" />, value: "Car Battery"  },
+    { name: "Tire Mags", icon: <GiCartwheel size="40px" />, value: "Tire Mags" },
+    { name: "Oils", icon: <LiaOilCanSolid size="40px" />, value: "Oils"},
+    { name: "Car Filters", icon: <BiSolidCylinder size="40px" />, value: "Car Filters" },
+
+
+  ]
+  
 
   const [ isOpen, setIsOpen ] = useState(false);
 
@@ -50,7 +63,14 @@ const Products: FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const filtersOptions =["Low-to-High", "High-to-Low"];
+  const filtersOptions =[
+    {
+      name: "Low-to-High", value: "asc"
+    },
+    {
+    name:  "High-to-Low", value: "desc"
+   }
+];
 
 
   const router = useRouter();
@@ -63,14 +83,30 @@ const Products: FC = () => {
 
   // search products
 
-  const ProductSearch = async () => {
-    const response = await fetch("http://localhost:3001/product/getSearchProduct", {
-      method: "GET",
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const result = await response.json()
-    setProductSearch(result)
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`http://localhost:3001/product/getProductsByCategory/?category=${category}&skip=${page}&orderby=${filterProducts}`, {
+          method: "GET",
+          headers: { 'Content-Type': 'application/json' },
+      })
+
+      const result = await response.json()
+      setProductCategory(result)
+    }
+    fetchData()
+  } ,[ productCategory ])
+
+  useEffect(() => {
+        const fetchData = async () => {
+          const response = await fetch(`http://localhost:3001/product/getSearchProduct/?search=${search}`, {
+            method: "GET",
+            headers: { 'Content-Type': 'application/json' },
+          })
+          const result = await response.json()
+          setProductSearch(result)
+        }
+        fetchData() //wait lang andito kapatid ko
+  }, [ productSearch ])
 
   useEffect(() => {
     const cookies = Cookies.get("ecom_token") as any
@@ -80,29 +116,16 @@ const Products: FC = () => {
 
   //filter data w/ pagination 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("http://localhost:3001/product/getProductByCategory", {
-        method: "GET",
-        headers: { 'Content-Type': 'application/json' },
-      })
 
-      const result = await response.json();
-      setFilterProducts(result)
-
-    }
-
-    fetchData();
-  }, [ filters ])
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`http://localhost:3001/product/getAllProduct/?skip=${page}&orderby=desc`, {
+      const res = await fetch(`http://localhost:3001/product/getAllProduct/?skip=${page}&orderby=${filterProducts}`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
         cache: "default"
       })
-    
+      
     if (!res.ok) {
       throw new Error("There something wrong while fetching data")
     }
@@ -120,35 +143,28 @@ const Products: FC = () => {
   return (
     <div className={styles.bodyProductPage}>
       <section className="relative h-screen flex flex-col items-center justify-center text-center text-white ">
-
-        <div className="absolute top-[300px] left-20 max-w-2xl mx-auto">
-
-          <aside className="absolute opacity-80 w-96" aria-label="Sidebar">
-
-            <div className={styles.category}>
-              <div className="absolute top-12 left-8 flex items-center w-80 mx-auto bg-white border-2 border-black rounded-md " x-data="{ search: '' }">
-                <div className="w-full">
-                <div>
-                <button type="button" className="inline-flex justify-center w-[120px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+      <div className='absolute top-[200px] left-[310px]'>
+                <button type="button" className="inline-flex justify-center w-[150px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                         onClick={toggleDropdown}
                       >
-                       {filters === "" ? "Filters" : filters}
+    
+                          Price Filters
 
                         <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 011.414 0 1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                       </button>
                     </div>
-                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'w-[220px] absolute z-10' : 'hidden'}`}>
+                    <div className={`bg-white flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-black ${isOpen ? 'w-[160px] absolute top-[240px] left-[300px] z-10' : 'hidden'}`}>
   {isOpen ? (
-    filtersOptions.map((name) => (
+    filtersOptions.map(({name, value}) => (
       <button
       name="status"
         className='text-left'
         type="button"
         key={name}
-        value={name}
-        onClick={(e) => setFilters(e.currentTarget.value)}
+        value={value}
+        onClick={(e) => setFilterProducts(e.currentTarget.value)}
       
         aria-required>
         {name}
@@ -156,8 +172,16 @@ const Products: FC = () => {
     ))
   ) : null}
                 </div>
+        <div className="absolute top-[250px] left-20 max-w-2xl mx-auto">
+        
+          <aside className="absolute opacity-80 w-96" aria-label="Sidebar">
+
+            <div className={styles.category}>
+              <div className="absolute top-12 left-8 flex items-center w-80 mx-auto bg-white border-2 border-black rounded-md " x-data="{ search: '' }">
+                <div className="w-full">
+                
                   <input type="search" className="w-full px-4 py-1 text-gray-800 rounded-lg focus:outline-none "
-                    placeholder="search" x-model="search" />
+                    placeholder="search" onChange={(e) => setSearch(e.target.value)}/>
                 </div>
                 
                 <div>
@@ -170,66 +194,76 @@ const Products: FC = () => {
                   </button>
                 </div>
               </div>
-              <div className="px-20 py-16 overflow-y-auto rounded-2xl bg-[#FFBD59]">
-                <ul className="pt-16 space-y-2">
-                  <li>
-                    <a href="#" target="_blank"
-                      className="flex items-center p-2 font-normal text-black rounded-lg dark:text-black hover:bg-black hover:text-white">
-                      <IoListSharp size="40px" />
-                      <span className=" ml-3 text-2xl">View All</span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="#"
-                      className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">
-                      <GiCarWheel size="40px" />
-                      <span className="ml-3 text-2xl">Tires</span>
-                    </a>
-                    </li>
-
-                    <li>
-                      <a href="#"
-                        className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">
-                        <BiSolidCarBattery size="40px" />
-                        <span className=" ml-3 text-2xl">Car Battery</span>					</a>
-                    </li>
-                    
-                    <li>
-                    <a href="#"
-                      className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">
-                      <GiCartwheel size="40px" />
-                      <span className=" ml-3 text-2xl">Tire Mags</span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="#"
-                      className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">
-                      <LiaOilCanSolid size="40px" />
-                      <span className=" ml-3 text-2xl">Oils</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      className="flex items-center p-2 font-normal text-gray-900 rounded-lg dark:text-black hover:bg-black hover:text-white">
-                      <BiSolidCylinder size="40px" />
-                      <span className=" ml-3 text-2xl">Car Filters</span>
-                    </a>
-                  </li>
-                </ul>
+              <div className="px-20 py-8 overflow-y-auto rounded-2xl bg-[#FFBD59]">
+                <div className="pt-16 space-y-2">
+                  {productCategoryLInk.map(({ name, icon, value }: any) => (
+                   <div className='mt-16 justify-center h-20 '>
+                
+                    <button value={value} onClick={(e) => setCategory(e.currentTarget.value)} className=" text-black font-semibold hover:bg-white hover:px-16 hover:w-full flex items-center align-center justify-center gap-5 ml-3 text-2xl">
+                    {icon}
+                   <span>
+                      {name}
+                   </span></button>
+                   </div>
+                  ))}
+                </div>
               </div>
             </div>
           </aside>
 
         </div>
         <div className="absolute top-[120px] ml-60 left-96 grid grid-cols-1 md:grid-cols-3 gap-8 ">
+    
+        { search  ? productSearch?.map(({ productID, name, category, price, stock, image, description, quantity } :any) => (
+                    <div key={productID} onClick={() => handleClick(productID)}>
+          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+           {image.length > 0 && (
+    <Image src={image[0]} alt={name} height={120} width={320}/>
+  )}
+            <div className="p-4">
+            
+              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">{name}</h2>
+              
+              <p className="text-sm mb-2 dark:text-black text-black">{description}</p>
+              <div className="flex items-center">
+                <p className="mr-2 text-lg font-bold flex text-black dark:text-black">{FormattedPrice(price)} </p>
+              </div>
+            </div>
+            <button
+               
+               className="absolute bottom-0 right-0 mx-2 my-2 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoIosEye size="18px"/></button>
 
-        {products?.map(({ userId, id, productID, name, category, price, stock, image, description, quantity }: any) => (
+          </div>
+
+          </div>
+        ))  :category ? productCategory?.map(({ productID, name, category, price, stock, image, description, quantity } :any) => (
+                    <div key={productID} onClick={() => handleClick(productID)}>
+          <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+           {image.length > 0 && (
+    <Image src={image[0]} alt={name} height={120} width={320}/>
+  )}
+            <div className="p-4">
+            
+              <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">{name}</h2>
+              
+              <p className="text-sm mb-2 dark:text-black text-black">{description}</p>
+              <div className="flex items-center">
+                <p className="mr-2 text-lg font-bold flex text-black dark:text-black">{FormattedPrice(price)} </p>
+              </div>
+            </div>
+            <button
+               
+               className="absolute bottom-0 right-0 mx-2 my-2 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoIosEye size="18px"/></button>
+
+          </div>
+
+          </div>
+        )): 
+         products?.map(({ userId, id, productID, name, category, price, stock, image, description, quantity }: any) => (
           <div key={productID} onClick={() => handleClick(productID)}>
           <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
            {image.length > 0 && (
-    <Image src={image[1]} alt={name} height={120} width={320}/>
+    <Image src={image[0]} alt={name} height={120} width={320}/>
   )}
             <div className="p-4">
             
@@ -249,14 +283,13 @@ const Products: FC = () => {
           </div>
           ))}
 
-          <div className="absolute bottom-[-120px] min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible flex gap-10">
 
 <div className={styles.pagination}>
 <button className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
        <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
 </div>          </div>
 
-        </div>
+        
       </section>
 
       {/*  */}

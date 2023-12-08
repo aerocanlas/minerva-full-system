@@ -9,6 +9,7 @@ import Modal from '@/components/Modal';
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
 import { FormattedPrice, FormattedDate } from '@/helpers/index'
+import { Toaster, toast } from 'sonner'
 
 const Orders: FC = () => {
 
@@ -21,8 +22,10 @@ const Orders: FC = () => {
   }
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 5000);
+  }
 
   const [profile, setProfile] = useState<[]>()
   const [ users, setUsers ] = useState<[]>()
@@ -35,7 +38,7 @@ const Orders: FC = () => {
       const response = await fetch(`http://localhost:3001/order/?skip=${page}&orderby=desc`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
-        cache: "default"
+        cache: "no-cache"
       })
 
       if (!response.ok) throw new Error("There is something wrong while fethcing")
@@ -65,7 +68,7 @@ const Orders: FC = () => {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            userID: userid,
+          ...products,    userID: userid,
         })
     })
 
@@ -79,7 +82,7 @@ const Orders: FC = () => {
 
     return res.json();
   }
-  console.log()
+  console.log(orders)
 
   
   return (
@@ -127,7 +130,7 @@ const Orders: FC = () => {
               <div className={styles.col2O}>CUSTOMER NAME</div>
               <div className={styles.col3O}>DATE ORDERED</div>
               <div className={styles.col4O}>AMOUNT</div>
-              <div className={styles.col5O}>PAYMENT METHOD</div>
+              <div className={styles.col5O}>PAYMENT</div>
               <div className={styles.col6O}>ORDER STATUS</div>
               <div className={styles.col7O}>ACTION</div>
             </li>
@@ -145,8 +148,8 @@ const Orders: FC = () => {
                   <div className={styles.col5O} data-label="Payment Method">{payment}</div>
                   <div className={styles.col6O} data-label="Order Status"><span>{status}</span></div>
                   <div className={styles.col7O} data-label="Action">
-                    <button onClick={() => router.push(`/minerva/admin/orders/editorders/${orderID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
-                    <button onClick={handleOpenModal} className={styles.col7}> <TbTrash size={25} /> </button>
+                    <button onClick={() => router.push(`/minerva/admin/orders/editorders/${orderID}`)} className={`${styles.col7} pl-4`}> <TbEdit size={25} /> </button>
+                    {/* <button onClick={handleOpenModal} className={styles.col7}> <TbTrash size={25} /> </button> */}
                   </div>
                 </li>
                 ))
@@ -161,7 +164,7 @@ const Orders: FC = () => {
         </div>
 
       </div>
-
+      <Toaster richColors  />
     </div>
 
   )
