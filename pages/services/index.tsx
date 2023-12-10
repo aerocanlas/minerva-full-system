@@ -39,7 +39,9 @@ useEffect(() => {
     setServices(result)
   }
   fetchData()
-}, [])
+}, [services])
+
+console.log(page);
 
   return (
     <>
@@ -47,7 +49,7 @@ useEffect(() => {
   <section className="relative mt-4 h-screen pb-12 mb-16 flex flex-col items-center justify-center ">
     <div className="relative top-40 mb-12 grid gap-16 lg:grid-cols-3 p-8 mx-8 gap-y-18	">
     
-    {services?.map(({ servicesID, image, services, description, userID, price }: any) => (
+    {services?.slice (0, 3).map(({ servicesID, image, services, description, userID, price }: any) => (
       <div key={servicesID} onClick={() => handleClick(servicesID)}>
                     <div className="relative w-full h-[750px] lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow transition-all duration-700 hover:scale-105">
                         <div>
@@ -71,12 +73,19 @@ useEffect(() => {
                 ))}
 
             </div>
-            <div className="absolute bottom-[200px] min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible flex gap-10">
+            <div className="absolute bottom-[-220px] min-h-[80px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible flex gap-10">
 
           <div className={styles.pagination}>
-        <button className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
-                 <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
-        </div>          </div>
+        <button disabled={page === 0 } className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+        <button
+            className="bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => setPage(() => page + 1)}
+          >
+            Next
+          </button>       
+           </div>         
+           
+            </div>
 
             </section>
 
@@ -93,7 +102,7 @@ useEffect(() => {
       <div>
       <img src="/logo.png" className="mr-5 h-6 sm:h-6" alt="logo" />
         <p className="max-w-xs mt-4 text-sm text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
+        Let us make your trips more comfortable and safe. Leave the worries behind and let's begin our journey!
         </p>
         <div className="flex mt-8 space-x-6 text-gray-600">
           <a href="https://www.facebook.com/MinervaSalesCorp" className="hover:opacity-75" target="_blank" rel="noreferrer">
@@ -134,7 +143,7 @@ useEffect(() => {
           <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
             <a href="" className="hover:opacity-75"> Contact </a>
             <a href="" className="hover:opacity-75"> About </a>
-            <a href="" className="hover:opacity-75"> Live Chat </a>
+
           </nav>
         </div>
         <div>
@@ -142,9 +151,7 @@ useEffect(() => {
             Legal
           </p>
           <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-            <a href="" className="hover:opacity-75" > Privacy Policy </a>
             <a href="" className="hover:opacity-75" > Terms &amp; Conditions </a>
-            <a href="" className="hover:opacity-75" > Returns Policy </a>
           </nav>
         </div>
       </div>

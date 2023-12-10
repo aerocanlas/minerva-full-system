@@ -85,12 +85,13 @@ const ViewOrders: FC = () => {
         </div>
 
         <div className={styles.pagination}>
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
-                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        <button disabled={page === 0 } className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>          
+        
         </div>
-
-      </div>
-      <section className="absolute top-[1000px] left-[500px] flex flex-col items-center justify-center text-center text-white ">
+        
+              <section className="absolute top-[1000px] left-[500px] flex flex-col items-center justify-center text-center text-white ">
           <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
             <div className="max-w-screen-xl mt-2 px-2 py-8 mx-auto sm:px-6 lg:px-8">
               <div className="relative top-4 grid grid-cols-1 gap-8 lg:grid-cols-3">

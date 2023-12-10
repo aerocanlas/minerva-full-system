@@ -8,23 +8,189 @@ import Link from 'next/link'
 import styles from '@/styles/customer/customer.module.scss'
 import React from 'react';
 import { IoCartOutline } from "react-icons/io5";
-import { IoMdArrowDropright } from "react-icons/io";
+import { IoIosEye, IoMdArrowDropright } from "react-icons/io";
 import { FaUserClock } from "react-icons/fa6";
 import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner'
+import { FormattedPrice } from '@/helpers'
+import { useRouter } from 'next/router'
+import { jwtDecode } from 'jwt-decode'
+import Cookies from 'js-cookie'
 
 const Home: FC = () => {
 
+  const [ productsTake, setProductsTake ] = useState(10)  // you can set this on default
   const [ products, setProducts ] = useState<[]>()
+  const [ filterProducts, setFilterProducts ] = useState("asc")
+  const [ search, setSearch ] = useState("")
+  const [ productSearch, setProductSearch ] = useState(null)
   const [ productCategory, setProductCategory ] =useState(null)
   const [ category, setCategory ] = useState("")
   const [ page, setPage] = useState(0)
   const [ userId, setUserId] = useState("")
 
+  
+
+  const [ isOpen, setIsOpen ] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const filtersOptions =[
+    {
+      name: "Low-to-High", value: "asc"
+    },
+    {
+    name:  "High-to-Low", value: "desc"
+   }
+];
+
+
+  const router = useRouter();
+
+  const handleClickProducts = (productId: any) => {
+    // Navigate to the target page when the component is clicked
+    router.push(`/products/productdetail/${productId}`);
+  };
+
+  const handleClickServices = (servicesID: any) => {
+    // Navigate to the target page when the component is clicked
+    router.push(`/services/servicedetail/${servicesID}`);
+  };
+
+
+  // search products
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`http://localhost:3001/product/getProductsByCategory/?category=${category}&skip=${page}&orderby=${filterProducts}`, {
+          method: "GET",
+          headers: { 'Content-Type': 'application/json' },
+      })
+
+      const result = await response.json()
+      setProductCategory(result)
+    }
+    fetchData()
+  } ,[ productCategory ])
+
+  useEffect(() => {
+        const fetchData = async () => {
+          const response = await fetch(`http://localhost:3001/product/getSearchProduct/?search=${search}`, {
+            method: "GET",
+            headers: { 'Content-Type': 'application/json' },
+          })
+          const result = await response.json()
+          setProductSearch(result)
+        }
+        fetchData()
+  }, [ productSearch ])
+
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
+
+  //filter data w/ pagination 
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`http://localhost:3001/product/getAllProduct/?skip=${page}&orderby=${filterProducts}`, {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json' },
+        cache: "default"
+      })
+      
+    if (!res.ok) {
+      throw new Error("There something wrong while fetching data")
+    }
+
+    const result = await res.json();
+
+    setProducts(result)
+
+  }
+
+  fetchData();
+  }, [ products ])
+
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 2000);
+  }
+
+  const [ services, setServices ] = useState<[]>()
+  const [ servicesId, setServicesId] = useState("")
+  const [ userid, setUserID ] = useState("")
+
+
+  useEffect(() => {
+    const cookies = Cookies.get("ecom_token") as any
+    const { userID }: any = jwtDecode(cookies) as any
+    setUserId(userID)
+  }, [ userId ])
+
+  useEffect(() => {
+    const fetchData = async () => {
+       const response = await fetch(`http://localhost:3001/services/getAllServices/?skip=${page}&orderby=desc`, {
+          method: "GET",
+          headers: { 'Content-Type': 'application/json' },
+          cache: "default"
+      })
+
+      if (!response.ok) {
+        throw new Error("There something wrong while fetching data")
+      }
+  
+      const result = await response.json();
+  
+      setServices(result)
+  
+    }
+  
+    fetchData();
+    }, [ services ])
+
+
+    const onFormDelete =  async () => {
+    const res = await fetch(`http://localhost:3001/services/deleteService/${servicesId}`, {
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            userID: userId,
+        })
+    })
+
+
+    if(!res.ok) {
+        alert("There something wrong while updating..")
+    } else {
+      {services?.map(({ userID, servicesID, id, services, description, price, status }: any) => (
+
+      toast.warning(`${services} has been deleted`)
+
+      ))}
+    }
+
+    return res.json();
+  }
+
+
   return (
 <div className={styles.bodyHome}>
 <Toaster richColors  />
-<section className="relative h-screen flex flex-col items-center justify-center text-center text-white ">
+<section className="relative h-screen flex flex-col items-center justify-center text-center text-white">
   
           <div className={styles.videoDocker}>
               <video 
@@ -32,7 +198,7 @@ const Home: FC = () => {
               <source src="/landingvid.MOV" 
               type="video/mp4"/></video>
           </div>
-          <div className="video-content space-y-2 z-10">
+          <div className="pt-80 video-content space-y-2 z-10">
               <span className={styles.welcome}>Welcome</span>
               <span className={styles.tagline}>Road Safety & Roadworthiness 
               <br></br>at your fingertips</span>
@@ -42,7 +208,7 @@ const Home: FC = () => {
           </div>
       </section>
 
-      <section className="relative h-96 flex flex-col items-center justify-center text-center text-white">
+      <section className="relative mt-60 h-96 flex flex-col items-center justify-center text-center text-white">
               <div className={styles.section2}>
               <div className={styles.titleText}>
 
@@ -51,9 +217,7 @@ const Home: FC = () => {
               </span>
               </div>
                 <div className={styles.contentText}>
-                  <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-                  standard dummy text ever since the 1500s
+                  <span>We are an automotive retail service provider for over 30 years in Binan, Laguna. Our flagship brand in tires is Dunlop, but we also provide supplies for other notable brands such as Yokohama, Goodyear, Michelin, BF Goodrich, and etc.
                   </span>
                 </div>
               </div>
@@ -119,7 +283,7 @@ const Home: FC = () => {
                           </span>
                           <p className="text-2xl font-extrabold text-dark-grey-900">Office Hours</p>
                           <span className="text-base leading-7 text-dark-grey-600 font-medium">Visit us during these Hours</span>
-                          <a className="text-lg font-bold text-purple-blue-500">
+                          <div className="text-lg font-bold text-purple-blue-500">
                               <a className='relative -left-24'>Open Mon-Sat <br></br>
                               8:00am - 5:00pm
                               </a>
@@ -128,60 +292,12 @@ const Home: FC = () => {
                               8:30am - 3:00pm
                                     <br></br></a>
                               
-                            </a>
+                           </div>
                           </div>  
                       </div>
             
         </ul>
         
-        {/* <div className="w-full draggable">
-        <div className="container flex flex-col items-center gap-2 mx-2 my-32">
-                      <div className="grid w-full grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3">
-                          <div className="flex w-80 flex-col items-center gap-3 px-2 py-10 bg-[#FFBD59] rounded-3xl shadow-yellow-50 shadow-2xl border-black border-4">
-                          <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-  </svg>
-                          </span>
-                          <p className="text-2xl font-extrabold text-dark-grey-900">Phone</p>
-                          <p className="text-base leading-7 text-dark-grey-600 font-medium">Reach out to us by phone</p>
-                          <a className="text-lg font-bold text-purple-blue-500">0917 865 7346</a>
-                          </div>
-                          <div className="flex w-80 flex-col items-center gap-3 px-2 py-10 bg-[#FFBD59] rounded-3xl shadow-yellow-50 shadow-2xl border-black border-4">
-                          <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h8">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-  </svg>
-                          </span>
-                          <p className="text-2xl font-extrabold text-dark-grey-900">Location</p>
-                          <p className="text-base leading-7 text-dark-grey-600 font-medium">Find us at our office</p>
-                          <a className="text-lg font-bold text-purple-blue-500" target="_blank" href="https://tinyurl.com/yeysd225">General Malvar Street
-  Barangay Tubigan
-  Binan City, Laguna</a>
-                          </div>
-                          <div className="flex w-96 flex-col items-center gap-3 px-8 py-10 bg-[#FFBD59] rounded-3xl shadow-yellow-50 shadow-2xl border-black border-4">
-                          <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-                          </span>
-                          <p className="text-2xl font-extrabold text-dark-grey-900">Office Hours</p>
-                          <p className="text-base leading-7 text-dark-grey-600 font-medium">Visit us during these Hours</p>
-                          <a className="text-lg font-bold text-purple-blue-500">
-                            <span className='grid w-full grid-cols-1 gap-2 md:grid-cols-2'>
-                              <span>Open Mon-Sat <br></br>
-                              8:00am - 5:00pm
-                              </span>
-                              Open Sun    <br></br>
-                              8:30am - 3:00pm
-                                    <br></br>
-                              </span>
-                            </a>
-                          </div>
-                      </div>
-                  </div>
-                  </div> */}
               </div>
       </section>
 
@@ -201,57 +317,41 @@ const Home: FC = () => {
     </div>
 
     <div
-        className="w-full max-w-[1190px] px-6 sm:px-8 md:px-16 py-10 md:py-20 rounded-xl bg-gradient-to-r  from-gray-100 via-[#FFBD59] to-gray-100 min-h-[300px] m-2 shadow-[0px_14px_28px_-5px_rgba(0,0,0,0.5)]">
-        <h1 className="font-bold text-2xl mb-2 tracking-wider drop-shadow-[3px_3px_5px_rgba(91,91,91,0.58)]">Products</h1>
-        <small className="font-[700]">Explore our wide range of products.</small>
+        className={styles.productSection}>        
+        <h1 className={styles.headerP}>Products</h1>
+        <small className={styles.h2}>Explore our wide range of products.</small>
         <ul className="flex items-start justify-between gap-8 mt-10 md:flex-row flex-col">
-        <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
-                        <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
+        
+        { products?.slice(0, 3).map(({ userId, id, productID, name, category, price, stock, image, description, quantity }: any) => (
+  
+  <div key={productID} onClick={() => handleClickProducts(productID)}>
+       
+        <div className={styles.pCard}>
+           
+           {image.length > 0 && (
+    <Image src={image[0]} alt={name} height={120} width={320}/>
+  )}                       
+   <div className="p-4">
+                          <h2 className={styles.pName}>{name}</h2>
+                          <p className="text-sm mb-2 dark:text-black text-black">{category}</p>
                               <div className="flex items-center">
-                                <p className="mr-2 text-lg font-bold flex text-black dark:text-black">PHP 5,600.00 </p>
+                                <p className="mr-2 text-lg font-bold flex text-black dark:text-black">{FormattedPrice(price)} </p>
                                 <button
-                  className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px"/></button>
+               
+               className="absolute bottom-0 right-0 mx-2 my-2 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoIosEye size="18px"/></button>
                               </div>
                           </div>  
                       </div>
-
-                      <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
-                        <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
-                              <div className="flex items-center">
-                                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
-                                <button
-                  className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px"/></button>
-
-                              </div>
-                          </div>  
                       </div>
 
-                      <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="https://www.motolite.com/cdn/shop/products/Gold1_750x.jpg?v=1663294903" alt="Motolite Gold" />
-                        <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Motolite Gold</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Long lasting power for high performance vehicles.</p>
-                              <div className="flex items-center">
-                                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 5,600.00</p>
-                                <button
-                  className="ml-28 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><IoCartOutline size="18px"/></button>
-
-                              </div>
-                          </div>  
-                      </div>
-            
+           ))}  
         </ul>
-        <button className="group relative top-4 mt-12 -mb-16 h-12 w-60 overflow-hidden rounded-lg bg-white text-lg shadow">
+        <div className={styles.pButton}>
+          <button onClick={() => router.push("/products")} className="group relative top-8 left-[53px] mt-12 -mb-16 h-12 w-60 overflow-hidden rounded-lg bg-white text-lg shadow">
     <div className="absolute inset-0 w-3 bg-amber-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
     <span className="relative text-black group-hover:text-white">View More Products </span>
-  </button>
-    </div>
+  </button>  
+  </div></div>
 
 </section>
 
@@ -265,64 +365,47 @@ const Home: FC = () => {
                 </div>
             </section>
 
-      <section className="relative -top-36 mb-20 h-screen flex flex-col items-center justify-center text-center text-black ">
+       <section className="relative -top-36 mb-20 h-screen flex flex-col items-center justify-center text-center text-black ">
     <div className="absolute -top-40 lg:w-2/3 w-full h-80 -z-10">
     </div>
 
     <div
-        className="w-full max-w-[1300px] px-6 sm:px-8 md:px-16 py-10 md:py-20 rounded-xl bg-gradient-to-r  from-[#FFBD59] via-gray-100 to-[#FFBD59] min-h-[300px] m-2 shadow-[0px_14px_28px_-5px_rgba(0,0,0,0.5)]">
-        <h1 className="font-bold text-2xl mb-2 tracking-wider drop-shadow-[3px_3px_5px_rgba(91,91,91,0.58)]">Services</h1>
-        <small className="font-[700]">Try our service and maintenance.</small>
+        className={styles.servicesSection}>
+
+        <h1 className={styles.h1S}>Services</h1>
+        
+        <small className={styles.h2S}>Try our service and maintenance.</small>
+
         <ul className="flex items-start justify-between gap-8 mt-10 md:flex-row flex-col">
-        <div className="mx-auto mt-2 w-96 transform overflow-hidden rounded-lg bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="/services.png" alt="Change Tire" />
-                        <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Change Tire</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Requires two sets of wheels and two sets of tires.</p>
+
+        {services?.map(({ userID, servicesID, id, services, description, price, status, image }: any) => (
+          
+          <div key={servicesID} onClick={() => handleClickServices(servicesID)}>
+        
+        <div className={styles.sCard}>
+ <Image src={image} alt={services} height={350} width={450} />                        <div className="p-4">
+                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">{services}</h2>
+                          <p className="text-sm mb-2 dark:text-black text-black">{status}</p>
                               <div className="flex items-center">
-                                <p className="mr-2 text-lg font-bold flex text-black dark:text-black">PHP 1,600.00 </p>
+                                <p className="mr-2 w-36 text-lg font-bold flex text-black dark:text-black">{FormattedPrice(price)} </p>
                                 <button
                   className="ml-40 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/></button>
                               </div>
                           </div>  
                       </div>
-
-                      <div className="mx-auto mt-2 w-96 transform overflow-hidden rounded-lg bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="/services.png" alt="Change Tire" />
-                        <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Change Tire</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Requires two sets of wheels and two sets of tires.</p>
-                              <div className="flex items-center">
-                                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 1,600.00</p>
-                                <button
-                  className="ml-40  px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/></button>
-
-                              </div>
-                          </div>  
                       </div>
-
-                      <div className="mx-auto mt-2 w-96 transform overflow-hidden rounded-lg bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-                        <img className="h-48 w-full object-cover object-center" src="/services.png" alt="Change Tire" />
-                        <div className="p-4">
-                          <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">Change Tire</h2>
-                          <p className="text-sm mb-2 dark:text-black text-black">Requires two sets of wheels and two sets of tires.</p>
-                              <div className="flex items-center">
-                                <p className="mr-2 text-lg font-bold text-black dark:text-black">PHP 1,600.00</p>
-                                <button
-                  className="ml-40  px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/></button>
-
-                              </div>
-                          </div>  
-                      </div>
+            ))}
             
         </ul>
-        <button className="group relative top-4 mt-12 -mb-16 h-12 w-60 overflow-hidden rounded-lg bg-white text-lg shadow">
+        <div className={styles.sButton}>
+        <button onClick={() => router.push("/services")} className="group relative top-4 left-[35px] mt-12 -mb-2 h-12 w-60 overflow-hidden rounded-lg bg-white text-lg shadow">
     <div className="absolute inset-0 w-3 bg-amber-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
     <span className="relative text-black group-hover:text-white">View More Services </span>
   </button>
     </div>
+    </div> 
 
-</section>
+</section> 
 
 {/*  */}
 <section className="relative flex flex-col items-center justify-center text-center text-white ">
@@ -332,7 +415,7 @@ const Home: FC = () => {
       <div>
       <img src="/logo.png" className="mr-5 h-6 sm:h-6" alt="logo" />
         <p className="max-w-xs mt-4 text-sm text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
+          Let us make your trips more comfortable and safe. Leave the worries behind and let's begin our journey
         </p>
         <div className="flex mt-8 space-x-6 text-gray-600">
           <a href="https://www.facebook.com/MinervaSalesCorp" className="hover:opacity-75" target="_blank" rel="noreferrer">
@@ -373,7 +456,6 @@ const Home: FC = () => {
           <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
             <a href="" className="hover:opacity-75"> Contact </a>
             <a href="" className="hover:opacity-75"> About </a>
-            <a href="" className="hover:opacity-75"> Live Chat </a>
           </nav>
         </div>
         <div>
@@ -381,9 +463,7 @@ const Home: FC = () => {
             Legal
           </p>
           <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-            <a href="" className="hover:opacity-75" > Privacy Policy </a>
             <a href="" className="hover:opacity-75" > Terms &amp; Conditions </a>
-            <a href="" className="hover:opacity-75" > Returns Policy </a>
           </nav>
         </div>
       </div>

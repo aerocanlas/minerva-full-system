@@ -105,7 +105,7 @@ const Products: FC = () => {
           const result = await response.json()
           setProductSearch(result)
         }
-        fetchData() //wait lang andito kapatid ko
+        fetchData()
   }, [ productSearch ])
 
   useEffect(() => {
@@ -212,8 +212,7 @@ const Products: FC = () => {
           </aside>
 
         </div>
-        <div className="absolute top-[120px] ml-60 left-96 grid grid-cols-1 md:grid-cols-3 gap-8 ">
-    
+        <div className="absolute top-[120px] ml-60 left-96 grid grid-cols-1 md:grid-cols-3 gap-8 ">    
         { search  ? productSearch?.map(({ productID, name, category, price, stock, image, description, quantity } :any) => (
                     <div key={productID} onClick={() => handleClick(productID)}>
           <div className="mx-auto mt-2 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-[#FFBD59] shadow-md duration-300 hover:scale-105 hover:shadow-lg">
@@ -284,10 +283,23 @@ const Products: FC = () => {
           ))}
 
 
+{/* Pagination section */}
 <div className={styles.pagination}>
-<button className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
-       <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
-</div>          </div>
+    <button
+      disabled={page === 0}
+      className="bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded"
+      onClick={() => setPage(() => page - 1)}
+    >
+      Prev
+    </button>
+    <button
+      className="bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      onClick={() => setPage(() => page + 1)}
+    >
+      Next
+    </button>
+  </div>
+  </div>
 
         
       </section>
@@ -300,7 +312,7 @@ const Products: FC = () => {
               <div>
                 <img src="/logo.png" className="mr-5 h-6 sm:h-6" alt="logo" />
                 <p className="max-w-xs mt-4 text-sm text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
+                Let us make your trips more comfortable and safe. Leave the worries behind and let's begin our journey!
                 </p>
                 <div className="flex mt-8 space-x-6 text-gray-600">
                   <Link href="https://www.facebook.com/MinervaSalesCorp" className="hover:opacity-75" target="_blank" rel="noreferrer">
@@ -341,7 +353,6 @@ const Products: FC = () => {
                   <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
                     <Link href="" className="hover:opacity-75"> Contact </Link>
                     <Link href="" className="hover:opacity-75"> About </Link>
-                    <Link href="" className="hover:opacity-75"> Live Chat </Link>
                   </nav>
                 </div>
                 <div>
@@ -349,9 +360,7 @@ const Products: FC = () => {
                     Legal
                   </p>
                   <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-                    <Link href="" className="hover:opacity-75" > Privacy Policy </Link>
                     <Link href="" className="hover:opacity-75" > Terms &amp; Conditions </Link>
-                    <Link href="" className="hover:opacity-75" > Returns Policy </Link>
                   </nav>
                 </div>
               </div>

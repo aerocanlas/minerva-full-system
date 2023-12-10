@@ -4,6 +4,31 @@
     background-image: url('/frontbg.jpg');
     background: cover; // Adjust as needed
     background-repeat: repeat;
+    @media screen and (max-width: 1920px) {
+      width: 100%;
+      position: absolute;
+      top: -150px;
+        }
+    @media screen and (max-width: 1200px) {
+      width: 100%;
+      margin-top: 240px;
+        }
+        @media screen and (max-width: 1024px) {
+          width: 1010px;
+          margin-top: 240px;
+            }
+        @media screen and (max-width: 600px) {
+          width: 100%;
+          
+      }
+      @media screen and (max-width: 390px) {
+        width: 430px;
+        
+      }
+      @media screen and (max-width: 375px) {
+        width: 430px;
+        
+      }
 
 }
 
@@ -12,6 +37,13 @@
     height: 1500px;
     background-image: url('/frontbg.jpg');
     background-size: cover;
+}
+
+.bodyContact{
+  width: 1900px;
+  height: 1500px;
+  background-image: url('/frontbg.jpg');
+  background-size: cover;
 }
 
 .bodyCart{
@@ -26,6 +58,13 @@
     height: 1300px;
     background-image: url('/frontbg.jpg');
     background-size: cover;
+}
+
+.bodyServicesD{
+  width: 100%;
+  height: 1350px;
+  background-image: url('/frontbg.jpg');
+  background-size: cover;
 }
 
 .bodyProductPage{
@@ -120,7 +159,7 @@
 
 .pagination {
     position: absolute;
-    bottom: -550px;
+    bottom: -100px;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -273,8 +312,8 @@
   }
 
   .videoDocker video {
-    height: 100px;
-    top: 0px;
+    height: 200px;
+    top: 150px;
     left: 0%;
 }
 
@@ -282,11 +321,11 @@
     content: "";
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 117%;
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.75);
-    z-index: 1;
+    z-index: 5;
 }
 
 .videoDocker1 video {
@@ -306,9 +345,9 @@
           width: 100%;
           
       }
-      @media screen and (max-width: 300px) {
-        width: 100%;
-        
+      @media (max-width: 375px) {
+        position: relative;
+        max-height: 250px;
       }
 }
 
@@ -335,9 +374,11 @@
           width: 100%;
           
       }
-      @media screen and (max-width: 300px) {
-        width: 100%;
-        
+      @media (max-width: 375px) {
+        z-index: 10px;
+        position: absolute;
+        top: -280px;
+        height: 260px;
       }
 }
 
@@ -358,9 +399,11 @@
           width: 100%;
           
       }
-      @media screen and (max-width: 300px) {
+      @media screen and (max-width: 375px) {
         width: 100%;
-        
+        height: 200px;
+        position: absolute;
+        top: -800px;
       }
 }
 
@@ -392,7 +435,8 @@
       @media screen and (max-width: 375px) {
         width: 100%;
         height: 200px;
-        
+        position: absolute;
+        top: -800px;
       }
 }
 
@@ -437,12 +481,13 @@
     font-size: 40px;
 }
 @media screen and (max-width: 375px) {
-  font-size: 23px;
+  font-size: 25px;
   
   -webkit-text-stroke: 0px #000;
 }
 
 }
+
 
 .tagline{
     line-height: 80px;
@@ -466,10 +511,17 @@
     font-size: 40px;
     
 }
+
+@media screen and (max-width: 390px) {
+  padding: 20 20 20 20;
+
+  font-size: 40px;
+  
+}
 @media screen and (max-width: 375px) {
   padding: 20 20 20 20;
 
-  font-size: 18px;
+  font-size: 40px;
   
 }
 }
@@ -558,7 +610,7 @@
     @media screen and (max-width: 1920px) {
       max-width: 100%;
       position: absolute;
-      top: -120px;
+      top: 10px;
       
   }
     @media screen and (max-width: 715px) {
@@ -576,7 +628,7 @@
 @media screen and (max-width: 375px) {
   max-width: 100%;
   position: absolute;
-  top: -20px;
+  top: -100px;
   
 }
 
@@ -612,7 +664,7 @@
   width: 85%;
   height: 50%;
   position: absolute;
-  top: -195px;
+  top: -295px;
   left: 30px;
   
 }
@@ -638,6 +690,209 @@ display: none;
   display: none;
   
 }
+}
+
+.productSection{
+  position: relative;
+  top: -100px;
+  width: 1200px;
+  height: 720px;
+   border-radius: 1rem; // Equivalent to rounded-xl in Tailwind
+   background-image: linear-gradient(to right, #FFBD59, rgb(199, 199, 199) 50%, #FFBD59); // Equivalent to bg-gradient-to-r from-[#FFBD59] via-gray-100 to-[#FFBD59] in Tailwind
+   box-shadow: 0px 14px 28px -5px rgba(0, 0, 0, 0.5);
+  @media (min-width: 1280) {
+    padding: 0 1rem; // Equivalent to sm:px-8 in Tailwind
+  }
+  @media (min-width: 1024) {
+    padding: 0 1.5rem; // Equivalent to sm:px-8 in Tailwind
+  }
+  @media (min-width: 640px) {
+    padding: 0 2rem; // Equivalent to sm:px-8 in Tailwind
+  }
+  @media (min-width: 768px) {
+    padding: 0 4rem; // Equivalent to md:px-16 in Tailwind
+  }
+  @media (max-width: 375px) {
+    position: relative;
+    top: -320px;
+    width: 380px;
+    height: 1425px;
+  }
+}
+
+.headerP {
+  position: absolute;
+  top: 50px;
+  left: 530px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 35px;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em; /* Adjust the value for tracking-wider effect */
+     @media (max-width: 375px) {
+        position: absolute;
+        top: 30px;
+        left: 130px;
+        font-size: 25px;
+
+  }
+}
+
+.h2 {
+  position: absolute;
+  top: 110px;
+  left: 430px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px; /* Equivalent to text-2xl in Tailwind CSS */
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em; /* Adjust the value for tracking-wider effect */
+  @media (max-width: 375px) {
+    width: 240px;
+    position: absolute;
+    top: 70px;
+    left: 70px;
+    font-size: 18px;
+  }
+}
+
+.pCard {
+  position: relative;
+  top: 140px;
+  left: 10px;
+  width: 300px;
+  height: 420px;
+  transform: scale(1.05);
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: #FFBD59; // Adjust as needed
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  @media (max-width: 375px) {
+    height: 270px;
+    position: relative;
+    top: 120px;
+    left: 40px;
+    }
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+}
+
+.pName{
+  margin-bottom: 0.5rem; // Equivalent to mb-2
+  font-size: 16px; // Equivalent to text-lg
+  font-weight: 600; // Equivalent to font-medium
+  color: #1a202c; // Equivalent to text-gray-900 in light mode
+}
+
+.pButton{
+  position: absolute;
+  top: 560px;
+  left: 440px;
+
+  @media (max-width: 375px) {
+    position: relative;
+    font-size: .8rem;
+    top: 100px;
+    left: -50px;
+    }
+}
+
+.servicesSection{
+  position: relative;
+  top: 80px;
+  max-width: 1380px;
+  max-height: 800px;
+   border-radius: 1rem; // Equivalent to rounded-xl in Tailwind
+   background-image: linear-gradient(to right, #FFBD59, rgb(199, 199, 199) 50%, #FFBD59); // Equivalent to bg-gradient-to-r from-[#FFBD59] via-gray-100 to-[#FFBD59] in Tailwind
+   box-shadow: 0px 14px 28px -5px rgba(0, 0, 0, 0.5);
+  @media (min-width: 1280) {
+    padding: 0 1rem; // Equivalent to sm:px-8 in Tailwind
+  }
+  @media (min-width: 1024) {
+    padding: 0 1.5rem; // Equivalent to sm:px-8 in Tailwind
+  }
+  @media (min-width: 640px) {
+    padding: 0 2rem; // Equivalent to sm:px-8 in Tailwind
+  }
+  @media (min-width: 768px) {
+    padding: 0 4rem; // Equivalent to md:px-16 in Tailwind
+  }
+  @media (max-width: 375px) {
+    position: relative;
+    top: -200px;
+    min-width: 180px;
+    max-height: 1425px;
+  }
+}
+
+.h1S {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 2.5rem; /* Equivalent to text-2xl in Tailwind CSS */
+  margin-top: 200px;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em; /* Adjust the value for tracking-wider effect */
+  @media (min-width: 375px) {
+  position: relative;
+  top: -160px;
+  }
+}
+
+.h2S {
+  position: relative;
+  top: -150px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px; /* Equivalent to text-2xl in Tailwind CSS */
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em; /* Adjust the value for tracking-wider effect */
+  @media (max-width: 375px) {
+  position: relative;
+  top: -170px;
+  width: 11px;
+  padding: 10px 15px 10px 15px;
+  }
+}
+
+.sCard {
+  position: relative;
+  left: 0px;
+  max-width: 1200px;
+  height: 100%;
+  transform: scale(1);
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: #FFBD59; // Adjust as needed
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  @media (min-width: 375px) {
+    position: relative;
+    top: -140px;
+    }
+}
+
+.pName{
+  margin-bottom: 0.5rem; // Equivalent to mb-2
+  font-size: 16px; // Equivalent to text-lg
+  font-weight: 600; // Equivalent to font-medium
+  color: #1a202c; // Equivalent to text-gray-900 in light mode
+}
+
+.sButton{
+  position: relative;
+  @media (min-width: 375px) {
+    position: relative;
+    font-size: .8rem;
+    top: -170px;
+    left: -30px;
+    }
 }
 
 .category{

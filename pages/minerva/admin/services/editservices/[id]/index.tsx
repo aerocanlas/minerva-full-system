@@ -77,13 +77,6 @@ const EditServicesPage: FC = () => {
   const EditServicesForm = async (e :any) => {
 
     e.preventDefault();
-    // const fd = new FormData();
-
-    // fd.append("services", services.services)
-    // fd.append("description", services.description);
-    // fd.append("price", services.price);
-    // fd.append("status", services.status)
-    // fd.append("userID", userId)
     const response = await fetch(`http://localhost:3001/services/updateService/${router.query.id}`, {
       method: "PATCH",  
       headers: { 'Content-Type': 'application/json' },

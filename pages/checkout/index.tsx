@@ -1,18 +1,20 @@
 import HomePageLayout from '@/layout/homepagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
 import React, { FC, SyntheticEvent, useEffect, useState } from 'react'
-import Modal from '@/components/Modal';
+import PaymentModal from '@/components/PaymentModal';
 import { FormattedPrice } from '@/helpers/index'
 import Image from 'next/image'
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router';
 import { Toaster, toast } from 'sonner'
+import { HiInformationCircle } from "react-icons/hi";
+import { IoMailUnread } from 'react-icons/io5';
 
 const  Checkout: FC= () => {
 
     const payments = [
-        { name: "Pay via GCASH", value: "GCASH"},
+        { name: "Pay via GCASH", value: "GCASH",},
         { name: "Pay via Maya", value:"MAYA"},
         { name: "Pay Upon Pick Up - Cash", value:"CASH"},
         { name: "Pay Upon Pick Up - Card", value:"CARD"},
@@ -23,43 +25,11 @@ const  Checkout: FC= () => {
     const [ paymenthod, setPaymethod ] = useState("")
     const [ isModalOpen, setIsModalOpen ] = useState(true);
 
-    const handleOpenModalCard = () => {
+    const handleOpenModal = () => {
         setIsModalOpen(true);
     }
 
-    const handleCloseModalCard = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleOpenModalCash = () => {
-        setIsModalOpen(true);
-    }
-
-    const handleCloseModalCash = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleOpenModalGcash = () => {
-        setIsModalOpen(true);
-    }
-
-    const handleCloseModalGcash = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleOpenModalMaya = () => {
-        setIsModalOpen(true);
-    }
-
-    const handleCloseModalMaya = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleOpenModalBankTrans = () => {
-        setIsModalOpen(true);
-    }
-
-    const handleCloseModalBankTrans = () => {
+    const handleCloseModal = () => {
         setIsModalOpen(false);
     };
 
@@ -131,6 +101,73 @@ const  Checkout: FC= () => {
         
     <div className="h-screen pt-24 pb-28 grid grid-cols-3">
 
+        <PaymentModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <div className="bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[80vh] max-w-3xl mx-auto">
+                <div className="p-4 sm:p-7 " >
+                    <div className="text-center">
+                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Payment Information <HiInformationCircle size="30px" /></h1>
+                    </div>
+
+                    <div className="mt-5 flex flex-col justify-center items-left">
+                    <div className="text">
+                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Pay Upon Pickup - Card</h1>
+                    </div>
+                    <p className="pt-1 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                        Pay your order in shop. Just present your order form to the counter and settle your payment using any debit or credit card
+                    </p>
+
+                    <hr className="my-5 border-t border-gray-300 dark:border-gray-700" />
+
+                    <div className="text">
+                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Pay Upon Pickup - Cash</h1>
+                    </div>
+                    <p className="pt-1 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                    Pay your order in shop. Just present your order form to the counter and settle your payment using cash.
+                    </p>
+
+                    <hr className="my-5 border-t border-gray-300 dark:border-gray-700" />
+
+                    <div className="text">
+                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Pay via Maya</h1>
+                    </div>
+                    <p className="pt-1 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                        You may pay prior pickup using Maya. Scan the QR code or enter the account number and wait for the acknowledgement receipt in your email. Kindly screenshot or keep any proof of payment that you may present for any inquiries.
+                    </p>
+
+                    {/* insert image */}
+
+                    <hr className="my-5 border-t border-gray-300 dark:border-gray-700" />
+
+                    <div className="text">
+                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Pay via Gcash</h1>
+                    </div>
+                    <p className="pt-1 pb-2 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                        You may pay prior pickup using Gcash. Scan the QR code or enter the account number and wait for the acknowledgement receipt in your email. Kindly screenshot or keep any proof of payment that you may present for any inquiries.
+                    </p>
+
+                    <img src="/gcashpayment.jpg"></img>
+
+                    <hr className="my-5 border-t border-gray-300 dark:border-gray-700" />
+
+                    <div className="text">
+                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
+                        Pay via Bank Transfer (Chinabank)
+                    </h1>
+                    </div>
+                    <p className="pt-1 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                    You may pay prior to pickup via Bank Transfer. The only available bank partner right now is Chinabank. Kindly see the deposit details below. After payment, keep any proof of payment and present the acknowledgement receipt in your email upon pickup.
+                    </p>
+                    <div className="mt-3">
+                    <p className="mb-1  text-white ">Bank: CHINA BANKING CORPORATION</p>
+                    <p className="mb-1  text-white">Acct Name: MINERVA SALES CORPORATION</p>
+                    <p className=" text-white">Acct No.: 1266 000 00 660</p>
+                    </div>
+                    
+                    </div>
+                </div>
+                </div>
+      </PaymentModal>
+
         <div className="lg:col-span-2 col-span-3 bg-indigo-50 space-y-8 px-12">
             <div className="mt-8 p-4 relative flex flex-col sm:flex-row sm:items-center bg-white shadow rounded-md">
                 <div className="flex flex-row items-center border-b sm:border-b-0 w-full sm:w-auto pb-4 sm:pb-0">
@@ -161,19 +198,26 @@ const  Checkout: FC= () => {
                     </section>
                     <section>
                     <h2 className="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">Payment Information</h2>
+                    <div className='absolute top-[315px] left-[270px]'>
+                        <button onClick={handleOpenModal}><HiInformationCircle size="30px" /></button>
+                    </div>
                     <fieldset className=" bg-white shadow-lg rounded text-gray-600">
-                        {payments.map(({ name, value } : any ) => (
+                        {payments.map(({ name, value, icons } : any ) => (
                             <button value={value} onChange={(e) => setPaymethod(e.currentTarget.value)} className="flex items-center justify-between w-full bg-white rounded-md border-2 border-gray-200 p-4 focus:outline-none">
                                 <label className="flex items-center">
                                 <input type="radio" className="form-radio h-5 w-5 text-yellow-600" name="paymentMethod" />
                                 <span className="ml-2 text-sm text-gray-700">{name}</span>
+            
                                 </label>
                             </button>
                         ))}
                  
+                 
 
 
 </fieldset>
+                
+
                 </section>
                 <button onClick={handleGoBack} type="submit" className="relative top-20 submit-button px-4 py-3 rounded-full bg-[#FFBD59] text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors">
                 Place Order Now

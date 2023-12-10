@@ -4,7 +4,7 @@ import Head from 'next/head'
 import PageWithLayout from '@/layout/pagewithlayout'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import router, { useRouter } from 'next/router'
-import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight } from 'react-icons/tb'
+import { TbEdit, TbShoppingBag, } from 'react-icons/tb'
 import Modal from '@/components/Modal';
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
@@ -68,7 +68,7 @@ const Orders: FC = () => {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...products,    userID: userid,
+          ...orders,    userID: userid,
         })
     })
 
@@ -159,11 +159,11 @@ const Orders: FC = () => {
         </div>
 
         <div className={styles.pagination}>
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
-                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        <button disabled={page === 0 } className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>          
+        
         </div>
-
-      </div>
       <Toaster richColors  />
     </div>
 

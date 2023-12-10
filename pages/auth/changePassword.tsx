@@ -192,54 +192,7 @@ export default function ChangePassword() {
               </div>
 
             </ul>
-            {/* <div className="w-full draggable">
-        <div className="container flex flex-col items-center gap-2 mx-2 my-32">
-                      <div className="grid w-full grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3">
-                          <div className="flex w-80 flex-col items-center gap-3 px-2 py-10 bg-[#FFBD59] rounded-3xl shadow-yellow-50 shadow-2xl border-black border-4">
-                          <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-  </svg>
-                          </span>
-                          <p className="text-2xl font-extrabold text-dark-grey-900">Phone</p>
-                          <p className="text-base leading-7 text-dark-grey-600 font-medium">Reach out to us by phone</p>
-                          <a className="text-lg font-bold text-purple-blue-500">0917 865 7346</a>
-                          </div>
-                          <div className="flex w-80 flex-col items-center gap-3 px-2 py-10 bg-[#FFBD59] rounded-3xl shadow-yellow-50 shadow-2xl border-black border-4">
-                          <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h8">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-  </svg>
-                          </span>
-                          <p className="text-2xl font-extrabold text-dark-grey-900">Location</p>
-                          <p className="text-base leading-7 text-dark-grey-600 font-medium">Find us at our office</p>
-                          <a className="text-lg font-bold text-purple-blue-500" target="_blank" href="https://tinyurl.com/yeysd225">General Malvar Street
-  Barangay Tubigan
-  Binan City, Laguna</a>
-                          </div>
-                          <div className="flex w-96 flex-col items-center gap-3 px-8 py-10 bg-[#FFBD59] rounded-3xl shadow-yellow-50 shadow-2xl border-black border-4">
-                          <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-                          </span>
-                          <p className="text-2xl font-extrabold text-dark-grey-900">Office Hours</p>
-                          <p className="text-base leading-7 text-dark-grey-600 font-medium">Visit us during these Hours</p>
-                          <a className="text-lg font-bold text-purple-blue-500">
-                            <span className='grid w-full grid-cols-1 gap-2 md:grid-cols-2'>
-                              <span>Open Mon-Sat <br></br>
-                              8:00am - 5:00pm
-                              </span>
-                              Open Sun    <br></br>
-                              8:30am - 3:00pm
-                                    <br></br>
-                              </span>
-                            </a>
-                          </div>
-                      </div>
-                  </div>
-                  </div> */}
+          
           </div>
         </section>
 

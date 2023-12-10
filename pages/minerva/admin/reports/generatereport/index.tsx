@@ -2,29 +2,35 @@ import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
 import React, { FC, useState, useEffect, SyntheticEvent } from 'react'
+import { TbFileAnalytics } from 'react-icons/tb'
 import Head from 'next/head'
-import { TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbDownload } from 'react-icons/tb'
 import router from 'next/router'
 import Cookies from 'js-cookie'
 import { jwtDecode} from 'jwt-decode'
-import { format } from 'date-fns'
-import PDFTemplate from '@/components/PDFTemplate'
 import Products from '@/pages/products'
-import { PDFDownloadLink, PDFViewer } from '@react-pdf-viewer';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { saveAs } from 'file-saver';
+import PDF from '@/components/pdf'
+import { Toaster, toast } from 'sonner'
 
 const GenerateReport: FC = () => {
 
   const [showPDF, setShowPDF] = useState(false);
 
+  const [reportData, setReportData] = useState(null);
+
   const handleButtonClick = () => {
-    // Toggle the state to show or hide the PDF template
-    setShowPDF(!showPDF);
+    // Open the PDF view in a new tab
+    const newTab = window.open('/pdfview', '_blank');
+    
+    // Focus on the new tab
+    if (newTab) {
+      newTab.focus();
+    }
   };
+
   const [ isOpen, setIsOpen ] = useState(false);
   const [ userId, setUserId ] = useState("")
-  const [ generated, setGenerated ] = useState<[]>()
+  const [ generated, setGenerated ] = useState(null)
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -38,24 +44,20 @@ const GenerateReport: FC = () => {
   }, [ userId ])
 
   const [ isOpen1, setIsOpen1 ] = useState(false);
+
   const [ dates, setDates ] = useState({
-    startDate: "",
-    endDate: ""
+    startDate: "2023-12-09",
+    endDate: "2023-12-31"
   })
+  
   const toggleDropdown1 = () => {
     setIsOpen1(!isOpen1);
   };
 
-  // const pdfUrl = 'your-pdf-url-here';
-
-  // const handleDownload = async () => {
-  //   const pdfBlob = await fetch(pdfUrl).then((res) => res.blob());
-  //   saveAs(pdfBlob, 'Generated-Report.pdf');
-  // };
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`http://localhost:3001/order/getGeneratedReport/?start=${dates.startDate}&endDate=${dates.endDate}`, {
+      const res = await fetch(`http://localhost:3001/order/getGeneratedReport?startDate=${dates.startDate}&endDate=${dates.endDate}`, {
         method: "GET",
         cache: "default",
         headers: { 'Content-Type': 'application/json' },
@@ -72,7 +74,9 @@ const GenerateReport: FC = () => {
     fetchData()
   }, [ generated ])
 
-
+  // console.log(generated)
+  
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
 
   const onSubmitGenerateRerport = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -91,13 +95,18 @@ const GenerateReport: FC = () => {
     
     if(!res.ok) throw new Error("There is something wrong while fetching your data")
 
+    toast.promise(promise, {
+      loading: 'Loading...',
+      success: (generated) => {
+        return `Generated report succesfully`;
+      },
+      error: 'Error',
+    });
 
     const result = await res.json();
 
     return result
   }
-
-  console.log(Products)
   return (
     <div>
       <Head>
@@ -108,7 +117,7 @@ const GenerateReport: FC = () => {
         <div className={styles.icon}><TbFileAnalytics size={50} /></div>
         Generate Report
       </div>
-      
+      <Toaster richColors  />
       <div className={styles.container}>
         <div className={styles.title}>Generate Report</div>
         <div className={styles.divider}></div>
@@ -160,11 +169,11 @@ const GenerateReport: FC = () => {
           
 
               <div className='pt-4'>
-                <button onClick={handleButtonClick}
+                <button
         type="submit" className="relative left-4 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Generate Report</button>
               </div>
 </form>
-
+ 
             </div>
 
           </div>
@@ -172,16 +181,17 @@ const GenerateReport: FC = () => {
         </div>
 
       </div>
-      <div className={styles.generateReportContainer}>
-        <div className={styles.titlePreview}>Preview File Here
-          <button  className="py-2 flex font-large ml-80 absolute -top-2 left-60 text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 rounded-lg text-sm px-5 text-center border-2 border-white"> <TbDownload className='mr-2' size={25} />Download</button>
-        </div>
+
+       <div className={styles.generateReportContainer}>
+        <div className={styles.titlePreview}>Preview File Here</div>
+      
+        
         <div className={styles.dividerPreview}>
          
-        
+      {generated ?   
+      <PDF generate={generated} startDate={dates.startDate} endDate={dates.endDate} /> : null}
         </div>
-          <PDFTemplate id="pdf-template" generated={generated}/>
-      </div>
+      </div> 
 
     </div>
 

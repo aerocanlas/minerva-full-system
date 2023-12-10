@@ -122,17 +122,17 @@ const ServiceDetails: FC = () => {
   }, [servicesD])
 
   return (
-    <div className={styles.bodyProducts}>
+    <div className={styles.bodyServicesD}>
 
-<div className="w-screen relative top-20">
+<div className="w-full relative top-20">
 <div className="relative mx-auto mt-20 mb-20 max-w-screen-lg overflow-hidden rounded-t-xl bg-yellow-100/60 py-32 text-center shadow-xl shadow-gray-300">
   <h1 className="mt-2 px-8 text-3xl font-bold text-white md:text-5xl">Book a Service</h1>
   <p className="mt-6 text-lg text-white">Set up your Appointment</p>
-  <img className="absolute top-0 left-0 -z-10 h-full w-full object-cover" src="https://images.unsplash.com/photo-1504672281656-e4981d70414b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" />
+  <img className="absolute top-0 -z-10 h-full w-full object-cover" src="https://images.unsplash.com/photo-1504672281656-e4981d70414b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" />
 </div>
 <form encType='multipart/form-data' onSubmit={AddAppointmentForm} className='grid grid-cols-1 md:grid-cols-2 gap-16'>
 
-<div className='relative left-[500px] flex flex-col items-center justify-center'>
+<div className='absolute left-[500px] flex flex-col'>
     <div className="flex flex-row items-center justify-center mx-auto max-w-screen-[2000px] px-4 pb-20 gap-60">
       <div className="w-full lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow transition-all duration-700 hover:scale-105">
         <div>
@@ -184,22 +184,6 @@ const ServiceDetails: FC = () => {
   </select>
 </div>
                     
-        {/* <div className="">
-          <p className="mt-8 font-serif text-xl font-bold text-white">Select a Time</p>
-          <div className="mt-4 grid grid-cols-3 gap-2 lg:max-w-xl">
-            {['08:00', '09:00', '10:00', '11:00', '12:00', '1:00', '2:00', '3:00', '4:00'].map((time) => (
-              <button
-                key={time}
-                className={`rounded-lg ${
-                  selectedTime === time ? 'bg-[#FFBD59] text-white' : 'bg-yellow-100 text-black-900'
-                } px-4 py-2 font-medium active:scale-95 hover:bg-[#FFBD59] hover:text-white border-2 focus:outline-none`}
-                onClick={(e) => setAppointment({...appointment, time: e.target.value})}
-              >
-                {time}
-              </button>
-            ))}
-          </div>
-        </div> */}
       <Toaster richColors  />
         <button
         type="submit"
@@ -215,6 +199,72 @@ const ServiceDetails: FC = () => {
 </div>
 <script src="https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"></script>
 
+<section className="absolute w-full top-[1160px] flex flex-col items-center justify-center text-center text-white ">
+    <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
+      <div className="max-w-screen-xl mt-2 px-2 py-8 mx-auto sm:px-6 lg:px-8">
+        <div className="relative top-4 grid grid-cols-1 gap-8 lg:grid-cols-3">
+          <div>
+            <img src="/logo.png" className=" h-6 sm:h-6" alt="logo" />
+            <p className="max-w-xs mt-4 text-sm text-gray-600">
+            Let us make your trips more comfortable and safe. Leave the worries behind and let's begin our journey!
+            </p>
+        <div className="flex mt-8 space-x-6 text-gray-600">
+          <a href="https://www.facebook.com/MinervaSalesCorp" className="hover:opacity-75" target="_blank" rel="noreferrer">
+            <span className="sr-only"> Facebook </span>
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-1 lg:grid-cols-4">
+        <div>
+          <p className="font-medium text-black">
+          <a href="/products" className="hover:opacity-75">Products</a>
+          </p>
+          <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
+            <a href="" className="hover:opacity-75"> Tires </a>
+            <a href="" className="hover:opacity-75"> Car Battery </a>
+            <a href="" className="hover:opacity-75"> Oils </a>
+            <a href="" className="hover:opacity-75"> Tire Mags </a>
+            <a href="" className="hover:opacity-75"> Car Filters </a>
+          </nav>
+        </div>
+        <div>
+          <p className="font-medium text-black">
+          <a href="/services" className="hover:opacity-75 "> Services </a>
+          </p>
+          <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
+            <a href="" className="hover:opacity-75"> Oil Change </a>
+            <a href="" className="hover:opacity-75"> Change Tire </a>
+            <a href="" className="hover:opacity-75"> Alignment </a>
+          </nav>
+        </div>
+        <div>
+          <p className="font-medium text-black">
+            Helpful Links
+          </p>
+          <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
+            <a href="" className="hover:opacity-75"> Contact </a>
+            <a href="" className="hover:opacity-75"> About </a>
+          </nav>
+        </div>
+        <div>
+          <p className="font-medium text-black">
+            Legal
+          </p>
+          <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
+            <a href="" className="hover:opacity-75" > Terms &amp; Conditions </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <p className="mt-9 text-xs text-gray-800">
+      © 2023 Minerva Sales Corporation
+    </p>
+    </div>
+  </footer>
+</section>
 </div>
   )
 }

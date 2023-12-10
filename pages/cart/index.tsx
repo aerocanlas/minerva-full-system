@@ -83,7 +83,7 @@ const  Cart: FC= () => {
                                           onClick={() => {
                                             
                                                 const removeItem =  products?.filter((a: any) => a.productID !== productID )
-                                                setProducts(removeItem)
+                                                setProducts(removeItem as any)
                                                 localStorage.setItem('products', JSON.stringify(removeItem));
                                               
                                           } 

@@ -162,15 +162,15 @@ const formSubmitProductQuantity = async (e: SyntheticEvent) => {
 
             <li className={styles.tableRow}>
               <div className={styles.col1I} data-label="Product Id">{id}</div>
-              <div className={`${styles.col2I} ${styles.colInvName}`} data-label="Customer Name">{name}</div>
-              <div className={`${styles.col2I} ${styles.colInvStock}`} data-label="Email Address">{stock}</div>
+              <div className={`${styles.col2I} ${styles.colInvName}`} data-label="Product Name">{name}</div>
+              <div className={`${styles.col2I} ${styles.colInvStock}`} data-label="Status">{stock}</div>
               <div
   className={`${styles.col4I} ${styles.colInvQ} ${quantity >= 10 ? styles.badgeSuccess : styles.badgeCancel}`}
-  data-label="Email Address"
+  data-label="Quantity"
 >{quantity}</div>
               <div className={`${styles.col5I} ${styles.colInvDate}`}>{FormattedDate(updatedAt)}</div>
-             <div className={`${styles.col6I} ${styles.colInvCat}`}  data-label="Email Address">{category}</div>
-              <div className={`${styles.col7I} ${styles.colInvPrice}`}  data-label="Email Address">{FormattedPrice(price)}</div>
+             <div className={`${styles.col6I} ${styles.colInvCat}`}  data-label="Category">{category}</div>
+              <div className={`${styles.col7I} ${styles.colInvPrice}`}  data-label="Price">{FormattedPrice(price)}</div>
               <div className={`${styles.col8I} ${styles.colInvAction}`} data-label="Action">
                 <div className="flex align-items-center">
                 <button onClick={() => router.push(`/minerva/admin/inventory/editinventory/${productID}`)} className={styles.col7}> <TbEdit size={25} /> </button>
@@ -187,11 +187,10 @@ const formSubmitProductQuantity = async (e: SyntheticEvent) => {
         </div>
 
         <div className={styles.pagination}>
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
-                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
-        </div>
-
-      </div>
+        <button disabled={page === 0 } className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>         
+         </div>
       <Toaster richColors  />
     </div>
   )

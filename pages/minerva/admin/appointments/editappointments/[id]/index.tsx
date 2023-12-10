@@ -10,14 +10,7 @@ import Cookies from 'js-cookie'
 import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner'
 
-interface InputProp {
-  labelTitle: string;
-  defaultValue: string;
-  updateFormValue: (value: string) => void;
-}
-
-
-const EditAppointmentsPage: FC<InputProp> = ({labelTitle, defaultValue, updateFormValue }) => {
+const EditAppointmentsPage: FC = () => {
 
   const [ status, setStatus ] = useState("") // set niyo ung status
 

@@ -6,16 +6,25 @@ import styles from '@/styles/customer/customer.module.scss'
 const  Contacts: FC= () => {
   return (
 
-    <div className={styles.bodyProducts}>
-    <section className='relative top-12 ' id="contact">
+    <div className={styles.bodyContact}>
+            <section className='absolute top-20' id="about">
+      <div className="relative w-screen h-[500px] overflow-hidden">
+  <img className='object-cover w-full h-full' src="/MSC-TEAM.jpeg" alt="About" />
+  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <p className="text-white text-[100px] font-bold font-poppins text-center">CONTACT US</p>
+  </div>
+  
+</div>
+
+
+</section>
+
+    <section className='relative h-[1000px] top-[600px] mb-80' id="contact">
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-8 lg:px-8 lg:py-20">
         <div className="mb-4">
             <div className="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
-                <p className="text-base font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-200">
-                    Contact Us
-                </p>
                 <h2 className="font-heading mb-4 font-bold tracking-tight text-gray-900 dark:text-white text-3xl sm:text-5xl">
-                    Get in Touch with us through Email
+                    Get in Touch With Us
                 </h2>
                 <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 dark:text-slate-400">
                     We would love to hear from you!
@@ -25,10 +34,10 @@ const  Contacts: FC= () => {
         <div className="flex items-stretch justify-center">
             <div className="grid md:grid-cols-2">
                 <div className="h-full pr-6">
-                    <p className="mt-3 mb-12 text-lg text-gray-600 dark:text-slate-400">You may send an email and inquire us by filling up the form. Preferably, you may log in your account and inquire through the chat function as well for a quicker repsonse.</p>
+                    <p className="mt-3 mb-12 text-lg text-gray-600 dark:text-slate-400">You may send an email and inquire with us through our contact details. Preferably, you may log in your account and inquire through the chat function as well for a quicker repsonse.</p>
                     <ul className="mb-6 md:mb-0">
                         <li className="flex">
-                            <div className="flex h-10 w-10 items-center justify-center rounded bg-blue-900 text-gray-50">
+                            <div className="flex h-10 w-10 items-center justify-center rounded bg-[#FFBD59] text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" className="h-6 w-6">
@@ -46,7 +55,7 @@ const  Contacts: FC= () => {
                             </div>
                         </li>
                         <li className="flex">
-                            <div className="flex h-10 w-10 items-center justify-center rounded bg-blue-900 text-gray-50">
+                            <div className="flex h-10 w-10 items-center justify-center rounded bg-[#FFBD59] text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" className="h-6 w-6">
@@ -65,7 +74,7 @@ const  Contacts: FC= () => {
                             </div>
                         </li>
                         <li className="flex">
-                            <div className="flex h-10 w-10 items-center justify-center rounded bg-blue-900 text-gray-50">
+                            <div className="flex h-10 w-10 items-center justify-center rounded bg-[#FFBD59] text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" className="h-6 w-6">
@@ -82,26 +91,10 @@ const  Contacts: FC= () => {
                         </li>
                     </ul>
                 </div>
-                <div className="card h-fit max-w-6xl p-5 md:p-12" id="form">
-                    <h2 className="mb-4 text-2xl font-bold">Ready to Get Started?</h2>
-                    <form id="contactForm">
-                        <div className="mb-6">
-                            <div className="mx-0 mb-1 sm:mb-4">
-                                <div className="mx-0 mb-1 sm:mb-4">
-                                    <label htmlFor="name" className="pb-1 text-xs uppercase tracking-wider"></label><input type="text" id="name" autoComplete="given-name" placeholder="Your name" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0" name="name"/>
-                                </div>
-                                <div className="mx-0 mb-1 sm:mb-4">
-                                    <label htmlFor="email" className="pb-1 text-xs uppercase tracking-wider"></label><input type="email" id="email" autoComplete="email" placeholder="Your email address" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0" name="email"/>
-                                </div>
-                            </div>
-                            <div className="mx-0 mb-1 sm:mb-4">
-                                <label htmlFor="textarea" className="pb-1 text-xs uppercase tracking-wider"></label><textarea id="textarea" name="textarea" cols={30} rows={5} placeholder="Write your message..." className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"></textarea>
-                            </div>
-                        </div>
-                        <div className="text-center">
-                            <button type="submit" className="w-full bg-[#FFBD59] text-white px-6 py-3 font-xl rounded-md sm:mb-0">Send Message</button>
-                        </div>
-                    </form>
+                <div className="absolute top-[200px] left-[900px]" id="form">
+                <iframe className={styles.map}src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3865.685100620232!2d121.07044808579853!3d14.329715147891662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d75e4116aa53%3A0xc60e02b60387b51a!2sMinerva%20Sales%20Corp.%20-%20Dunlop%20Concept%20Shop!5e0!3m2!1sen!2sph!4v1700566977340!5m2!1sen!2sph" 
+      width="600" height="450"  loading="lazy" ></iframe>
+
                 </div>
             </div>
         </div>
@@ -116,7 +109,7 @@ const  Contacts: FC= () => {
       <div>
       <img src="/logo.png" className="mr-5 h-6 sm:h-6" alt="logo" />
         <p className="max-w-xs mt-4 text-sm text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
+        Let us make your trips more comfortable and safe. Leave the worries behind and let's begin our journey!
         </p>
         <div className="flex mt-8 space-x-6 text-gray-600">
           <a href="https://www.facebook.com/MinervaSalesCorp" className="hover:opacity-75" target="_blank" rel="noreferrer">

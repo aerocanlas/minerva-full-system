@@ -67,7 +67,7 @@ const ServicePage: FC = () => {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            userID: userId,
+            userID: userId
         })
     })
 
@@ -135,7 +135,7 @@ const ServicePage: FC = () => {
       <div className={styles.col4}>Action</div>
     </li>
 
-    {services?.map(({ userID, servicesID, id, services, description, price, status }: any) => (
+    {services?.map(({ userId, servicesID, id, services, description, price, status }: any) => (
 
     <li className={styles.tableRow}>
       <div className={styles.col1} data-label="Service ID">{id}</div>
@@ -155,11 +155,12 @@ const ServicePage: FC = () => {
 
 
   <div className={styles.pagination}>
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
-                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        <button disabled={page === 0 } className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>          
+        
         </div>
-</div>
-</div>
+        </div>
     
 
   )

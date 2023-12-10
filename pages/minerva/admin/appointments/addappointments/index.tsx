@@ -10,15 +10,7 @@ import { jwtDecode } from 'jwt-decode'
 import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner'
 
-
-interface InputProp {
-  labelTitle: string;
-  defaultValue: string;
-  updateFormValue: (value: string) => void;
-}
-
-
-const AddAppointmentsPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFormValue }) => {
+const AddAppointmentsPage: FC = () => {
 
   const [ isOpen, setIsOpen ] = useState(false);
 
@@ -67,19 +59,13 @@ const AddAppointmentsPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFo
     {
       alert("Please complete all fields")
     }
-  //  else {
-  //         toast.promise(promise, {
-  //         loading: 'Loading...',
-  //         success: (products) => {
-  //           return `Added new manual appointment succesfully`;
-  //         },
-  //         error: 'Error',
-  //       });
-  // }
+    else{
+      
+    }
   }
 
   const handleGoBack = () => {
-    // Delay the router.back() function by 2000 milliseconds
+
     setTimeout(() => {
       router.back();
   
@@ -165,38 +151,6 @@ const AddAppointmentsPage: FC<InputProp> = ({ labelTitle, defaultValue, updateFo
                         />
                     </div>
                 
-                {/* <div className="mb-6">
-                  <div className="relative inline-block text-left">
-                    <div>
-                      <label htmlFor="lastName" className="text-sm font-medium text-gray-900 block mb-2">Appointment Status</label>
-                      <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
-                        onClick={toggleDropdown}
-                      >
-                        {appointmentStatus === "" ? "Select Product Status" : appointmentStatus}
-
-                        <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 011.414 0 1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                      </button>
-                    </div>
-                    <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'absolute z-10' : 'hidden'}`}>
-  {isOpen ? (
-    appointmentStatusB.map((name) => (
-      <button
-      name="status"
-        className='text-left'
-        type="button"
-        key={name}
-        value={name}
-        onClick={(e) => setAppointmentStatus(e.currentTarget.value)}
-      >
-        {name}
-      </button>
-    ))
-  ) : null}
-  </div>
-                  </div>
-                </div> */}
                 
 
                 <button type="submit" className="relative top-10 left-80  text-black bg-[#FFBD59] hover:bg-[#FFBD59] focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleGoBack}>Add New Appointment</button>

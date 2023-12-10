@@ -10,6 +10,7 @@ export default function Register() {
   };
   
   const [ retype, retypPassword ] = useState("")
+
   const [ register, setRegister ] = useState({
     firstname: "",
     lastname: "",
@@ -68,7 +69,7 @@ export default function Register() {
     }
 
     // Validate Confirm Password
-    if (register.password !== register.confirmPassword) {
+    if (register.password !== errorMessages.confirmPassword) {
       newErrorMessages.confirmPassword = 'Passwords do not match';
       isValid = false;
     } else {

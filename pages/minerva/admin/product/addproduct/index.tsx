@@ -1,16 +1,15 @@
 import styles from '@/styles/admin/content.module.scss'
 import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
-import React, { FC, useEffect, useState, useCallback, SyntheticEvent } from 'react'
+import React, { FC, useEffect, useState, } from 'react'
 import Head from 'next/head'
 import { TbEdit, TbFile, TbFiles, TbTrash, TbUsers } from 'react-icons/tb'
 import router from 'next/router'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
-import { useDropzone } from 'react-dropzone';
-import { IoIosAttach } from "react-icons/io";
 import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner'
+
 
 interface InputProp {
   labelTitle: string;

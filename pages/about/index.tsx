@@ -6,118 +6,91 @@ import { motion } from "framer-motion"
 import { FC, useRef, useState } from 'react'
 import Link from 'next/link'
 import styles from '@/styles/customer/customer.module.scss'
+import { FaCar } from "react-icons/fa6";
+import { PiSmileyFill } from "react-icons/pi";
+import { FaHandshake } from "react-icons/fa6";
+import { BsBullseye } from "react-icons/bs";
+import { IoIosEye } from "react-icons/io";
 
 const  About: FC = () => {
   return (
     <div className={styles.bodyAbout}>
-      <section className='absolute top-20 left-48' id="about">
-        <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
-          <p className="font-normal text-sm leading-3 text-blue-600 hover:text-blue cursor-pointer pb-2">About Us</p>
-          <div className="flex lg:flex-row flex-col lg:gap-8 sm:gap-10 gap-12">
-            <div className="w-full lg:w-6/12">
-              <h2 className="w-full font-bold lg:text-4xl text-3xl lg:leading-10 leading-9 text-white">We are here to make great design accessible and delightful for everyone</h2>
-              <p className="font-normal text-base leading-6 text-white mt-6">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum. In the first place, we have granted to God, and by this, our present charter confirmed for us and our heirs forever that the English Church shall be free, and shall have her rights entire,</p>
-            </div>
-            <div className="w-full lg:w-6/12">
-              <img className="lg:block hidden w-full" src="https://i.ibb.co/RjNH7QB/Rectangle-122-1.png" alt="people discussing on board" />
-              <img className="lg:hidden sm:block hidden w-full" src="https://i.ibb.co/16fPqrg/Rectangle-122-2.png" alt="people discussing on board" />
-              <img className="sm:hidden block w-full" src="https://i.ibb.co/Jxhpxh6/Rectangle-122.png" alt="people discussing on board" />
-            </div>
-          </div>
-        </div>
-
-    <div className="relative mt-24">
-      <div className="grid sm:grid-cols-3 grid-cols-2 sm:gap-8 gap-4">
-        <div className="z-20 w-12 h-12 bg-gray-800 rounded-full flex justify-center items-center">
-          <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg1.svg" alt="flag" />
-        </div>
-
-        <img className="z-20" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg2.svg" alt="note" />
-
-        <img className="z-20 sm:block hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg3.svg" alt="users" />
-      </div>
-      <hr className="z-10 absolute top-2/4 w-full bg-gray-200" />
-    </div>
-    <div className="grid sm:grid-cols-3 grid-cols-2 sm:gap-8 gap-4">
-      <div>
-        <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white mt-6">Founded</p>
-        <p className="font-normal text-base leading-6 text-white mt-6">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-      </div>
-      <div>
-        <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white mt-6">50M monthly enrichments</p>
-        <p className="font-normal text-base leading-6 text-white mt-6">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-      </div>
-      <div className="sm:block hidden">
-        <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white mt-6">400k User</p>
-        <p className="font-normal text-base leading-6 text-white mt-6">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-      </div>
-    </div>
-    <div className="sm:hidden block relative mt-8">
-      <div className="grid sm:grid-cols-3 grid-cols-2 sm:gap-8 gap-4">
-        <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg3.svg" alt="user" />
-      </div>
-      <hr className="z-10 absolute top-2/4 w-full bg-gray-200" />
-    </div>
-    <div className="sm:hidden grid sm:grid-cols-3 grid-cols-2 sm:gap-8 gap-4">
-      <div>
-        <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white mt-6">400k User</p>
-        <p className="font-normal text-base leading-6 text-white mt-6">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-      </div>
-    </div>
-
-    <div className="flex lg:flex-row flex-col md:gap-14 gap-16 justify-between lg:mt-20 mt-16">
-      <div className="w-full lg:w-6/12">
-        <h2 className="font-bold lg:text-4xl text-3xl lg:leading-9 leading-7 text-white">Our Mission</h2>
-        <p className="font-normal text-base leading-6 text-white mt-6 w-full lg:w-10/12 xl:w-9/12">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum. In the first place, we have granted to God, and by this, our present charter confirmed for us and our heirs forever that the English Church shall be free, and shall have her rights entire, and her liberties inviolate; and we will that it be thus observed; which is apparent from</p>
-      </div>
-
-      <div className="flex lg:flex-row flex-col md:gap-14 gap-16 justify-between lg:mt-20 mt-16">
-      <div className="w-full lg:w-6/12">
-        <h2 className="font-bold lg:text-4xl text-3xl lg:leading-9 leading-7 text-white">Our Vision</h2>
-        <p className="font-normal text-base leading-6 text-white w-full lg:w-10/12 xl:w-9/12 mt-10">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum. In the first place, we have granted to God, and by this, our present charter confirmed for us and our heirs forever that the English Church shall be free, and shall have her rights entire, and her liberties inviolate; and we will that it be thus observed; which is apparent from</p>
-      </div>
-      
-      <div className="w-full lg:w-6/12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 lg:gap-12 gap-10">
-         
-          {/* Team Card */}
-          <div className="flex p-4 shadow-md">
-            <div className="mr-6">
-              <img className="mr-6 fill" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg4.svg" alt="team card" />
-            </div>
-            <div className="">
-              <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white">Team</p>
-              <p className="mt-2 font-normal text-base leading-6 text-white">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-            </div>
-          </div>
-
-          {/* Board Card */}
-          <div className="flex p-4 shadow-md">
-            <div className="mr-6">
-              <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg5.svg" alt="board card" />
-            </div>
-            <div className="">
-              <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white">Board</p>
-              <p className="mt-2 font-normal text-base leading-6 text-white">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-            </div>
-          </div>
-
-          {/* Press Card */}
-          <div className="flex p-4 shadow-md">
-            <div className="mr-6">
-              <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/about-us-3-svg6.svg" alt="press card" />
-            </div>
-            <div className="">
-              <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-white">Press</p>
-              <p className="mt-2 font-normal text-base leading-6 text-white">It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <section className='absolute top-20' id="about">
+      <div className="relative w-screen h-[500px] overflow-hidden">
+  <img className='object-cover w-full h-full' src="/about.jpeg" alt="About" />
+  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <p className="text-white text-[100px] font-bold font-poppins text-center">ABOUT US</p>
   </div>
-</section>
+  
+</div>
 
+
+</section>
+<div className="absolute top-[580px] h-[920px] inset-0 bg-gray-700 bg-opacity-90 " >
+  <span className='absolute top-20 left-60 font-poppins font-bold text-[32px] text-[#FFBD59]'>About Us</span>
+  <span className='absolute mt-6 w-[550px] top-32 left-60 font-poppins font-semibold text-[45px] text-white leading-[50px] tracking-wide'> We Are The Pioneer In Automotive Services in Biñan, Laguna </span>
+<span className='absolute mt-4 w-[620px] top-80 left-60 font-poppins text-white text-[17px] tracking-wide'>
+Welcome to Minerva Sales Corporation, a pioneer in automotive services in Biñan, Laguna. We offer a comprehensive range of car care services to meet all your vehicle’s needs.
+ Our skilled technicians and mechanics provide top-notch service, utilizing the latest technology and tools.
+
+ <br></br>
+ <br></br>
+
+ At Minerva Sales Corporation, we are committed to excellence, ensuring your vehicle receives the highest 
+ level of care. Visit us today and experience our dedication to keeping your vehicle in prime condition.
+</span>
+
+<div className="absolute top-[90px] left-[1000px] bg-[#FFBD59] px-2 py-2 rounded-3xl">
+  <FaCar color="white" size="30px"/>
+</div>
+<span className='absolute top-[87px] left-[1070px] font-poppins font-bold text-[30px] text-[#FFBD59]' >Quality</span>
+<span className='absolute w-[550px] top-36 left-[1070px]  font-poppins text-white text-[17px] tracking-wide'> 
+We value quality workmanship and strive for excellence in every service we provide. We prioritize using high-quality parts, employing skilled technicians,
+and following industry best practices to ensure that vehicles are serviced or repaired to the highest standards.
+</span>
+
+<div className='absolute top-48'>
+<div className="absolute top-[90px] left-[1000px] bg-[#FFBD59] px-2 py-2 rounded-3xl">
+  <PiSmileyFill color="white" size="30px"/>
+</div>
+<span className='absolute w-96 top-[87px] left-[1070px] font-poppins font-bold text-[30px] text-[#FFBD59]' >Customer Satisfaction</span>
+<span className='absolute w-[550px] top-36 left-[1070px]  font-poppins text-white text-[17px] tracking-wide'> 
+We prioritize building strong relationships with our clients and customers by delivering exceptional service, listening to their needs, and addressing their concerns.
+</span>
+</div>
+
+<div className='absolute top-[335px]'>
+<div className="absolute top-[90px] left-[1000px] bg-[#FFBD59] px-2 py-2 rounded-3xl">
+  <FaHandshake color="white" size="30px"/>
+</div>
+<span className='absolute w-[600px] top-[87px] left-[1070px] font-poppins font-bold text-[30px] text-[#FFBD59]' >Integrity and Transparency</span>
+<span className='absolute w-[550px] top-36 left-[1070px]  font-poppins text-white text-[17px] tracking-wide'> 
+We place a high emphasis on integrity and transparency. We are honest and upfront about the services, products, pricing, and any potential issues discovered during inspections. We provide detailed explanations,
+ options, and accurate estimates, ensuring that customers have a clear understanding of the work being done on their vehicles.</span>
+</div>
+
+<hr className="relative left-48 top-[630px] mt-8 w-[1500px] border-4 border-[#FFBD59] rounded-lg " />
+
+<div className='absolute top-[620px] left-[250px]'>
+<div className="absolute top-[90px]  bg-[#FFBD59] px-2 py-2 rounded-3xl">
+  <IoIosEye color="white" size="30px"/>
+</div>
+<span className='absolute w-96 top-[87px] left-16 font-poppins font-bold text-[30px] text-[#FFBD59]' >Vision</span>
+<span className='absolute w-[550px] top-36  left-16 font-poppins text-white text-[17px] tracking-wide'> 
+  To continue to be the leading automotive retail and service provider in Binan, Laguna and further improve service quality and customer experience</span>
+</div>
+
+<div className='absolute top-[620px] left-[1020px]'>
+<div className="absolute top-[90px]  bg-[#FFBD59] px-2 py-2 rounded-3xl">
+  <BsBullseye color="white" size="30px"/>
+</div>
+<span className='absolute w-96 top-[87px] left-16 font-poppins font-bold text-[30px] text-[#FFBD59]' >Mission</span>
+<span className='absolute w-[550px] top-36  left-16 font-poppins text-white text-[17px] tracking-wide'> 
+To serve our clients and deliver a convenient shopping and servicing experience  to keep them worry-free on their journeys.</span>
+</div>
+
+
+</div>
 {/* Footer */}
 <section className="absolute w-full top-[1500px] flex flex-col items-center justify-center text-center text-white ">
     <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
@@ -126,7 +99,7 @@ const  About: FC = () => {
           <div>
             <img src="/logo.png" className="mr-5 h-6 sm:h-6" alt="logo" />
             <p className="max-w-xs mt-4 text-sm text-gray-600">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
+            Let us make your trips more comfortable and safe. Leave the worries behind and let's begin our journey!
             </p>
         <div className="flex mt-8 space-x-6 text-gray-600">
           <a href="https://www.facebook.com/MinervaSalesCorp" className="hover:opacity-75" target="_blank" rel="noreferrer">

@@ -3,7 +3,7 @@ import AdminPageLayout from '@/layout/adminpagelayout'
 import PageWithLayout from '@/layout/pagewithlayout'
 import React, { FC, useState, useEffect } from 'react'
 import Head from 'next/head'
-import { TbFilter, TbEye, TbEdit, TbTrash, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight } from 'react-icons/tb'
+import { TbFilter, TbEye, TbArchive } from 'react-icons/tb'
 import router from 'next/router'
 import { FormattedDate } from '@/helpers/index'
 import { format } from 'date-fns'
@@ -13,6 +13,7 @@ const ReportArchivePage: FC = () => {
 
   const [ isOpen, setIsOpen ] = useState(false);
   const [ archive, setArchive ] = useState<[]>()
+  const [ archiveId, setArchiveId ] = useState("")
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -24,9 +25,10 @@ const ReportArchivePage: FC = () => {
   };
 
 
+
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`http://localhost:3001/archive/getAllArchive/?skip=0`, {
+      const res = await fetch(`http://localhost:3001/archive/getAllArchive?skip=${page}&filter=Daily`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
         cache: "no-cache"
@@ -38,6 +40,7 @@ const ReportArchivePage: FC = () => {
     fetchData()
   }, [ archive ])
 
+  console.log(archive)
   return (
 
     <div>
@@ -84,14 +87,14 @@ const ReportArchivePage: FC = () => {
             <div className={styles.col5}>Action</div>
           </li>
 
-          {archive?.map(({ archiveID, id, startDate, endDate, createdAt, User }: any) => (
-            <li key={archiveID} className={styles.tableRow}>
+          {archive?.map(({ archieveID, id, startDate, endDate, createdAt, User }: any) => (
+            <li key={archieveID} className={styles.tableRow}>
             <div className={styles.col1} data-label="Job Id">{id}</div>
             <div className={styles.col2} data-label="Customer Name">{User.profile.firstname} {User.profile.lastname}</div> 
             <div className={styles.col3} data-label="Date Created">{FormattedDate(createdAt)}</div> 
             <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccessArchive}>Generated Report</span></div>
             <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push("/minerva/admin/reports/reportarchive/viewreportarchive")} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
+              <button onClick={() => router.push(`/minerva/admin/reports/reportarchive/viewreportarchive/${archieveID}`)} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
             </div>
           </li>
           ))}
@@ -101,11 +104,11 @@ const ReportArchivePage: FC = () => {
 
 
         <div className={styles.pagination}>
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
-                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        <button disabled={page === 0 } className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
+                 <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
+        </div>          
+        
         </div>
-      </div>
-
     </div>
 
   )
