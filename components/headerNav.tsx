@@ -13,7 +13,7 @@ import { jwtDecode } from 'jwt-decode'
 const customer = [
   { name: "Home", url: "/"},  
   {
-    name: "Products", url: "/products"
+    name: "Products", url: "/product"
   },
   {
     name: "Services", url: "/services"
@@ -56,7 +56,6 @@ export default function HeaderNavbar() {
     { label: 'Account Details', value: 'Account Details', icon: <TbSettings size="20px" />, url: `/minerva/customer/accountdetails/${userId}` },
     { label: 'View Orders', value: 'View Orders', icon: <TbShoppingBag size="20px" />, url: "/minerva/customer/vieworders" },
     { label: 'View Appointments', value: 'View Appointments', icon: <TbCalendar size="20px" />, url: "/minerva/customer/viewappointments" },
-    { label: 'Logout', value: 'Logout' , icon: <TbCircleArrowRight size="20px" />, url: "/auth/login" },
   ];
 
 
@@ -175,6 +174,12 @@ export default function HeaderNavbar() {
     
                   </a>
                 ))}
+                <button onClick={() => {
+                  Cookies.remove("ecom_token")
+                  router.push("/auth/login")
+                }} type="button"><span className='inline-flex gap-x-2 px-4 py-2 text-sm text-gray-700'>
+                  Logout<TbCircleArrowRight size="20px" /></span></button>
+
               </div>
             </div>
           )}

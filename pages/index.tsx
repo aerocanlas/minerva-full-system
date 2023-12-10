@@ -87,12 +87,6 @@ const Home: FC = () => {
         fetchData()
   }, [ productSearch ])
 
-  useEffect(() => {
-    const cookies = Cookies.get("ecom_token") as any
-    const { userID }: any = jwtDecode(cookies) as any
-    setUserId(userID)
-  }, [ userId ])
-
   //filter data w/ pagination 
 
 
@@ -134,12 +128,15 @@ const Home: FC = () => {
   const [ servicesId, setServicesId] = useState("")
   const [ userid, setUserID ] = useState("")
 
-
+  
   useEffect(() => {
     const cookies = Cookies.get("ecom_token") as any
-    const { userID }: any = jwtDecode(cookies) as any
-    setUserId(userID)
+    if(cookies) {
+      const { userID }: any = jwtDecode(cookies) as any
+      setUserId(userID)
+    }
   }, [ userId ])
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -198,7 +195,7 @@ const Home: FC = () => {
               <source src="/landingvid.MOV" 
               type="video/mp4"/></video>
           </div>
-          <div className="pt-80 video-content space-y-2 z-10">
+          <div className="pt-10 video-content space-y-2 z-10">
               <span className={styles.welcome}>Welcome</span>
               <span className={styles.tagline}>Road Safety & Roadworthiness 
               <br></br>at your fingertips</span>
@@ -208,7 +205,7 @@ const Home: FC = () => {
           </div>
       </section>
 
-      <section className="relative mt-60 h-96 flex flex-col items-center justify-center text-center text-white">
+      <section className="relative mt-20 h-96 flex flex-col items-center justify-center text-center text-white">
               <div className={styles.section2}>
               <div className={styles.titleText}>
 
@@ -432,7 +429,7 @@ const Home: FC = () => {
           <a href="/products" className="hover:opacity-75">Products</a>
           </p>
           <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-            <a href="" className="hover:opacity-75"> Tires </a>
+            <Link href="http://localhost:3001/product/getProductsByCategory/?category=Tire&skip=0" className="hover:opacity-75"> Tires </Link>
             <a href="" className="hover:opacity-75"> Car Battery </a>
             <a href="" className="hover:opacity-75"> Oils </a>
             <a href="" className="hover:opacity-75"> Tire Mags </a>

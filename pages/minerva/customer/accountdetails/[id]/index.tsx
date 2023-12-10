@@ -6,6 +6,7 @@ import { TbUsers } from 'react-icons/tb'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/router'
+import { Toaster, toast } from 'sonner'
 
 const AccountDetails: FC = () => {
 
@@ -29,6 +30,8 @@ const AccountDetails: FC = () => {
   }, [])
 
   console.log(userId)
+
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,6 +70,15 @@ const AccountDetails: FC = () => {
     });
 
     if (!response.ok) throw new Error("There is something error while updating");
+    else {
+      toast.promise(promise, {
+      loading: 'Loading...',
+      success: (user) => {
+        return `Updated account details succesfully`;
+      },
+      error: 'Error',
+    });
+}
 
     return response.json();
   };
@@ -95,7 +107,7 @@ const AccountDetails: FC = () => {
     return (
 
         <div className={styles.bodyProducts}>
-
+ <Toaster richColors  />
             <section className="relative mt-4 h-screen pb-12 mb-16 flex flex-col items-center justify-center text-center text-black ">
 
                 <div className={styles.containerEdit}>
@@ -144,7 +156,7 @@ const AccountDetails: FC = () => {
       </div>
             </section>
             {/*  */}
-            <section className="relative mt-40 flex flex-col items-center justify-center text-center text-white ">
+            <section className="relative mt-18 flex flex-col items-center justify-center text-center text-white ">
                 <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
                     <div className="max-w-screen-xl mt-2 px-2 py-8 mx-auto sm:px-6 lg:px-8">
                         <div className="relative top-4 grid grid-cols-1 gap-8 lg:grid-cols-3">

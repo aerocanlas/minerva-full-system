@@ -14,6 +14,14 @@ const ReportArchivePage: FC = () => {
   const [ isOpen, setIsOpen ] = useState(false);
   const [ archive, setArchive ] = useState<[]>()
   const [ archiveId, setArchiveId ] = useState("")
+
+
+  console.log(archive)
+
+
+  const [ dateFilters, setDateFilters ] = useState("Daily")
+  const filters =["Daily", "Weekly", "Monthly"];
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -28,7 +36,7 @@ const ReportArchivePage: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`http://localhost:3001/archive/getAllArchive?skip=${page}&filter=Daily`, {
+      const res = await fetch(`http://localhost:3001/archive/getAllArchive?skip=${page}&filter=${dateFilters}`, {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
         cache: "no-cache"
@@ -40,7 +48,6 @@ const ReportArchivePage: FC = () => {
     fetchData()
   }, [ archive ])
 
-  console.log(archive)
   return (
 
     <div>
@@ -53,29 +60,40 @@ const ReportArchivePage: FC = () => {
         Report Archive
       </div>
       <div className={styles.container}>
-        <div className={styles.title}>View Report Archive
-          <div className="mb-6">
-            <div className="absolute top-5 right-5">
 
-              <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
-                onClick={toggleDropdown}
-              >
-                <TbFilter className='mr-2' size={25} /> Date Filter
+        <div className={styles.title}>View Report Archive</div>
 
+        <div className="absolute top-6 right-6 mb-6">
+                                <div className="relative inline-block text-left">
+                                  <div>
+                                    <button type="button" className="flex gap-4 justify-center w-[220px] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                                      onClick={toggleDropdown}
+                                    >
+                                    {dateFilters === "" ? "Filters" : dateFilters}
 
-              </button>
-            </div>
-            {isOpen && (
-              <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                <div className="py-1">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Daily</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Weekly</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Monthly</a>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+                                     <span className='pt-[2px]'><TbFilter/></span>
+                                    </button>
+                                  </div>
+                                  <div className={`w-full flex flex-col rounded-md shadow-lg bg-primary-100 p-4 text-primary-600 ${isOpen ? 'w-[220px] absolute z-10' : 'hidden'}`}>
+                {isOpen ? (
+                  filters.map((name) => (
+                    <button
+                    name="filters"
+                      className='text-left'
+                      type="button"
+                      key={name}
+                      value={name}
+                      onClick={(e) => setDateFilters(e.currentTarget.value)}
+                    
+                      aria-required>
+                      {name}
+                    </button>
+                  ))
+                ) : null}
+              </div></div>
+                                </div>
+      
+
         <div className={styles.divider}></div>
 
         <ul className={styles.responsiveTable}>
@@ -87,18 +105,18 @@ const ReportArchivePage: FC = () => {
             <div className={styles.col5}>Action</div>
           </li>
 
-          {archive?.map(({ archieveID, id, startDate, endDate, createdAt, User }: any) => (
-            <li key={archieveID} className={styles.tableRow}>
-            <div className={styles.col1} data-label="Job Id">{id}</div>
-            <div className={styles.col2} data-label="Customer Name">{User.profile.firstname} {User.profile.lastname}</div> 
-            <div className={styles.col3} data-label="Date Created">{FormattedDate(createdAt)}</div> 
-            <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccessArchive}>Generated Report</span></div>
-            <div className={styles.col5} data-label="Action">
-              <button onClick={() => router.push(`/minerva/admin/reports/reportarchive/viewreportarchive/${archieveID}`)} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
-            </div>
-          </li>
-          ))}
-          
+          {archive?.map(({ archieveID, id, startDate, firstname, lastname, endDate, createdAt, User }: any) => (
+             <li key={archieveID} className={styles.tableRow}>
+             <div className={styles.col1} data-label="Job Id">{id}</div>
+             <div className={styles.col2} data-label="Customer Name">{firstname} {lastname}</div> 
+             <div className={styles.col3} data-label="Date Created">{FormattedDate(createdAt)}</div> 
+             <div className={styles.col4} data-label="File Type"><span className={styles.badgeSuccessArchive}>Generated Report</span></div>
+             <div className={styles.col5} data-label="Action">
+               <button onClick={() => router.push(`/minerva/admin/reports/reportarchive/viewreportarchive/${archieveID}`)} className={styles.col7}> <TbEye className='ml-5' size={25} /> </button>
+             </div>
+           </li>
+           ))}
+            
 
         </ul>
 

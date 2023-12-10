@@ -19,7 +19,7 @@ const ViewReportArchivePage: FC = () => {
     const fetchData = async () => {
       const res = await fetch(`http://localhost:3001/archive/getAllArchive/${router.query.id}`, {
         method: "GET",
-        cache: "force-cache",
+        cache: "default",
       })
       const result = await res.json();
 
@@ -42,7 +42,7 @@ const ViewReportArchivePage: FC = () => {
       </div>
 
       <div className={styles.archiveContainer}>
-        <div className={styles.title}>Viewing Report Archive [insertID]</div>
+        <div className={styles.title}>Viewing Report Archive {archive?.id}</div>
         <div className={styles.divider}></div>
 
         <div>

@@ -109,7 +109,7 @@ const  Cart: FC= () => {
           <div className="mt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-900">Total</p>
             <p className="text-2xl font-semibold text-gray-900">
-              {FormattedPrice(products?.reduce((a: any, b: any) => (a + b.total), 0) as any)}
+              {FormattedPrice(products?.reduce((a: any, b: any) => (a + b.total), 0))}
             </p>
           </div>
 

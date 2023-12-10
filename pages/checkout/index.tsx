@@ -23,7 +23,7 @@ const  Checkout: FC= () => {
     ]
 
     const [ paymenthod, setPaymethod ] = useState("")
-    const [ isModalOpen, setIsModalOpen ] = useState(true);
+    const [ isModalOpen, setIsModalOpen ] = useState(false);
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -105,7 +105,7 @@ const  Checkout: FC= () => {
         <div className="bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[80vh] max-w-3xl mx-auto">
                 <div className="p-4 sm:p-7 " >
                     <div className="text-center">
-                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Payment Information <HiInformationCircle size="30px" /></h1>
+                    <h1 className="pl-4 flex gap-2 text-2xl font-bold text-gray-800 dark:text-white">Payment Information <HiInformationCircle size="30px" /></h1>
                     </div>
 
                     <div className="mt-5 flex flex-col justify-center items-left">
@@ -130,18 +130,18 @@ const  Checkout: FC= () => {
                     <div className="text">
                     <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Pay via Maya</h1>
                     </div>
-                    <p className="pt-1 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                    <p className="pt-1 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white pb-8">
                         You may pay prior pickup using Maya. Scan the QR code or enter the account number and wait for the acknowledgement receipt in your email. Kindly screenshot or keep any proof of payment that you may present for any inquiries.
                     </p>
 
-                    {/* insert image */}
+                    <img src="/mayapayment.jpg"></img>
 
                     <hr className="my-5 border-t border-gray-300 dark:border-gray-700" />
 
                     <div className="text">
                     <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Pay via Gcash</h1>
                     </div>
-                    <p className="pt-1 pb-2 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                    <p className="pt-1 text-center divide-x divide-gray-300 dark:divide-gray-700 text-white pb-8">
                         You may pay prior pickup using Gcash. Scan the QR code or enter the account number and wait for the acknowledgement receipt in your email. Kindly screenshot or keep any proof of payment that you may present for any inquiries.
                     </p>
 
@@ -197,7 +197,7 @@ const  Checkout: FC= () => {
                             </div>
                     </section>
                     <section>
-                    <h2 className="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">Payment Information</h2>
+                    <h2 className="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">Payment Information <span className='pl-8 text-sm text-gray-400'> (Click here for more information) </span></h2>
                     <div className='absolute top-[315px] left-[270px]'>
                         <button onClick={handleOpenModal}><HiInformationCircle size="30px" /></button>
                     </div>
@@ -219,7 +219,7 @@ const  Checkout: FC= () => {
                 
 
                 </section>
-                <button onClick={handleGoBack} type="submit" className="relative top-20 submit-button px-4 py-3 rounded-full bg-[#FFBD59] text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors">
+                <button onClick={handleGoBack} type="submit" className="relative top-56 submit-button px-4 py-3 rounded-full bg-[#FFBD59] text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors">
                 Place Order Now
             </button>
                 </form>
@@ -261,7 +261,7 @@ const  Checkout: FC= () => {
             </div>
             
         </div>
-        <div className="absolute -bottom-28 right-0 font-semibold text-xl px-8 flex justify-between py-8 text-gray-600 gap-72 ">
+        <div className="absolute bottom-0 right-0 font-semibold text-xl px-8 flex justify-between py-8 text-gray-600 gap-72 ">
                 <span>Total</span>
                 <span>{FormattedPrice(products?.reduce((a: any, b: any) => (a + b?.total), 0) as any)}</span>
             </div>

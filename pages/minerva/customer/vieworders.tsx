@@ -13,7 +13,7 @@ import {FormattedDate, FormattedPrice } from '@/helpers/index'
 const ViewOrders: FC = () => {
 
   const [ page, setPage] = useState(0)
-  const [ orders, setOrders ] = useState(null)
+  const [ orders, setOrders ] = useState<any>(null)
 
 
   const [ userId, setUserId ] = useState("")
@@ -55,7 +55,7 @@ const ViewOrders: FC = () => {
         Orders
       </div>
 
-      <div className={styles.container}>
+      <div className={styles.containerVO}>
         <div className={styles.divider}></div>
 
         <div className={styles.tablecontainer}>
@@ -84,10 +84,11 @@ const ViewOrders: FC = () => {
           </ul>
         </div>
 
-        <div className={styles.pagination}>
+        <div className={styles.paginationVO}>
+        <div className='absolute bottom-10 right-[700px]'>
         <button disabled={page === 0 } className=' bg-[#FFBD59] hover:bg-blue-700 text-white font-bold mx-4 py-2 px-4 rounded' onClick={() => setPage(()=> page - 1)}>Prev</button>
                  <button className='bg-[#FFBD59] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setPage(() => page + 1)}>Next</button>
-        </div>          
+        </div>     </div>        
         
         </div>
         

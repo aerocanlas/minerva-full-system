@@ -157,6 +157,30 @@
     box-shadow: 0px 0px 10px 0px #ccc;
 }
 
+.containerVO{
+  position: absolute;
+  top: 130px;
+  width: 1550px;
+  height: 850px;
+  position: absolute;
+  background-color: #ccc;
+  border-radius: 10px;
+  margin-left: 200px;
+  box-shadow: 0px 0px 10px 0px #ccc;
+}
+
+.containerV{
+  position: absolute;
+  top: 130px;
+  width: 1000px;
+  height: 850px;
+  position: absolute;
+  background-color: #ccc;
+  border-radius: 10px;
+  margin-left: 200px;
+  box-shadow: 0px 0px 10px 0px #ccc;
+}
+
 .pagination {
     position: absolute;
     bottom: -100px;
@@ -286,9 +310,6 @@
       .table-header {
         display: none;
       }
-      .table-row{
-        
-      }
       li {
         display: block;
       }
@@ -315,6 +336,11 @@
     height: 200px;
     top: 150px;
     left: 0%;
+    @media (max-width: 375px) {
+      position: absolute;
+      top: 10px;
+      max-height: 250px;
+    }
 }
 
 .videoDocker::after {
@@ -326,6 +352,11 @@
     left: 0;
     background: rgba(0, 0, 0, 0.75);
     z-index: 5;
+    @media (max-width: 375px) {
+      position: absolute;
+      top: 10px;
+      height: 670px;
+    }
 }
 
 .videoDocker1 video {
@@ -468,7 +499,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: -5px;
+    padding-top: 300px;
+    margin-bottom: 10px;
     @media screen and (max-width: 715px) {
       padding: 20 20 20 20;
 
@@ -482,7 +514,6 @@
 }
 @media screen and (max-width: 375px) {
   font-size: 25px;
-  
   -webkit-text-stroke: 0px #000;
 }
 
@@ -556,12 +587,13 @@
 
 .section2{
     position: absolute;
-    top: 75px;
+    top: 175px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
 .titleText{
     font-size: 30px;
     font-family: 'Poppins', sans-serif;
@@ -576,16 +608,20 @@
     
 }
 @media screen and (max-width: 375px) {
-  line-height: 20px;
+  position: absolute;
+  top: -150px;
+  line-height: 40px;
   font-size: 20px;
+  width: 400px;
   
 }
 }
 .contentText{
     padding-top: 55px;
-    max-width: 60%;
+    width: 1200px;
     font-size: 18px;
     font-family: 'Poppins', sans-serif;
+
     @media screen and (max-width: 715px) {
       max-width: 80%;
       font-size: 17px;
@@ -596,6 +632,10 @@
     
 }
 @media screen and (max-width: 375px) {
+
+  position: absolute;
+  max-width: 350px;
+  top: -100px;
   font-size: 15px;
   
 }

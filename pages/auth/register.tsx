@@ -1,15 +1,14 @@
 import React, { SyntheticEvent, useState } from 'react'
 import Image from 'next/image'
-import router from 'next/router'
+import router, { useRouter } from 'next/router'
+import Modal from '@/components/Modal';
+import { IoCartOutline, IoMailUnread } from "react-icons/io5";
 
 export default function Register() {
-  const [showPassword, setShowPassword] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  
-  const [ retype, retypPassword ] = useState("")
+  const router = useRouter();
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const [ email, setEmail ] = useState("")
 
   const [ register, setRegister ] = useState({
     firstname: "",
@@ -20,6 +19,19 @@ export default function Register() {
     shipping: ""
 
   })
+
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  
+  const [ retype, retypPassword ] = useState("")
 
   const [errorMessages, setErrorMessages] = useState({
     firstname: '',
@@ -36,12 +48,12 @@ export default function Register() {
     const newErrorMessages = { ...errorMessages };
 
     // Validate First Name
-    if (!/^[A-Za-z]+$/.test(register.firstname)) {
-      newErrorMessages.firstname = 'Please enter a valid first name (letters only)';
+    if (!/^[A-Za-z\s]+$/.test(register.firstname)) {
+      newErrorMessages.firstname = 'Please enter a valid first name (letters and spaces only)';
       isValid = false;
-    } else {
+     } else {
       newErrorMessages.firstname = '';
-    }
+     }
 
     // Validate Last Name
     if (!/^[A-Za-z]+$/.test(register.lastname)) {
@@ -69,7 +81,7 @@ export default function Register() {
     }
 
     // Validate Confirm Password
-    if (register.password !== errorMessages.confirmPassword) {
+    if (register.password !== register.password) {
       newErrorMessages.confirmPassword = 'Passwords do not match';
       isValid = false;
     } else {
@@ -85,8 +97,8 @@ export default function Register() {
     }
 
     // Validate Phone Number
-    if (!/^\d{10}$/.test(register.phone)) {
-      newErrorMessages.phone = 'Please enter a valid 10-digit phone number';
+    if (!/^\d{11}$/.test(register.phone)) {
+      newErrorMessages.phone = 'Please enter a valid 11-digit phone number';
       isValid = false;
     } else {
       newErrorMessages.phone = '';
@@ -123,6 +135,22 @@ export default function Register() {
 
 
     <div className="h-screen md:flex">
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <div className=" bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
+          <div className="p-4 sm:p-7 " >
+            <div className="text-center">
+              <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Confirm Registration</h1>
+            </div>
+
+            <div className="mt-5 flex flex-col justify-center items-center">
+              <IoMailUnread size={60} className="text-white mb-3" />
+              <p className="text-center divide-x divide-gray-300 dark:divide-gray-700 text-white">
+                The verification link for the registration of your account is now sent to the email you provided. Please see the email, if you cannot see an email from us, please double-check the spam folder.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Modal>
       <div
         className="relative overflow-hidden md:flex w-1/2 i justify-around items-center hidden">
         <div>
@@ -148,7 +176,7 @@ export default function Register() {
                 name=""
                 id=""
                 placeholder="First Name"
-                pattern="[A-Za-z]+"
+                pattern="^[A-Za-z\s-]+$"
                 title="Please enter a valid first name (letters only)"
                 onChange={(e) => setRegister({ ...register, firstname: e.target.value })}
                 />           
@@ -165,7 +193,7 @@ export default function Register() {
                 name=""
                 id=""
                 placeholder="Last Name"
-                pattern="[A-Za-z]+"
+                pattern="^[A-Za-z\s-]+$"
                 title="Please enter a valid last name (letters only)"
                 onChange={(e) => setRegister({ ...register, lastname: e.target.value })}
                   />            
@@ -261,14 +289,14 @@ export default function Register() {
                 name=""
                 id=""
                 placeholder="Phone Number"
-                pattern="^\d{10}$"
+                pattern="^\d{11}$"
                 title="Please enter a valid 10-digit phone number"
                 onChange={(e) => setRegister({ ...register, phone: e.target.value })}
               />
             </div>  
 
           </div>
-          <button type="submit" className="block w-full bg-[#FFBD59] mt-4 py-2 rounded-2xl text-black font-semibold mb-2" onClick={() => router.push("/auth/registrationPrompt")}>Register</button>
+          <button type="submit" className="block w-full bg-[#FFBD59] mt-4 py-2 rounded-2xl text-black font-semibold mb-2" onClick={handleOpenModal}>Register</button>
         {/* Display error messages */}
         {Object.values(errorMessages).map((error, index) => (
           error && <p key={index} className="text-red-500 text-sm">{error}</p>

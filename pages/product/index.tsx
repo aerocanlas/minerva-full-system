@@ -39,8 +39,8 @@ const Products: FC = () => {
   const [ products, setProducts ] = useState<[]>()
   const [ filterProducts, setFilterProducts ] = useState("asc")
   const [ search, setSearch ] = useState("")
-  const [ productSearch, setProductSearch ] = useState(null)
-  const [ productCategory, setProductCategory ] =useState(null)
+  const [ productSearch, setProductSearch ] = useState<any>(null)
+  const [ productCategory, setProductCategory ] =useState<any>(null)
   const [ category, setCategory ] = useState("")
   const [ page, setPage] = useState(0)
   const [ userId, setUserId] = useState("")
@@ -77,7 +77,7 @@ const Products: FC = () => {
 
   const handleClick = (productId: any) => {
     // Navigate to the target page when the component is clicked
-    router.push(`/products/productdetail/${productId}`);
+    router.push(`/product/productdetail/${productId}`);
   };
 
 
