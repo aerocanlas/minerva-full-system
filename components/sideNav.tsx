@@ -6,6 +6,7 @@ import {  Open_Sans } from 'next/font/google'
 import {TbListSearch, TbUsers, TbFiles, TbCalendar, TbShoppingBag, TbClock, TbGraph, TbFileAnalytics, TbList, TbArchive, TbClipboard, TbMessage, TbSettings2, TbLogout2, TbArrowLeft, TbChevronLeft, TbChevronRight, TbSettings  } from 'react-icons/tb'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+
 const poppins = Open_Sans({
     weight: '500',
     subsets: ["latin"]
@@ -67,6 +68,10 @@ export default function Sidebar() {
     Cookies.remove("ecom_token")
     router.push("/")
   }
+
+  const [ mobile, setMobile ] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <div className={styles.container}>
 

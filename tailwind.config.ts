@@ -16,6 +16,23 @@ const config: Config = {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
       },
+      screens: {
+
+        '12': '390px',
+        // => @media (min-width: 375px) { ... }
+
+        'xs': '375px',
+        // => @media (min-width: 375px) { ... }
+
+        'sm': '414px',
+        // => @media (min-width: 414px) { ... }
+  
+        'md': '960px',
+        // => @media (min-width: 960px) { ... }
+  
+        'lg': '1440px',
+        // => @media (min-width: 1440px) { ... }
+      },
     },
   },
  

@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const  Cart: FC= () => {
 
@@ -35,27 +36,27 @@ const  Cart: FC= () => {
     return ( 
           <div className={styles.bodyCart}>
 
-        <section className="h-screen py-12 sm:py-16 lg:py-20">
+<section className="h-screen py-12 sm:py-16 lg:py-20">
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mt-36 flex items-center justify-center">
-            <h1 className="text-2xl font-semibold text-white">Your Cart</h1>
+          <div className="mt-40 flex items-center justify-center">
+            <h1 className="mt-20 lg:mt-6 lg:ml-12 text-2xl font-semibold text-white">Your Cart</h1>
           </div>
 
-    <div className="absolute top-[250px] left-[600px] mx-auto mt-8 max-w-md md:mt-12">
-      <div className="w-[700px] rounded-3xl bg-white shadow-lg">
+    <div className="absolute left-4 ml-4 lg:top-[190px] lg:left-[600px] mx-auto mt-8 max-w-md md:mt-12">
+      <div className="w-80 mt-2 h-[600px] sm:h-[780px] 12:h-[780px]  sm:w-[350px] lg:h-[920px] lg:w-[700px] lg:mt-20 rounded-3xl bg-white shadow-lg">
       
 
-        <div className="overflow-y-auto h-[700px] px-4 py-6 sm:px-8 sm:py-10 rounded-3xl">
+        <div className="overflow-y-auto h-[570px] lg:h-[700px] px-4 py-6 sm:px-8 sm:py-10 rounded-3xl">
     
 
 {
                 products?.map(({ productID,  name, category, total, quantity, image, price}: any) => (
                   
                   <div className=" flow-root">
-                    <button
+                    {/* <button
                                         className="absolute top-4 -right-56 bg-red-500 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-red-800">
   Clear Cart
-</button>
+</button> */}
                     <div className=" my-2">
                       
                           <div className=" flex  flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
@@ -105,8 +106,8 @@ const  Cart: FC= () => {
            
           </div>
           <div className='pl-12 pr-12 pb-12'>
-          <hr className="mx-0 mt-6 mb-0 h-0 border-r-0 border-b-0 border-l-0 border-t border-solid border-gray-300" /> 
-          <div className="mt-6 flex items-center justify-between">
+          <hr className="mx-0 mt-[-120px] sm:mt-[40px] 12:mt-[40px]  lg:mt-6 mb-0 h-0 border-r-0 border-b-0 border-l-0 border-t border-solid border-gray-300" /> 
+          <div className="lg:mt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-900">Total</p>
             <p className="text-2xl font-semibold text-gray-900">
               {FormattedPrice(products?.reduce((a: any, b: any) => (a + b.total), 0))}
@@ -125,11 +126,30 @@ const  Cart: FC= () => {
                   </button>
                   </div>
         </div>
+
       </div>
     </div>
       </div>
     </section>
+       
+    <footer className="py-10 mt-80 lg:mt-[404px] w-screen flex flex-col space-y-10 justify-center bg-gradient-to-r from-[#FFBD59] via-gray-100 to-[#FFBD59]">
 
+<nav className="flex justify-center flex-wrap gap-6 text-gray-500 font-medium">
+    <Link className="text-black hover:text-gray-500" href="#">Home</Link>
+    <Link className="text-black hover:text-gray-500" href="#">Products</Link>
+    <Link className="text-black hover:text-gray-500" href="#">Services</Link>
+    <Link className="text-black hover:text-gray-500" href="#">About</Link>
+    <Link className="text-black hover:text-gray-500" href="#">Contact</Link>
+</nav>
+
+<div className="flex justify-center space-x-5">
+    <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+        <img src="https://img.icons8.com/fluent/30/000000/facebook-new.png" />
+   </Link>
+  
+</div>
+<p className="text-center text-gray-700 font-medium">&copy; 2023 Minerva Sales Corporation. All rights reservered.</p>
+</footer>
       </div>
       
 

@@ -187,7 +187,8 @@ const Home: FC = () => {
   return (
 <div className={styles.bodyHome}>
 <Toaster richColors  />
-<section className="relative h-screen flex flex-col items-center justify-center text-center text-white">
+
+<section className="relative w-full h-screen flex flex-col items-center justify-center text-center text-white">
   
           <div className={styles.videoDocker}>
               <video 
@@ -205,12 +206,12 @@ const Home: FC = () => {
           </div>
       </section>
 
-      <section className="relative mt-20 h-96 flex flex-col items-center justify-center text-center text-white">
+        <section className="relative mt-20 h-96 flex flex-col items-center justify-center text-center text-white">
               <div className={styles.section2}>
               <div className={styles.titleText}>
 
               <span>
-              WELCOME TO <span className={styles.color}>MINERVA SALES</span> CORPORATION
+              <span className={styles.color}>MINERVA SALES</span> CORPORATION
               </span>
               </div>
                 <div className={styles.contentText}>
@@ -218,14 +219,14 @@ const Home: FC = () => {
                   </span>
                 </div>
               </div>
-      </section>
+      </section>  
 
       <section className="relative -mb-96 h-32 flex flex-col items-center justify-center text-center text-white ">
 
     <div className={styles.section3}>
       <img src="/section-3.jpeg"></img>
       </div>
-      </section>
+      </section> 
 
       
 
@@ -296,28 +297,28 @@ const Home: FC = () => {
         </ul>
         
               </div>
-      </section>
+      </section>   
 
       {/* Products */}
 
-      <section className="relative h-60 top-96 mb-28 flex flex-col items-center justify-center text-center text-white ">
+         <section className="relative h-60 top-96 mb-28 flex flex-col items-center justify-center text-center text-white ">
 <div className={styles.videoDocker2}>
               <video 
               autoPlay muted loop className="max-w-full max-h-full  absolute object-cover"> 
               <source src="/productvid.mp4" 
               type="video/mp4"/></video>
           </div>
-      </section>
-
-      <section className="relative mb-28 top-20 h-[1200px] flex flex-col items-center justify-center text-center text-black ">
+      </section>  
+ 
+ <section className="relative mb-28 top-20 h-[1200px] flex flex-col items-center justify-center text-center text-black ">
     <div className="absolute -top-40 lg:w-2/3 w-full h-80 -z-10">
     </div>
 
     <div
         className={styles.productSection}>        
         <h1 className={styles.headerP}>Products</h1>
-        <small className={styles.h2}>Explore our wide range of products.</small>
-        <ul className="flex items-start justify-between gap-8 mt-10 md:flex-row flex-col">
+         <small className={styles.h2}>Explore our wide range of products.</small>
+        <ul className="flex items-start justify-start gap-8 lg:gap-[170px] mt-10 md:flex-row flex-col">
         
         { products?.slice(0, 3).map(({ userId, id, productID, name, category, price, stock, image, description, quantity }: any) => (
   
@@ -341,19 +342,20 @@ const Home: FC = () => {
                       </div>
                       </div>
 
-           ))}  
+           ))}   
         </ul>
         <div className={styles.pButton}>
-          <button onClick={() => router.push("/products")} className="group relative top-8 left-[53px] mt-12 -mb-16 h-12 w-60 overflow-hidden rounded-lg bg-white text-lg shadow">
+           <button onClick={() => router.push("/products")} className="group relative top-8 left-[53px] mt-12 -mb-16 h-12 w-60 overflow-hidden rounded-lg bg-white text-lg shadow">
     <div className="absolute inset-0 w-3 bg-amber-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
     <span className="relative text-black group-hover:text-white">View More Products </span>
-  </button>  
-  </div></div>
+    </button>  
+  </div>
+</div>
 
-</section>
+</section>  
 
       {/* Services */}
-      <section className="relative -top-12 h-60  mb-2 flex flex-col items-center justify-center text-center text-white ">
+         <section className="relative -top-12 h-60  mb-2 flex flex-col items-center justify-center text-center text-white ">
       <div className={styles.videoDocker1}>
                     <video 
                     autoPlay muted loop className="max-w-full max-h-full  absolute object-cover"> 
@@ -362,7 +364,8 @@ const Home: FC = () => {
                 </div>
             </section>
 
-       <section className="relative -top-36 mb-20 h-screen flex flex-col items-center justify-center text-center text-black ">
+
+      <section className="relative -mt-[650px] -mb-60 h-screen flex flex-col items-center justify-center text-center text-black ">
     <div className="absolute -top-40 lg:w-2/3 w-full h-80 -z-10">
     </div>
 
@@ -386,7 +389,7 @@ const Home: FC = () => {
                               <div className="flex items-center">
                                 <p className="mr-2 w-36 text-lg font-bold flex text-black dark:text-black">{FormattedPrice(price)} </p>
                                 <button
-                  className="ml-40 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/></button>
+                  className="-mt-80 xl:mt-2 ml-40 px-4 py-2 transition ease-in duration-200 uppercase rounded-full text-black font-bold hover:bg-black hover:text-white border-2 border-gray-900 focus:outline-none"><FaUserClock size="18px"/></button>
                               </div>
                           </div>  
                       </div>
@@ -402,77 +405,29 @@ const Home: FC = () => {
     </div>
     </div> 
 
-</section> 
+</section>  
 
 {/*  */}
-<section className="relative flex flex-col items-center justify-center text-center text-white ">
-          <footer className="h-62 bg-gradient-to-r w-full from-gray-100 via-[#FFBD59] to-gray-100">
-  <div className="max-w-screen-xl mt-2 px-2 py-8 mx-auto sm:px-6 lg:px-8">
-    <div className="relative top-4 grid grid-cols-1 gap-8 lg:grid-cols-3">
-      <div>
-      <img src="/logo.png" className="mr-5 h-6 sm:h-6" alt="logo" />
-        <p className="max-w-xs mt-4 text-sm text-gray-600">
-          Let us make your trips more comfortable and safe. Leave the worries behind and let's begin our journey
-        </p>
-        <div className="flex mt-8 space-x-6 text-gray-600">
-          <a href="https://www.facebook.com/MinervaSalesCorp" className="hover:opacity-75" target="_blank" rel="noreferrer">
-            <span className="sr-only"> Facebook </span>
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-1 lg:grid-cols-4">
-        <div>
-          <p className="font-medium text-black">
-          <a href="/products" className="hover:opacity-75">Products</a>
-          </p>
-          <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-            <Link href="http://localhost:3001/product/getProductsByCategory/?category=Tire&skip=0" className="hover:opacity-75"> Tires </Link>
-            <a href="" className="hover:opacity-75"> Car Battery </a>
-            <a href="" className="hover:opacity-75"> Oils </a>
-            <a href="" className="hover:opacity-75"> Tire Mags </a>
-            <a href="" className="hover:opacity-75"> Car Filters </a>
-          </nav>
-        </div>
-        <div>
-          <p className="font-medium text-black">
-          <a href="/services" className="hover:opacity-75 "> Services </a>
-          </p>
-          <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-            <a href="" className="hover:opacity-75"> Oil Change </a>
-            <a href="" className="hover:opacity-75"> Change Tire </a>
-            <a href="" className="hover:opacity-75"> Alignment </a>
-          </nav>
-        </div>
-        <div>
-          <p className="font-medium text-black">
-            Helpful Links
-          </p>
-          <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-            <a href="" className="hover:opacity-75"> Contact </a>
-            <a href="" className="hover:opacity-75"> About </a>
-          </nav>
-        </div>
-        <div>
-          <p className="font-medium text-black">
-            Legal
-          </p>
-          <nav className="flex flex-col mt-1 space-y-1 text-sm text-black">
-            <a href="" className="hover:opacity-75" > Terms &amp; Conditions </a>
-          </nav>
-        </div>
-      </div>
-    </div>
-    <p className="mt-9 text-xs text-gray-800">
-      © 2023 Minerva Sales Corporation
-    </p>
-  </div>
-</footer>
-          </section>
-    </div>
+ <footer className="py-10 mt-[100px] sm:mt-[1860px] lg:mt-[1050px] lg:w-[100%] flex flex-col space-y-10 justify-center bg-gradient-to-r from-[#FFBD59] via-gray-200 to-[#FFBD59]">
+
+<nav className="flex justify-center flex-wrap gap-6 text-gray-500 font-medium">
+    <Link className="text-black hover:text-gray-500" href="#">Home</Link>
+    <Link className="text-black hover:text-gray-500" href="#">Products</Link>
+    <Link className="text-black hover:text-gray-500" href="#">Services</Link>
+    <Link className="text-black hover:text-gray-500" href="#">About</Link>
+    <Link className="text-black hover:text-gray-500" href="#">Contact</Link>
+</nav>
+
+<div className="flex justify-center space-x-5">
+    <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+        <img src="https://img.icons8.com/fluent/30/000000/facebook-new.png" />
+   </Link>
+  
+</div>
+<p className="text-center text-gray-700 font-medium">&copy; 2023 Minerva Sales Corporation. All rights reservered.</p>
+</footer> 
     
+    </div> 
   )
 }
 

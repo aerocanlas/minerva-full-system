@@ -47,6 +47,7 @@ const EditOrdersPage: FC = ({}) => {
     payment: "",
     total: "",
     createdAt: "",
+    name: "",
   })
 
   const [ selectedImage, setSelectedImage ] = useState<any>([])
@@ -72,7 +73,7 @@ const EditOrdersPage: FC = ({}) => {
   }
 
     fetchData()
-  }, [router, orders.total])
+  }, [router, orders.total, ordersD])
 
   const [ users, setUsers ] = useState<[]>()
   const [ productStatus, setProductStatus ] = useState('');
@@ -80,17 +81,75 @@ const EditOrdersPage: FC = ({}) => {
 
   useEffect(() => {
     console.log(ordersD)
-    ordersD?.map(({ orderID, orders, status, payment, total, createdAt, }: any) => {
-      setOrders({
-        orders: orders,
-        status: status,
-        payment: payment,
-        createdAt: createdAt,
-        total
-      })
+    ordersD?.map(({ orderID, name, orders, status, payment, total, createdAt, User}: any) => {
 
-    })
-  }, [ordersD])
+      User.map(({ profile }: any) => (
+        setOrders({
+          orders: orders,
+          status: status,
+          payment: payment,
+          createdAt: createdAt,
+          total,
+          name: `${profile.firstname} ${profile.lastname}`
+        })
+
+      ))
+  })}, [ordersD])
+
+
+
+
+  // useEffect(() => {
+  //   ordersD?.map(({ userID, orderID, orders, name, total, payment, status, createdAt, User}: any) => {
+  //     name === null ?
+      
+  //     User.map(({ profile }: any) => (
+  //        setOrders({
+  //          orders: orders,
+  //          status: status,
+  //          payment: payment,
+  //          name: `${profile.firstname} ${profile.lastname}`,
+  //          createdAt: createdAt,
+  //          total
+  //        })
+  //      )) : setOrders({
+  //        orders: orders,
+  //        status: status,
+  //        payment: payment,
+  //        name: name,
+  //        createdAt: createdAt,
+  //        total,
+         
+  //      }) 
+    
+  //    })
+  // }, [  ordersD ])
+
+  // useEffect(() => {
+  //   console.log(ordersD)
+  //   {orders?.map(({ userID, orderID, orders, name, total, payment, status, createdAt, User}: any) => (
+  //     name === null ?
+
+  //     User.map(({ profile }: any) => (
+
+  //       setOrders({
+  //         name: `${profile.firstname} ${profile.lastname}`,
+  //         orders: orders,
+  //         status: status,
+  //         payment: payment,
+  //         createdAt: createdAt,
+  //         total
+  //       })
+  //     )) : setOrders({
+  //       orders: orders,
+  //       status: status,
+  //       payment: payment,
+  //       createdAt: createdAt,
+  //       total
+  //     }) 
+    
+  //   })
+  // }, [  ordersD ])
 
   const promise = () => new Promise((resolve) => setTimeout(resolve, 5000));
 
@@ -154,7 +213,7 @@ const EditOrdersPage: FC = ({}) => {
                 </div>
                 <div className="mb-6">
                   <label htmlFor="customerName" className="text-sm font-medium text-gray-900 block mb-2">Customer Name</label>
-                  <input type="text" id="customerName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value='John Doe' disabled />
+                  <input type="text" id="customerName" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" defaultValue={orders.name} name="name" disabled />
                 </div>
 
                 <div className="mb-6">

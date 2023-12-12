@@ -136,6 +136,8 @@ const EditAppointmentsPage: FC = () => {
     });
   }
 
+  console.log(appointment)
+
   return (
     
     <div>

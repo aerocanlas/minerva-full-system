@@ -62,7 +62,7 @@ export default function HeaderNavbar() {
 
   const [ mobile, setMobile ] = useState(false)
   const [ user, setUsers ] = useState("")
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   const [ carts, setCartLength ] = useState<[]>()
 
 
